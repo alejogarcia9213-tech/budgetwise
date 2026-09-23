@@ -1,0 +1,1 @@
+import{U as e}from"./store-Cf7nJLwn.js";import{t}from"./calculator-view-HnyALPmx.js";var n=e();function r(){return(0,n.jsx)(t,{})}export{r as component};

@@ -1,0 +1,1 @@
+import{U as e}from"./store-Cf7nJLwn.js";import{t}from"./planner-view-CppqV6O7.js";var n=e();function r(){return(0,n.jsx)(t,{})}function i(){return(0,n.jsx)(r,{})}export{i as component};

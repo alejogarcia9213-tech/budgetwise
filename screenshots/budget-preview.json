@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/budget",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Invertir Desde Cero",
+      "hasCanvas": false,
+      "bodyTextLen": 3324,
+      "bodyTextHash": "64c45dfff526e7a01e9f42743baa44d8a25fc75d182506ccaa6cc401bf4a3c51",
+      "bodyTextPrefix": "Invertir DESDE CERO Curso gratis Ajustes Perfil de presupuesto M",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/budget-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Invertir Desde Cero",
+      "hasCanvas": false,
+      "bodyTextLen": 3311,
+      "bodyTextHash": "f0ea94b5564886aa7a745bb14e69f359a40c0d7dca6af9ce684ebd3819d60326",
+      "bodyTextPrefix": "Invertir DESDE CERO Ajustes Perfil de presupuesto Main Main Agos",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/budget-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/budget-preview.json"
+}

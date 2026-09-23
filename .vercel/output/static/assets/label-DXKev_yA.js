@@ -1,0 +1,1 @@
+import{B as e,U as t}from"./store-Cf7nJLwn.js";var n=t();function r({className:t,...r}){return(0,n.jsx)(`label`,{className:e(`mb-1.5 block text-sm font-medium text-fg`,t),...r})}export{r as t};

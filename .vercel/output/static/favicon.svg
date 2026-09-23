@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Budget Wise">
+  <rect width="64" height="64" rx="16" fill="#0A0B12"/>
+  <!-- Soft teal bloom on the crown — reads as the mint rim at tiny sizes -->
+  <ellipse cx="52" cy="14" rx="13" ry="9" fill="#3DDC97" opacity="0.28"/>
+  <!-- Four rising 3D bars: share-card skyline, teal crown on the tallest -->
+  <g>
+    <polygon fill="#2A3178" points="18,42 26,35 26,49 18,56"/>
+    <polygon fill="#4C56D4" points="8,56 18,56 18,42 8,42"/>
+    <polygon fill="#8B95FF" points="8,42 16,35 26,35 18,42"/>
+  </g>
+  <g>
+    <polygon fill="#323C98" points="30,34 38,27 38,49 30,56"/>
+    <polygon fill="#5862EE" points="20,56 30,56 30,34 20,34"/>
+    <polygon fill="#9AA3FF" points="20,34 28,27 38,27 30,34"/>
+  </g>
+  <g>
+    <polygon fill="#3E48B0" points="42,24 50,17 50,49 42,56"/>
+    <polygon fill="#6B78FF" points="32,56 42,56 42,24 32,24"/>
+    <polygon fill="#B4BAFF" points="32,24 40,17 50,17 42,24"/>
+  </g>
+  <g>
+    <polygon fill="#245C4A" points="54,14 62,7 62,49 54,56"/>
+    <polygon fill="#7080FF" points="44,56 54,56 54,18 44,18"/>
+    <polygon fill="#5EEFB4" points="44,18 54,18 54,14 44,14"/>
+    <polygon fill="#3DDC97" points="44,14 52,7 62,7 54,14"/>
+  </g>
+</svg>

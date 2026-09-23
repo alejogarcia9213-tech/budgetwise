@@ -1,0 +1,4124 @@
+# BUDGET WISE — MASTER RECONSTRUCTION BLUEPRINT V2
+
+I want you to help me reconstruct, audit, repair, and continue development of an existing personal finance application called:
+
+# BUDGET WISE
+
+This is NOT a generic expense tracker.
+
+Budget Wise was previously developed using Firebase Studio and evolved through several iterations.
+
+The purpose of this document is to reconstruct the most complete version of the product from:
+
+1. The original product requirements.
+2. Previously recovered technical specifications.
+3. Screenshots of the real Budget Wise application.
+4. Screenshots of an external compound-interest calculator that I want to use only as a FUNCTIONAL reference.
+5. The final privacy/local-first architecture that was decided later.
+
+Treat this document as the primary product specification.
+
+If I subsequently provide source code, screenshots, ZIP files, or an existing repository, analyze those against this specification instead of blindly creating a new app.
+
+---
+
+# PART 1 — PRODUCT IDENTITY
+
+Application name:
+
+**Budget Wise**
+
+Product type:
+
+Personal and family budgeting + financial planning application.
+
+The objective is to let a normal person answer, within seconds:
+
+* How much did I earn?
+* How much am I allowed to spend?
+* How much have I actually spent?
+* How much am I saving?
+* How much am I investing?
+* How much am I paying toward debt?
+* How much money remains available?
+* What is my net worth?
+* Is my financial situation improving?
+* Am I spending according to my desired allocation?
+* When will I reach my savings goal?
+* How much can my investments grow?
+* When will I become debt-free?
+
+The application should feel significantly more capable than a spreadsheet while remaining much easier to use than professional accounting software.
+
+---
+
+# PART 2 — IMPORTANT HISTORICAL CONTEXT
+
+Budget Wise existed in different iterations.
+
+Do NOT treat apparently conflicting requirements as mistakes.
+
+The application evolved.
+
+Earlier versions used a 50/30/20-style budgeting concept.
+
+Later versions used more detailed categories and zero-based budgeting.
+
+The screenshots also show a more refined budgeting interface using cards such as:
+
+* Essential Bills & Expenses
+* Flexible Spending & Fun
+* Long-Term Growth (Investing)
+* Savings Goals
+* Debt planning
+
+All of these concepts must coexist without creating duplicate accounting.
+
+Use the architecture described later in this document to unify them.
+
+---
+
+# PART 3 — FINAL PRODUCT PHILOSOPHY
+
+Budget Wise must be designed around these principles:
+
+* Local-first
+* Offline-first
+* Privacy-first
+* No mandatory account
+* No mandatory cloud
+* No mandatory subscription
+* Very fast transaction entry
+* Mobile-first usability
+* Excellent desktop experience
+* Installable PWA
+* Clear financial calculations
+* Transparent formulas
+* Non-destructive data migrations
+* Data export and backup
+* User-owned financial information
+
+Financial data must remain on the user's own device unless a future cloud-sync feature is explicitly enabled by the user.
+
+---
+
+# PART 4 — FINAL TECHNICAL DIRECTION
+
+Preferred architecture:
+
+* React
+* TypeScript
+* Vite
+* Zustand
+* IndexedDB
+* `idb` as IndexedDB wrapper
+* Recharts
+* Workbox
+* PWA manifest
+* Responsive CSS / Tailwind CSS or equivalent
+* Firebase Hosting may be used for deployment only
+
+Do NOT require:
+
+* Firebase Authentication
+* Google Sign-In
+* email/password accounts
+* Firestore
+* Firebase Realtime Database
+* mandatory backend
+* mandatory server
+* mandatory external financial APIs
+
+If legacy Firebase Auth or Firestore code exists in the current repository, identify it before removing anything.
+
+Never delete data merely to simplify migration.
+
+---
+
+# PART 5 — CORE ARCHITECTURE
+
+The application should conceptually follow:
+
+```text
+IndexedDB
+    ↓
+Repository / Persistence Layer
+    ↓
+Zustand Stores
+    ↓
+Financial Calculation Engine
+    ↓
+React Components
+    ↓
+Dashboard / Budget / Tools / Reports
+```
+
+React components should not independently perform raw IndexedDB operations everywhere.
+
+Centralize persistence.
+
+Centralize calculations.
+
+Centralize formatting.
+
+---
+
+# PART 6 — ORIGINAL DATABASE
+
+The historically recovered database name is:
+
+```text
+budgetwise_db
+```
+
+Previously recovered stores included:
+
+```text
+transactions
+categories
+settings
+goals
+```
+
+Those stores must remain compatible if they already exist.
+
+However, screenshots show that the application eventually contained more entities.
+
+Therefore expand the schema NON-DESTRUCTIVELY.
+
+Recommended complete store set:
+
+```text
+transactions
+categories
+budgets
+settings
+goals
+profiles
+paymentMethods
+recurringExpenses
+largePurchases
+assets
+debts
+financialTips
+calculatorPresets
+```
+
+Optional:
+
+```text
+migrationHistory
+```
+
+Never solve a database-version problem by deleting `budgetwise_db`.
+
+Use IndexedDB version migrations.
+
+---
+
+# PART 7 — BUDGET PROFILES
+
+The real application contained:
+
+**Settings → Budget Profile**
+
+Example:
+
+```text
+Main
+```
+
+with controls to:
+
+* select profile
+* add profile
+* remove profile
+
+Implement true financial separation between profiles.
+
+Examples:
+
+```text
+Main
+Household
+Personal
+Business Side Income
+```
+
+Each transaction, budget, goal, debt, asset, recurring expense and large purchase should contain:
+
+```ts
+profileId: string
+```
+
+Example:
+
+```ts
+interface BudgetProfile {
+    id: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+}
+```
+
+The default profile should be:
+
+```text
+Main
+```
+
+Deleting a profile containing financial data must require explicit confirmation.
+
+Never silently delete its data.
+
+---
+
+# PART 8 — TRANSACTION MODEL
+
+Historically recovered transaction fields included:
+
+```ts
+amount
+categoryId
+categoryName
+date
+notes
+type
+createdAt
+updatedAt
+```
+
+and IndexedDB indexes:
+
+```text
+by_date
+by_category
+```
+
+Use a modernized backward-compatible structure:
+
+```ts
+interface Transaction {
+    id: string;
+
+    profileId: string;
+
+    amount: number;
+
+    type:
+        | "income"
+        | "expense"
+        | "saving"
+        | "investment"
+        | "debt-payment";
+
+    categoryId: string;
+    categoryName: string;
+
+    subcategoryId?: string;
+    subcategoryName?: string;
+
+    paymentMethodId?: string;
+
+    date: string; // YYYY-MM-DD
+
+    notes?: string;
+
+    recurringExpenseId?: string;
+    largePurchaseId?: string;
+    goalId?: string;
+    debtId?: string;
+
+    createdAt: string;
+    updatedAt: string;
+}
+```
+
+Recommended indexes:
+
+```text
+by_date
+by_category
+by_profile
+by_profile_date
+by_payment_method
+```
+
+---
+
+# PART 9 — IMPORTANT ACCOUNTING MODEL
+
+Do NOT confuse the presentation cards with the underlying accounting model.
+
+The underlying financial ledger should use six logical groups:
+
+```text
+Income
+Essential Expenses
+Discretionary Expenses
+Debt Payments
+Savings
+Investments
+```
+
+The user-facing Budget Wise interface may use more friendly names:
+
+```text
+Essential Bills & Expenses
+Flexible Spending & Fun
+Long-Term Growth (Investing)
+Savings Goals
+Debt Paydown
+```
+
+This allows the application to preserve the original UI without corrupting financial calculations.
+
+---
+
+# PART 10 — MONTHLY NET INCOME
+
+The screenshots show a prominent card:
+
+```text
+Monthly Net Income
+for September 2025
+
+€ 4044.72
+```
+
+Preserve this concept.
+
+The selected month determines the displayed month/year.
+
+The user should be able to either:
+
+1. Enter a monthly net-income target directly.
+2. Add multiple income sources.
+
+Example income sources:
+
+```text
+Salary
+Bonus
+Freelance
+Rental income
+Dividends
+Other
+```
+
+The simple interface may show only the final monthly net income.
+
+Advanced View may expose individual income sources.
+
+---
+
+# PART 11 — GLOBAL MONTH/YEAR SYSTEM
+
+Budget Wise operates month-by-month.
+
+Every financial item must belong to the correct date/month.
+
+Allow selection of:
+
+```text
+Month
+Year
+```
+
+Example:
+
+```text
+September 2025
+```
+
+The screenshot shows the selected period inside Settings.
+
+The same selected period should be available globally throughout the application.
+
+Recommended global state:
+
+```ts
+selectedMonth
+selectedYear
+```
+
+Example:
+
+```ts
+selectedMonth = 9;
+selectedYear = 2025;
+```
+
+Changing the selected period must immediately update:
+
+* Monthly Net Income
+* Budget cards
+* Transactions
+* Goals
+* Monthly Summary
+* Financial ratios where relevant
+* Recurring expenses
+* Debt payments
+* Charts
+
+without requiring browser refresh.
+
+---
+
+# PART 12 — ZERO-BASED BUDGET ENGINE
+
+Budget Wise must support zero-based budgeting.
+
+Calculation:
+
+```text
+Net Income
+- Essential Expenses
+- Flexible / Discretionary Spending
+- Debt Allocation
+- Savings Allocation
+- Investment Allocation
+= Money Left to Budget
+```
+
+Target:
+
+```text
+Money Left to Budget = 0
+```
+
+This DOES NOT mean that the user's bank account should reach zero.
+
+It means every unit of expected income has a purpose.
+
+If:
+
+```text
+Money Left to Budget > 0
+```
+
+display something equivalent to:
+
+```text
+Money still available to allocate
+```
+
+If:
+
+```text
+Money Left to Budget < 0
+```
+
+display:
+
+```text
+Your planned allocations exceed your income
+```
+
+---
+
+# PART 13 — BUDGET ALLOCATION SYSTEM
+
+The screenshots demonstrate that every budgeting card contains both:
+
+```text
+Target amount
+Target percentage
+Actual amount
+Actual percentage
+Remaining
+Budget Adjustment
+```
+
+Example from the real application:
+
+```text
+Essential Bills & Expenses
+
+Target: €3,047
+80.0%
+
+Actual: €0
+(0.0%)
+
+Remaining:
+€3,047
+
+Budget Adjustment:
+-188.67
+```
+
+This behavior should be preserved.
+
+Each allocation category should have:
+
+```ts
+interface MonthlyBudgetAllocation {
+    id: string;
+    profileId: string;
+
+    year: number;
+    month: number;
+
+    categoryId: string;
+
+    targetPercentage: number;
+    baseTargetAmount: number;
+
+    adjustmentAmount: number;
+}
+```
+
+Effective target:
+
+```text
+effectiveTarget =
+baseTargetAmount + adjustmentAmount
+```
+
+Actual amount must be calculated from recorded transactions.
+
+Do not ask the user to manually calculate Actual.
+
+---
+
+# PART 14 — CUSTOM ALLOCATION PERCENTAGES
+
+Do NOT force 50/30/20.
+
+Budget Wise should allow custom allocation percentages.
+
+For example the screenshots contain unusual allocations such as:
+
+```text
+Essential Bills & Expenses: 80%
+Long-Term Growth: 30%
+Flexible Spending & Fun: 20%
+Savings Goals: 5%
+```
+
+That means target percentages and adjustments were intended to be flexible.
+
+The application should warn when planned allocations exceed available income but should not silently modify the user's percentages.
+
+The user controls the budget.
+
+---
+
+# PART 15 — LEGACY 50/30/20 ANALYTICS
+
+The historically recovered settings contained:
+
+```ts
+preferredRatios: {
+    needs: 50,
+    wants: 30,
+    savings: 20
+}
+```
+
+Preserve this as an OPTIONAL analytics system.
+
+Do NOT make it the fundamental accounting model.
+
+Map categories to:
+
+```text
+Needs
+Wants
+Savings + Investments
+```
+
+Then compare:
+
+```text
+Target ratio
+vs
+Actual ratio
+```
+
+Allow the preferred percentages to be customized.
+
+This may be shown in Advanced View.
+
+---
+
+# PART 16 — ESSENTIAL BILLS & EXPENSES
+
+Reconstruct the card visible in the screenshots:
+
+# Essential Bills & Expenses
+
+Description:
+
+```text
+Core expenses required for living, like rent,
+groceries, and utilities.
+```
+
+Show:
+
+```text
+Target
+Target %
+
+Progress bar
+
+Actual
+Actual %
+
+Remaining
+
+Budget Adjustment
+
+Items
+```
+
+Examples:
+
+```text
+Rent / Mortgage
+Groceries
+Electricity
+Gas
+Water
+Internet
+Phone
+Insurance
+Transportation
+Healthcare
+Childcare
+Household
+```
+
+Button:
+
+```text
++ Add Item
+```
+
+Allow edit/delete/reorder.
+
+---
+
+# PART 17 — FLEXIBLE SPENDING & FUN
+
+Reconstruct the card:
+
+# Flexible Spending & Fun
+
+Description:
+
+```text
+Non-essential spending that enhances your lifestyle.
+```
+
+Show:
+
+```text
+Target
+Target %
+Progress bar
+Actual
+Actual %
+Remaining
+Budget Adjustment
+Items
+```
+
+Examples:
+
+```text
+Restaurants
+Entertainment
+Shopping
+Travel
+Subscriptions
+Hobbies
+Gifts
+Games
+Other
+```
+
+Button:
+
+```text
++ Add Item
+```
+
+---
+
+# PART 18 — LONG-TERM GROWTH / INVESTING
+
+The screenshots contain:
+
+# Long-Term Growth (Investing)
+
+Description:
+
+```text
+Putting money to work to build wealth over
+the long term, e.g., stocks or retirement funds.
+```
+
+Show:
+
+```text
+Target
+Target %
+Actual
+Actual %
+Remaining
+Budget Adjustment
+```
+
+Possible investment items:
+
+```text
+Stocks
+ETFs
+Index Funds
+Retirement
+Crypto
+Real Estate
+Other Investments
+```
+
+Button:
+
+```text
++ Add Item
+```
+
+Monthly investment transactions should contribute to both:
+
+```text
+Monthly Summary
+Yearly Summary
+Savings-Investment Rate
+```
+
+---
+
+# PART 19 — SAVINGS GOALS
+
+The real application contains a dedicated:
+
+# Savings Goals
+
+card.
+
+Screenshot behavior:
+
+```text
+Savings Goals           5.0%
+
+Track your progress towards your financial goals.
+
+Total Monthly Contribution
+€0 / €202
+
+Progress bar
+
+Remaining
+Budget Adjustment
+```
+
+Individual goal example:
+
+```text
+Emergency Fund
+
+€0 / €5,000
+
+Progress bar
+
+This Month's Contribution
+€ Amount...
+```
+
+Button:
+
+```text
++ Add New Goal
+```
+
+Recommended data structure:
+
+```ts
+interface SavingsGoal {
+    id: string;
+    profileId: string;
+
+    name: string;
+
+    targetAmount: number;
+    currentAmount: number;
+
+    deadline?: string;
+
+    monthlyTarget?: number;
+
+    createdAt: string;
+    updatedAt: string;
+}
+```
+
+Goal examples:
+
+```text
+Emergency Fund
+Vacation
+House Down Payment
+Car
+Wedding
+Education
+Large Purchase
+Other
+```
+
+Monthly contributions should create or link to financial transactions so totals remain consistent.
+
+Never maintain two independent versions of the same money.
+
+---
+
+# PART 20 — LARGE PURCHASES
+
+The real app contains:
+
+# Large Purchases
+
+Description:
+
+```text
+Manage large one-time purchases by
+paying them off in installments over several months.
+```
+
+Empty state:
+
+```text
+No large purchases added yet.
+```
+
+Button:
+
+```text
++ Add Large Purchase
+```
+
+Implement:
+
+```ts
+interface LargePurchase {
+    id: string;
+    profileId: string;
+
+    name: string;
+
+    totalAmount: number;
+    amountPaid: number;
+
+    initialPayment?: number;
+
+    startDate: string;
+
+    installmentAmount?: number;
+    numberOfInstallments?: number;
+
+    frequency:
+        | "monthly"
+        | "biweekly"
+        | "weekly"
+        | "custom";
+
+    paymentMethodId?: string;
+
+    categoryId?: string;
+
+    notes?: string;
+
+    status:
+        | "active"
+        | "completed"
+        | "paused";
+}
+```
+
+Show:
+
+```text
+Total price
+Already paid
+Remaining
+Installment
+Next payment
+Progress %
+Estimated payoff date
+```
+
+Allow users to mark installments as paid.
+
+A paid installment should create or link a transaction.
+
+---
+
+# PART 21 — RECURRING EXPENSES
+
+The screenshots contain:
+
+# Recurring Expenses
+
+Description:
+
+```text
+Manage automatic payments like subscriptions and bills.
+```
+
+Empty state:
+
+```text
+No recurring expenses added yet.
+```
+
+Button:
+
+```text
++ Add Recurring Expense
+```
+
+Implement:
+
+```ts
+interface RecurringExpense {
+    id: string;
+    profileId: string;
+
+    name: string;
+    amount: number;
+
+    frequency:
+        | "weekly"
+        | "monthly"
+        | "quarterly"
+        | "yearly"
+        | "custom";
+
+    nextDueDate: string;
+
+    categoryId: string;
+    subcategoryId?: string;
+
+    paymentMethodId?: string;
+
+    active: boolean;
+
+    notes?: string;
+}
+```
+
+Examples:
+
+```text
+Netflix
+Spotify
+Phone
+Internet
+Insurance
+Rent
+Gym
+Software
+```
+
+Recurring expenses should help forecast the monthly budget.
+
+Do not automatically create permanent duplicate transactions every time the app loads.
+
+Use proper recurring scheduling logic.
+
+---
+
+# PART 22 — PAYMENT METHODS
+
+The Settings screenshot shows:
+
+# Manage Payment Methods
+
+Examples visible in the actual application:
+
+```text
+Cash
+Amex
+Etoro Visa Black Platinum
+Trade Republic
+C24 Bank
+```
+
+Each method has a color indicator.
+
+The UI contains:
+
+```text
+Add new payment method
+[color selector]
++
+```
+
+Implement:
+
+```ts
+interface PaymentMethod {
+    id: string;
+    profileId: string;
+
+    name: string;
+    color: string;
+
+    type?:
+        | "cash"
+        | "bank"
+        | "credit-card"
+        | "debit-card"
+        | "broker-card"
+        | "other";
+
+    archived: boolean;
+}
+```
+
+Transactions should optionally reference a payment method.
+
+Allow filtering transactions by payment method.
+
+Do not delete historical transactions if a payment method is archived.
+
+---
+
+# PART 23 — INVESTMENT GROWTH CALCULATOR
+
+The real Budget Wise screenshots show:
+
+# Investment Growth Calculator
+
+Description:
+
+```text
+Project your investment growth over time
+with the power of compound interest.
+```
+
+Inputs shown:
+
+```text
+Initial Investment
+Monthly Contribution
+Annual Interest Rate (%)
+Investment Period (Years)
+```
+
+The period uses a slider.
+
+Example:
+
+```text
+Initial Investment: 0 EUR
+Monthly Contribution: 0 EUR
+Annual Interest Rate: 10%
+Investment Period: 10 years
+```
+
+The original simple calculator must remain available.
+
+However, expand it using the compound-interest calculator functionality described later.
+
+---
+
+# PART 24 — ADVANCED COMPOUND-INTEREST CALCULATOR
+
+Some supplied screenshots are from an EXTERNAL WEBSITE named:
+
+```text
+Invertir Desde Cero
+```
+
+That website is NOT Budget Wise.
+
+DO NOT COPY:
+
+* its logo
+* its branding
+* its WhatsApp button
+* its course button
+* its exact visual design
+
+Use those screenshots only as a FUNCTIONAL reference.
+
+I want Budget Wise's Investment Growth Calculator to eventually support four calculation modes.
+
+---
+
+# MODE A — HOW MUCH CAN I ACCUMULATE?
+
+Equivalent concept:
+
+```text
+¿Cuánto puedo ahorrar?
+```
+
+Inputs:
+
+```text
+Initial Balance
+Periodic Contribution
+Contribution Frequency
+Deposit Timing
+Annual Rate
+Duration
+```
+
+Output:
+
+```text
+Final Portfolio Value
+```
+
+and breakdown:
+
+```text
+Initial Balance
+Total Contributions
+Total Interest / Investment Growth
+```
+
+---
+
+# MODE B — HOW LONG UNTIL I REACH MY GOAL?
+
+Equivalent:
+
+```text
+¿Cuánto tardaré en alcanzar mi objetivo?
+```
+
+Inputs:
+
+```text
+Target Amount
+Initial Balance
+Periodic Contribution
+Contribution Frequency
+Deposit Timing
+Annual Rate
+```
+
+Output:
+
+```text
+Required Time
+```
+
+Display:
+
+```text
+Years
+Months
+```
+
+where applicable.
+
+---
+
+# MODE C — HOW MUCH MUST I CONTRIBUTE?
+
+Equivalent:
+
+```text
+¿Cuánto necesito ahorrar cada periodo?
+```
+
+Inputs:
+
+```text
+Target Amount
+Initial Balance
+Contribution Frequency
+Deposit Timing
+Annual Rate
+Duration
+```
+
+Output:
+
+```text
+Required Periodic Contribution
+```
+
+---
+
+# MODE D — WHAT RETURN DO I NEED?
+
+Equivalent:
+
+```text
+¿Qué porcentaje de interés necesito?
+```
+
+Inputs:
+
+```text
+Target Amount
+Initial Balance
+Periodic Contribution
+Contribution Frequency
+Deposit Timing
+Duration
+```
+
+Output:
+
+```text
+Required Annual Return %
+```
+
+Use numerical solving when required.
+
+---
+
+# PART 25 — COMPOUND INTEREST MATH
+
+Do not approximate calculations using simplistic yearly multiplication.
+
+Use periodic compounding.
+
+Definitions:
+
+```text
+P = initial principal
+PMT = recurring contribution
+annualRate = annual nominal rate
+m = number of contribution/compounding periods per year
+r = annualRate / m
+n = years × m
+```
+
+For contributions made at the END of each period:
+
+```text
+FV =
+P × (1+r)^n
++
+PMT × [((1+r)^n - 1) / r]
+```
+
+For contributions made at the BEGINNING:
+
+```text
+FV =
+P × (1+r)^n
++
+PMT × [((1+r)^n - 1) / r] × (1+r)
+```
+
+Handle:
+
+```text
+r = 0
+```
+
+separately to avoid division by zero.
+
+For time or interest-rate calculations where no reliable closed formula works with all supported combinations, use numerical methods such as:
+
+```text
+binary search
+```
+
+with:
+
+* defined bounds
+* tolerance
+* iteration limit
+* impossible-case detection
+
+Never produce NaN or Infinity in the UI.
+
+---
+
+# PART 26 — INVESTMENT CALCULATOR RESULT
+
+The external reference screenshots show a useful result structure.
+
+Adapt it to Budget Wise.
+
+Display:
+
+```text
+Projected Final Balance
+```
+
+Then:
+
+```text
+Initial Balance
+Total Contributions
+Total Growth / Interest
+```
+
+Show a pie or donut chart.
+
+Example breakdown:
+
+```text
+Initial Balance        €1,000
+Periodic Contributions €12,000
+Investment Growth         €730.62
+```
+
+Also show a stacked bar chart over time.
+
+Components:
+
+```text
+Initial Balance
+Contributions
+Growth
+```
+
+---
+
+# PART 27 — YEAR-BY-YEAR INVESTMENT TABLE
+
+Show an expandable yearly table.
+
+Columns:
+
+```text
+Year
+Periodic Contributions
+Total Contributions
+Total Growth
+Final Balance
+```
+
+Example concept:
+
+```text
+Year 1
+Contributions this year
+Cumulative contributions
+Cumulative growth
+Ending balance
+```
+
+On mobile:
+
+allow controlled horizontal scrolling rather than breaking the table.
+
+On desktop:
+
+show the full table.
+
+---
+
+# PART 28 — CONTRIBUTION FREQUENCIES
+
+Support:
+
+```text
+Monthly
+Quarterly
+Semiannually
+Annually
+```
+
+Architecture should allow later addition of:
+
+```text
+Weekly
+Biweekly
+```
+
+Deposit timing:
+
+```text
+Beginning of period
+End of period
+```
+
+---
+
+# PART 29 — DEBT PAYDOWN PLANNER
+
+The actual Budget Wise application contains:
+
+# Debt Paydown Planner
+
+Description:
+
+```text
+Create a strategy to become debt-free.
+Choose a method and see your plan in action.
+```
+
+Sections:
+
+```text
+Your Debts
+Paydown Strategy
+Your Paydown Plan
+```
+
+---
+
+# PART 30 — DEBT MODEL
+
+Recommended:
+
+```ts
+interface Debt {
+    id: string;
+    profileId: string;
+
+    name: string;
+
+    balance: number;
+    annualInterestRate: number;
+
+    minimumPayment: number;
+
+    type?:
+        | "credit-card"
+        | "personal-loan"
+        | "mortgage"
+        | "car-loan"
+        | "student-loan"
+        | "other";
+
+    createdAt: string;
+    updatedAt: string;
+}
+```
+
+The Your Debts table should show:
+
+```text
+Debt Name
+Balance
+Interest Rate (%)
+Minimum Payment
+```
+
+The screenshot's empty state says:
+
+```text
+You have no debts with a balance listed
+in your Financial Health statement.
+```
+
+Therefore debt information should be shared between:
+
+```text
+Net Worth / Financial Health
+and
+Debt Paydown Planner
+```
+
+Do not create separate duplicate debt databases.
+
+---
+
+# PART 31 — DEBT PAYOFF METHODS
+
+The screenshot shows:
+
+```text
+Payoff Method
+Avalanche
+```
+
+Implement at least:
+
+```text
+Avalanche
+Snowball
+```
+
+Avalanche:
+
+Pay minimums on all debts and prioritize extra payment to the highest APR.
+
+Snowball:
+
+Pay minimums and prioritize extra payment to the smallest outstanding balance.
+
+Input:
+
+```text
+Extra Monthly Payment
+```
+
+Example:
+
+```text
+100 EUR
+```
+
+---
+
+# PART 32 — DEBT SIMULATION OUTPUT
+
+Simulate month by month.
+
+Display:
+
+```text
+Debt-free date
+Total months
+Total interest paid
+Total amount paid
+Interest saved vs minimum-only strategy
+```
+
+Then provide repayment schedule.
+
+When one debt is paid off:
+
+roll its previous minimum payment into the next debt.
+
+Never allow a payment to exceed remaining principal + accrued interest.
+
+---
+
+# PART 33 — NET WORTH STATEMENT
+
+Financial Health contains an accordion named:
+
+# Net Worth Statement
+
+Implement assets and liabilities.
+
+Assets examples:
+
+```text
+Cash
+Checking Accounts
+Savings Accounts
+Emergency Fund
+Brokerage Accounts
+Retirement Accounts
+Crypto
+Real Estate
+Vehicles
+Other Assets
+```
+
+Liabilities:
+
+```text
+Credit Cards
+Personal Loans
+Mortgage
+Car Loan
+Student Loan
+Other Debts
+```
+
+Formula:
+
+```text
+Net Worth =
+Total Assets - Total Liabilities
+```
+
+Allow editing balances.
+
+Do not confuse cash-flow transactions with asset balances.
+
+---
+
+# PART 34 — FINANCIAL HEALTH & RATIOS
+
+The actual application contains:
+
+# Financial Health & Ratios
+
+Description:
+
+```text
+Analyze your financial standing with key
+metrics and ratios.
+```
+
+Inside:
+
+```text
+Net Worth Statement
+Financial Ratios
+```
+
+Ratios visible in the screenshots:
+
+```text
+Basic Liquidity Ratio
+Savings-Investment Rate
+Debt to Assets Ratio
+Monthly Debt Ratio
+Invested Assets to Net Worth
+Solvency Ratio
+```
+
+Every ratio should have:
+
+```text
+Name
+Value
+Unit
+? information icon
+Status icon
+```
+
+Status:
+
+```text
+green check
+red X
+```
+
+Never rely solely on color.
+
+---
+
+# PART 35 — BASIC LIQUIDITY RATIO
+
+Formula:
+
+```text
+Basic Liquidity Ratio =
+Liquid Assets / Average Monthly Essential Expenses
+```
+
+Unit:
+
+```text
+Months
+```
+
+Example:
+
+```text
+4.8 Months
+```
+
+A common goal range can be approximately:
+
+```text
+3–6 months or greater
+```
+
+Explain the ratio via tooltip.
+
+---
+
+# PART 36 — SAVINGS-INVESTMENT RATE
+
+Formula:
+
+```text
+Savings-Investment Rate =
+(Monthly Savings + Monthly Investments)
+/
+Monthly Net Income
+× 100
+```
+
+Example:
+
+```text
+24.5%
+```
+
+Make the healthy threshold configurable rather than assuming the same target suits everyone.
+
+---
+
+# PART 37 — DEBT TO ASSETS RATIO
+
+Formula:
+
+```text
+Debt to Assets Ratio =
+Total Liabilities
+/
+Total Assets
+× 100
+```
+
+Lower is generally better.
+
+Handle:
+
+```text
+Total Assets = 0
+```
+
+without division errors.
+
+---
+
+# PART 38 — MONTHLY DEBT RATIO
+
+Formula:
+
+```text
+Monthly Debt Ratio =
+Required Monthly Debt Payments
+/
+Monthly Net Income
+× 100
+```
+
+Lower is generally better.
+
+Example screenshot behavior:
+
+```text
+0.00% → green check
+```
+
+---
+
+# PART 39 — INVESTED ASSETS TO NET WORTH
+
+Formula:
+
+```text
+Invested Assets to Net Worth =
+Invested Assets
+/
+Net Worth
+× 100
+```
+
+If net worth is <= 0, display an appropriate unavailable/attention state instead of misleading percentages.
+
+---
+
+# PART 40 — SOLVENCY RATIO
+
+Use:
+
+```text
+Solvency Ratio =
+Net Worth
+/
+Total Assets
+× 100
+```
+
+Explain via tooltip.
+
+Do not show invalid numbers if assets equal zero.
+
+---
+
+# PART 41 — FINANCIAL RATIO STATUS ENGINE
+
+Create centralized thresholds.
+
+Example structure:
+
+```ts
+interface RatioHealthRule {
+    ratioId: string;
+
+    goodMin?: number;
+    goodMax?: number;
+
+    warningMin?: number;
+    warningMax?: number;
+}
+```
+
+Do not hard-code status colors in six different components.
+
+Keep status logic centralized.
+
+---
+
+# PART 42 — FINANCIAL TIPS
+
+The real interface contains:
+
+# AI Financial Tip
+
+Description:
+
+```text
+A personalized tip based on your current budget.
+```
+
+Example screenshot text:
+
+```text
+It looks like you're starting fresh with your budget!
+Now's a great time to prioritize setting up automatic
+transfers to your savings and investment accounts...
+```
+
+Button:
+
+```text
+Get a new tip
+```
+
+IMPORTANT PRIVACY REQUIREMENT:
+
+Budget Wise must remain usable without sending financial data to an external AI service.
+
+Therefore implement a LOCAL RULE-BASED financial-tip engine as the default.
+
+Examples:
+
+```text
+If emergency fund < 3 months:
+suggest increasing emergency savings.
+
+If savings-investment rate < target:
+suggest reviewing discretionary spending.
+
+If monthly debt ratio is high:
+suggest prioritizing debt repayment.
+
+If no recurring expenses are registered:
+suggest adding recurring bills.
+
+If spending exceeds the monthly target:
+highlight the relevant category.
+
+If all financial metrics are empty:
+show a getting-started tip.
+```
+
+The UI may continue to say:
+
+```text
+AI Financial Tip
+```
+
+for historical fidelity, but do not require a remote model.
+
+If external AI is added later, it must be optional and require explicit consent before transmitting private financial information.
+
+---
+
+# PART 43 — MONTHLY SUMMARY
+
+The real application contains:
+
+# Monthly Summary
+
+Description:
+
+```text
+A visual overview of your monthly finances.
+```
+
+The screenshot shows:
+
+```text
+Total Income
+Total Expenses
+Total Saved & Invested
+Final Balance
+```
+
+Example:
+
+```text
+Total Income             €4,044.72
+Total Expenses              €0.00
+Total Saved & Invested      €0.00
+Final Balance            €4,044.72
+```
+
+Formula:
+
+```text
+Final Balance =
+Income
+- Expenses
+- Debt Payments
+- Savings Contributions
+- Investments
+```
+
+Depending on reporting perspective, saved/invested money may still remain part of net worth but must leave spendable monthly cash flow.
+
+Make the distinction clear.
+
+---
+
+# PART 44 — MONTHLY SUMMARY CHART
+
+If spending exists:
+
+show visualization.
+
+If not:
+
+preserve a clean empty state similar to the screenshot:
+
+```text
+Enter some spending to see the chart.
+```
+
+Do not render broken or zero-area charts.
+
+Possible chart:
+
+```text
+Essential
+Flexible
+Debt
+Savings
+Investing
+```
+
+Use Recharts.
+
+---
+
+# PART 45 — YEARLY SUMMARY
+
+The real app contains:
+
+# Yearly Summary for 2025
+
+Description:
+
+```text
+A high-level overview of your finances for
+the current year.
+```
+
+Show chart January–December.
+
+When there is no yearly dataset:
+
+```text
+No yearly data to display chart.
+```
+
+Below show:
+
+```text
+Total Income
+Total Expenses
+Total Saved
+Total Invested
+Final Balance
+```
+
+Example screenshot:
+
+```text
+Total Income       €4,044.72
+Total Expenses        €0.00
+Total Saved           €0.00
+Total Invested        €0.00
+Final Balance      €4,044.72
+```
+
+---
+
+# PART 46 — YEARLY CALCULATIONS
+
+Calculate:
+
+```text
+Annual Income
+Annual Essential Expenses
+Annual Discretionary Expenses
+Annual Debt Payments
+Annual Savings
+Annual Investments
+Annual Final Cash Balance
+```
+
+Also calculate:
+
+```text
+Average Monthly Income
+Average Monthly Expenses
+Average Monthly Savings
+Average Monthly Investments
+Average Savings-Investment Rate
+```
+
+---
+
+# PART 47 — YEARLY CHART
+
+Recommended chart:
+
+```text
+Month
+Income
+Expenses
+Savings
+Investments
+```
+
+January through December.
+
+Allow selecting another year.
+
+Historical years must remain accessible.
+
+Changing the current year must NEVER overwrite previous years.
+
+---
+
+# PART 48 — SETTINGS
+
+The real Settings screen contains:
+
+```text
+Budget Profile
+Selected Month
+Currency
+Language
+Theme
+Advanced View
+Manage Payment Methods
+```
+
+Reconstruct this.
+
+---
+
+# PART 49 — CURRENCY
+
+The screenshot shows:
+
+```text
+EUR (€)
+```
+
+Support at minimum:
+
+```text
+EUR (€)
+USD ($)
+GBP (£)
+COP ($)
+```
+
+Architecture should allow more currencies.
+
+Currency selection changes formatting.
+
+It must NOT silently perform FX conversion.
+
+Example:
+
+changing EUR → USD should not transform €1,000 into a converted market value unless an explicit currency conversion feature exists.
+
+---
+
+# PART 50 — LOCALE FORMATTING
+
+Use `Intl.NumberFormat`.
+
+Example European formatting:
+
+```text
+€4,044.72
+```
+
+or locale-specific equivalent depending selected language/locale.
+
+Do not manually concatenate symbols everywhere.
+
+Centralize:
+
+```ts
+formatCurrency()
+formatPercentage()
+formatDate()
+```
+
+---
+
+# PART 51 — LANGUAGE
+
+The screenshot shows:
+
+```text
+English
+```
+
+There must be a language selector.
+
+Implement a real internationalization layer.
+
+At minimum architecture should support:
+
+```text
+English
+Spanish
+```
+
+Make it easy to add:
+
+```text
+German
+```
+
+Do not hard-code hundreds of English strings directly throughout components.
+
+Use translation keys.
+
+Example:
+
+```text
+budget.essential.title
+budget.essential.description
+summary.totalIncome
+settings.language
+```
+
+---
+
+# PART 52 — LIGHT / DARK THEME
+
+The Settings screenshot shows a sun/moon toggle.
+
+Support:
+
+```text
+Light
+Dark
+```
+
+Persist selected mode locally.
+
+The screenshots mainly show Dark Mode.
+
+Dark visual language:
+
+```text
+near-black app background
+dark charcoal cards
+subtle gray borders
+white primary text
+muted gray secondary text
+purple primary accent
+green positive status
+red negative status
+blue investment values where appropriate
+```
+
+Do not copy Android status-bar colors.
+
+The OS chrome visible in screenshots is not part of Budget Wise.
+
+---
+
+# PART 53 — ADVANCED VIEW
+
+The real Settings contains:
+
+```text
+Advanced View
+```
+
+This is a major product concept.
+
+Use it to prevent Budget Wise from overwhelming casual users.
+
+## Standard View
+
+Prioritize:
+
+```text
+Monthly Net Income
+Budget allocations
+Transactions
+Essential Expenses
+Flexible Spending
+Savings
+Investments
+Monthly Summary
+```
+
+## Advanced View
+
+Additionally expose:
+
+```text
+Large Purchases
+Recurring Expenses
+Investment Growth Calculator
+Savings Goal analytics
+Debt Paydown Planner
+Net Worth Statement
+Financial Ratios
+Financial Tips
+Detailed yearly analytics
+```
+
+Do not destroy Advanced View data when the user turns the option off.
+
+Turning it off merely hides/simplifies advanced functionality.
+
+---
+
+# PART 54 — VISUAL DESIGN
+
+The actual Budget Wise screenshots show a clear design system.
+
+Reconstruct its spirit.
+
+## Background
+
+Very dark / almost black.
+
+## Cards
+
+Dark charcoal.
+
+Large rounded corners.
+
+Thin subtle borders.
+
+Generous vertical spacing.
+
+## Typography
+
+Large bold section titles.
+
+Readable gray descriptions.
+
+White values.
+
+## Main Accent
+
+Purple.
+
+Use purple for:
+
+```text
+primary buttons
+icons
+toggles
+sliders
+highlight states
+```
+
+## Semantic Colors
+
+Green:
+
+```text
+positive
+healthy
+savings
+```
+
+Red:
+
+```text
+expense
+unhealthy
+warning/debt
+```
+
+Blue:
+
+```text
+investing / selected analytical values where appropriate
+```
+
+Do not use excessive gradients.
+
+---
+
+# PART 55 — CARD STRUCTURE
+
+A typical card should conceptually follow:
+
+```text
+[Icon] Section Title
+
+Short explanation
+
+Primary numbers
+
+Progress bar / visualization
+
+Details
+
+Actions
+```
+
+Keep cards visually consistent.
+
+---
+
+# PART 56 — MOBILE DESIGN
+
+The supplied Budget Wise screenshots are primarily smartphone screenshots.
+
+Therefore mobile cannot be secondary.
+
+Requirements:
+
+* 100% usable on smartphone
+* no tiny text
+* no tiny buttons
+* large touch targets
+* card-based vertical layout
+* responsive charts
+* responsive forms
+* no accidental horizontal overflow
+* sticky/floating primary transaction action where useful
+* tables may scroll horizontally when absolutely necessary
+* safe padding around device edges
+
+The visual result should resemble a polished native personal-finance application.
+
+---
+
+# PART 57 — DESKTOP DESIGN
+
+Desktop should use the available width intelligently.
+
+Do NOT simply stretch mobile cards to 1,800px.
+
+Possible layout:
+
+```text
+Sidebar
++
+main content
+```
+
+or:
+
+```text
+responsive multi-column dashboard
+```
+
+Cards that are strongly related may sit beside each other.
+
+Tables and charts can use more horizontal space.
+
+---
+
+# PART 58 — NAVIGATION
+
+Recommended application areas:
+
+```text
+Dashboard
+Budget
+Transactions
+Calendar
+Goals
+Planning
+Reports
+Settings
+```
+
+Advanced tools may live inside:
+
+```text
+Planning
+```
+
+including:
+
+```text
+Investment Calculator
+Debt Planner
+Large Purchases
+Recurring Expenses
+```
+
+Do not create twenty top-level tabs.
+
+---
+
+# PART 59 — TRANSACTION ENTRY
+
+Create a prominent:
+
+```text
++ Add Transaction
+```
+
+action.
+
+Mobile flow should be very fast:
+
+```text
+Amount
+↓
+Type
+↓
+Category
+↓
+Subcategory
+↓
+Payment Method
+↓
+Date
+↓
+Notes
+↓
+Save
+```
+
+Default date:
+
+```text
+Today
+```
+
+---
+
+# PART 60 — TRANSACTION CRUD
+
+Support:
+
+```text
+Create
+Read
+Edit
+Delete
+Search
+Filter
+Sort
+```
+
+Filters:
+
+```text
+Date
+Month
+Year
+Type
+Category
+Subcategory
+Payment Method
+Amount range
+```
+
+Deleting a transaction requires confirmation.
+
+---
+
+# PART 61 — CALENDAR
+
+Budget Wise previously suffered from a month-navigation/state synchronization problem.
+
+Prevent that regression.
+
+Maintain separate states:
+
+```ts
+visibleMonth
+selectedDate
+```
+
+Example:
+
+```ts
+visibleMonth = "2026-08"
+selectedDate = "2026-08-22"
+```
+
+Navigation methods:
+
+```text
+Previous Month
+Next Month
+Month selector
+Year selector
+Today
+```
+
+Every control must update the same authoritative `visibleMonth`.
+
+Do not maintain competing month states across components.
+
+---
+
+# PART 62 — CALENDAR DAY VIEW
+
+Selecting one date displays transactions for that day.
+
+Example:
+
+```text
+22 August 2026
+
+Salary           +€3,500
+Aldi                -€57
+Restaurant          -€43
+Investment         -€500
+```
+
+Show:
+
+```text
+Income
+Expenses
+Saved
+Invested
+Net Cash Flow
+```
+
+---
+
+# PART 63 — MONTH COPY
+
+Allow:
+
+```text
+Copy previous month's budget
+```
+
+Example:
+
+```text
+Copy August budget → September
+```
+
+Copy:
+
+```text
+budget targets
+category allocations
+planned recurring items
+```
+
+Do NOT copy actual transactions.
+
+---
+
+# PART 64 — REPORTS
+
+Reports should include:
+
+```text
+Monthly Report
+Annual Report
+Custom Date Range
+```
+
+Data:
+
+```text
+Income
+Expenses
+Debt Payments
+Savings
+Investments
+Final Balance
+Budget vs Actual
+Category Breakdown
+Payment Methods
+Top Transactions
+Financial Ratios
+```
+
+---
+
+# PART 65 — EXCEL EXPORT
+
+Allow export without account/login.
+
+Workbook structure:
+
+```text
+Summary
+Budget
+Transactions
+Categories
+Savings Goals
+Debts
+Assets
+Monthly Analysis
+Annual Analysis
+```
+
+Keep raw data usable.
+
+Do not export only pretty charts.
+
+---
+
+# PART 66 — PDF REPORT
+
+PDF should be human-readable.
+
+Monthly example:
+
+```text
+Budget Wise
+September 2025
+
+Net Income
+Expenses
+Savings
+Investments
+Debt
+Final Balance
+
+Budget vs Actual
+Financial Health
+Major Transactions
+Charts
+```
+
+Annual reports should summarize January–December.
+
+---
+
+# PART 67 — FULL BACKUP
+
+Reports and backup are different.
+
+Create a true backup format, preferably JSON.
+
+Backup should contain:
+
+```text
+schemaVersion
+profiles
+transactions
+categories
+budgets
+settings
+paymentMethods
+goals
+largePurchases
+recurringExpenses
+assets
+debts
+```
+
+Allow:
+
+```text
+Export Backup
+Import Backup
+```
+
+Validate before import.
+
+Never overwrite current data without confirmation.
+
+---
+
+# PART 68 — PWA
+
+Budget Wise should be installable.
+
+Provide:
+
+```text
+manifest
+service worker
+icons
+offline shell
+standalone display mode
+theme colors
+```
+
+Suggested:
+
+```text
+name: Budget Wise
+short_name: BudgetWise
+display: standalone
+```
+
+---
+
+# PART 69 — OFFLINE BEHAVIOR
+
+After installation and at least one successful application load, the user must be able to:
+
+```text
+Open app
+Read budget
+Add transaction
+Edit transaction
+Delete transaction
+Use calculator
+View goals
+View debt planner
+View financial health
+```
+
+without internet.
+
+---
+
+# PART 70 — LOCAL FINANCIAL TIP ENGINE
+
+Because financial tips should work offline, create rules as pure functions.
+
+Example:
+
+```ts
+generateFinancialTips(financialSnapshot)
+```
+
+Input:
+
+```ts
+{
+    netIncome,
+    essentialExpenses,
+    flexibleExpenses,
+    savings,
+    investments,
+    debts,
+    netWorth,
+    liquidityRatio,
+    savingsInvestmentRate
+}
+```
+
+Return one or more tip candidates.
+
+Use a controlled random selection only among financially applicable tips.
+
+Button:
+
+```text
+Get a new tip
+```
+
+must not produce nonsensical advice.
+
+---
+
+# PART 71 — CENTRAL CALCULATION ENGINE
+
+Create a central module for financial math.
+
+Conceptually:
+
+```ts
+calculateMonthlyIncome()
+calculateMonthlyExpenses()
+calculateEssentialExpenses()
+calculateFlexibleExpenses()
+calculateSavings()
+calculateInvestments()
+calculateDebtPayments()
+
+calculateFinalMonthlyBalance()
+
+calculateTargetAmount()
+calculateRemainingBudget()
+calculateBudgetVariance()
+
+calculateAnnualTotals()
+
+calculateNetWorth()
+
+calculateLiquidityRatio()
+calculateSavingsInvestmentRate()
+calculateDebtToAssetsRatio()
+calculateMonthlyDebtRatio()
+calculateInvestedAssetsToNetWorth()
+calculateSolvencyRatio()
+
+calculateInvestmentFutureValue()
+calculateRequiredContribution()
+calculateRequiredRate()
+calculateRequiredDuration()
+
+simulateDebtPayoff()
+```
+
+Never duplicate these formulas in UI components.
+
+---
+
+# PART 72 — FINANCIAL PRECISION
+
+Do not permit floating-point display artifacts such as:
+
+```text
+3046.99999999997
+```
+
+Use sensible financial rounding.
+
+Amounts should display with two decimal places when appropriate.
+
+Avoid repeatedly rounding intermediate compound-interest calculations unnecessarily.
+
+---
+
+# PART 73 — LARGE PURCHASES VS DEBT
+
+Do not automatically treat every Large Purchase as formal debt.
+
+A large purchase may represent:
+
+```text
+Laptop paid over 6 planned monthly savings installments
+Vacation fund
+Furniture
+```
+
+Debt represents a real outstanding liability.
+
+Keep models separate but allow optional relationship.
+
+---
+
+# PART 74 — RECURRING EXPENSES VS TRANSACTIONS
+
+A recurring expense is a TEMPLATE/SCHEDULE.
+
+A transaction is an ACTUAL financial event.
+
+Do not treat them as identical.
+
+Possible flow:
+
+```text
+Recurring bill becomes due
+→ user confirms payment
+→ transaction is created
+```
+
+or optionally:
+
+```text
+Auto-post recurring transaction
+```
+
+if explicitly enabled.
+
+---
+
+# PART 75 — GOALS VS SAVINGS TRANSACTIONS
+
+SavingsGoal.currentAmount must not silently drift away from actual contributions.
+
+Prefer deriving goal contributions from linked transactions where possible.
+
+Example:
+
+```text
+Savings transaction
+goalId = emergency-fund
+```
+
+Then:
+
+```text
+currentAmount =
+openingBalance + linked contributions - withdrawals
+```
+
+---
+
+# PART 76 — INVESTMENTS VS NET WORTH
+
+Investment contributions represent cash flow.
+
+Investment account value represents asset value.
+
+These are different.
+
+Example:
+
+```text
+Monthly Investment Contribution = €500
+Brokerage account value = €125,000
+```
+
+Do not calculate current brokerage value as simply cumulative contributions.
+
+---
+
+# PART 77 — PAYMENT METHODS VS ACCOUNTS
+
+Payment methods such as:
+
+```text
+Amex
+Cash
+C24 Bank
+Etoro Visa Black Platinum
+```
+
+are primarily transaction attribution.
+
+If account-balance tracking is added, model it separately.
+
+Do not assume every payment method is an asset.
+
+---
+
+# PART 78 — INFORMATION TOOLTIPS
+
+The screenshots show `?` icons beside financial ratios.
+
+Implement tooltips explaining:
+
+```text
+What the metric means
+Formula
+Why it matters
+What a typical range may look like
+```
+
+Avoid presenting financial ratios as universal rules.
+
+---
+
+# PART 79 — EMPTY STATES
+
+Every module requires an intentional empty state.
+
+Examples from screenshots:
+
+```text
+No items added yet.
+
+No large purchases added yet.
+
+No recurring expenses added yet.
+
+Enter some spending to see the chart.
+
+No yearly data to display chart.
+
+You have no debts with a balance listed
+in your Financial Health statement.
+```
+
+Preserve this clean behavior.
+
+Do not show empty broken tables.
+
+---
+
+# PART 80 — SETTINGS MODEL
+
+Historically recovered settings included:
+
+```ts
+{
+    id: "settings",
+    currency,
+    darkMode,
+    preferredRatios,
+    exportFormat
+}
+```
+
+Expand backward-compatibly:
+
+```ts
+interface Settings {
+    id: "settings";
+
+    selectedProfileId: string;
+
+    selectedYear: number;
+    selectedMonth: number;
+
+    currency: string;
+    locale: string;
+    language: string;
+
+    theme:
+        | "light"
+        | "dark"
+        | "system";
+
+    advancedView: boolean;
+
+    preferredRatios: {
+        needs: number;
+        wants: number;
+        savings: number;
+    };
+
+    exportFormat:
+        | "csv"
+        | "excel"
+        | "pdf";
+}
+```
+
+---
+
+# PART 81 — RECOMMENDED FILE STRUCTURE
+
+Use logical separation similar to:
+
+```text
+src/
+
+  app/
+    App.tsx
+    router.tsx
+
+  components/
+
+    common/
+      Card.tsx
+      MoneyInput.tsx
+      PercentageInput.tsx
+      ProgressBar.tsx
+      EmptyState.tsx
+      ConfirmDialog.tsx
+
+    budget/
+      MonthlyIncomeCard.tsx
+      BudgetCategoryCard.tsx
+      EssentialExpensesCard.tsx
+      FlexibleSpendingCard.tsx
+      InvestmentBudgetCard.tsx
+
+    transactions/
+      TransactionForm.tsx
+      TransactionList.tsx
+      TransactionFilters.tsx
+
+    savings/
+      SavingsGoalsCard.tsx
+      SavingsGoalItem.tsx
+
+    debt/
+      DebtPaydownPlanner.tsx
+      DebtTable.tsx
+      PayoffStrategy.tsx
+      PayoffPlan.tsx
+
+    planning/
+      LargePurchases.tsx
+      RecurringExpenses.tsx
+      InvestmentGrowthCalculator.tsx
+
+    financial-health/
+      NetWorthStatement.tsx
+      FinancialRatios.tsx
+      RatioRow.tsx
+      FinancialTip.tsx
+
+    summary/
+      MonthlySummary.tsx
+      YearlySummary.tsx
+
+    settings/
+      ProfileSettings.tsx
+      CurrencySettings.tsx
+      LanguageSettings.tsx
+      ThemeSettings.tsx
+      AdvancedViewSettings.tsx
+      PaymentMethods.tsx
+
+    calendar/
+      BudgetCalendar.tsx
+
+  pages/
+    DashboardPage.tsx
+    BudgetPage.tsx
+    TransactionsPage.tsx
+    CalendarPage.tsx
+    GoalsPage.tsx
+    PlanningPage.tsx
+    ReportsPage.tsx
+    SettingsPage.tsx
+
+  db/
+    database.ts
+    migrations.ts
+
+    transactions.repository.ts
+    categories.repository.ts
+    budgets.repository.ts
+    profiles.repository.ts
+    settings.repository.ts
+    paymentMethods.repository.ts
+    goals.repository.ts
+    recurringExpenses.repository.ts
+    largePurchases.repository.ts
+    assets.repository.ts
+    debts.repository.ts
+
+  stores/
+    profileStore.ts
+    settingsStore.ts
+    budgetStore.ts
+    transactionStore.ts
+    savingsStore.ts
+    debtStore.ts
+    financialHealthStore.ts
+    calendarStore.ts
+
+  calculations/
+    budget.ts
+    investment.ts
+    debt.ts
+    ratios.ts
+    netWorth.ts
+    yearly.ts
+
+  services/
+    backup.ts
+    exportExcel.ts
+    exportPdf.ts
+    financialTips.ts
+
+  i18n/
+    en.ts
+    es.ts
+
+  types/
+    index.ts
+
+  utils/
+    currency.ts
+    dates.ts
+    numbers.ts
+    validation.ts
+```
+
+Do not create giant all-purpose components.
+
+---
+
+# PART 82 — STATE MANAGEMENT
+
+Zustand stores should expose actions rather than allowing arbitrary mutation.
+
+Example:
+
+```ts
+addTransaction()
+updateTransaction()
+deleteTransaction()
+
+setSelectedPeriod()
+
+setMonthlyIncome()
+
+updateBudgetAllocation()
+
+addSavingsGoal()
+
+addDebt()
+
+updateAsset()
+
+setCurrency()
+
+setAdvancedView()
+```
+
+---
+
+# PART 83 — DERIVED STATE
+
+Do not persist values that can safely be calculated.
+
+Example:
+
+Avoid permanently storing:
+
+```text
+monthlyTotalExpenses
+monthlyTotalIncome
+savingsRate
+debtRatio
+```
+
+when they can be reliably derived from the source records.
+
+Persist source data.
+
+Calculate summaries.
+
+This prevents stale duplicated values.
+
+---
+
+# PART 84 — NON-DESTRUCTIVE MIGRATIONS
+
+This is one of the highest priority technical requirements.
+
+If an existing user has an older database containing only:
+
+```text
+transactions
+categories
+settings
+goals
+```
+
+and the new application requires more stores:
+
+create a version upgrade.
+
+Do NOT:
+
+```text
+deleteDatabase("budgetwise_db")
+```
+
+Do NOT reset all data.
+
+Do NOT force the user to clear browser storage.
+
+---
+
+# PART 85 — ERROR HANDLING
+
+Every persistence operation must detect errors.
+
+Examples:
+
+```text
+Transaction could not be saved.
+Your previous data remains unchanged.
+```
+
+Do not hide failures only in console logs.
+
+When reasonable, provide:
+
+```text
+Retry
+Cancel
+```
+
+---
+
+# PART 86 — DESTRUCTIVE ACTIONS
+
+Require confirmation for:
+
+```text
+Delete transaction
+Delete budget category
+Delete goal
+Delete debt
+Delete asset
+Delete payment method permanently
+Delete profile
+Import backup over current database
+Reset application
+```
+
+---
+
+# PART 87 — VALIDATION
+
+Do not accept:
+
+```text
+NaN
+Infinity
+blank required values
+invalid dates
+negative balances where impossible
+invalid percentages
+impossible calculator inputs
+```
+
+Interest calculator must detect when a requested financial target is mathematically impossible under the selected assumptions.
+
+---
+
+# PART 88 — ACCESSIBILITY
+
+Provide:
+
+* sufficient contrast
+* keyboard navigation
+* form labels
+* ARIA labels where appropriate
+* semantic buttons
+* focus states
+* non-color status signals
+
+The green check/red X behavior should also have textual accessible labels:
+
+```text
+Healthy
+Needs Attention
+```
+
+---
+
+# PART 89 — TESTING
+
+Financial math must have automated tests.
+
+At minimum:
+
+```text
+Zero-rate investment
+Normal compound investment
+Beginning-of-period contribution
+End-of-period contribution
+Required contribution
+Required return
+Required duration
+
+Monthly budget totals
+Budget adjustments
+Final balance
+Annual totals
+
+Net worth
+Liquidity ratio
+Savings-investment rate
+Debt-to-assets ratio
+Monthly debt ratio
+Invested-assets ratio
+Solvency ratio
+
+Avalanche debt payoff
+Snowball debt payoff
+
+Month/year switching
+Profile separation
+IndexedDB persistence
+Database migration
+```
+
+---
+
+# PART 90 — CALENDAR REGRESSION TEST
+
+Given:
+
+```text
+visibleMonth = August 2026
+```
+
+When:
+
+```text
+Next Month
+```
+
+Expected:
+
+```text
+visibleMonth = September 2026
+Calendar header = September 2026
+Displayed transactions = September 2026
+```
+
+Also:
+
+```text
+Month = August
+Year = 2026
+
+change Year → 2027
+
+Expected:
+August 2027
+```
+
+---
+
+# PART 91 — PROFILE ISOLATION TEST
+
+Given:
+
+```text
+Profile A = Main
+Profile B = Household
+```
+
+Adding a transaction to Main must not change Household totals.
+
+Changing profile must update:
+
+```text
+Budget
+Transactions
+Goals
+Assets
+Debts
+Summary
+Reports
+```
+
+---
+
+# PART 92 — BUILD VALIDATION
+
+Before declaring work complete run:
+
+```bash
+npm run build
+```
+
+and any relevant tests.
+
+Resolve TypeScript failures.
+
+Avoid `any` unless genuinely required.
+
+Remove unused imports.
+
+Do not leave dead Firebase code behind after a migration.
+
+---
+
+# PART 93 — PERFORMANCE
+
+Budget Wise should continue to perform well with:
+
+```text
+multiple profiles
+5–10+ years
+thousands of transactions
+many recurring expenses
+multiple goals
+multiple payment methods
+```
+
+Use IndexedDB indexes.
+
+Avoid recalculating the entire financial history for every keystroke.
+
+---
+
+# PART 94 — FOOTER / AUTHORSHIP
+
+One screenshot of the original Budget Wise contains:
+
+```text
+By AlejandroGarciaO
+```
+
+Preserve this footer unless I explicitly tell you to remove or rename it.
+
+---
+
+# PART 95 — PRODUCT HIERARCHY
+
+To resolve any future ambiguity, use this priority.
+
+## LEVEL 1 — SOURCE OF TRUTH
+
+Financial transactions and balances.
+
+## LEVEL 2 — MONTHLY BUDGET
+
+Allocation of income.
+
+## LEVEL 3 — PLANNING
+
+Savings goals, large purchases, recurring expenses and debt strategy.
+
+## LEVEL 4 — ANALYSIS
+
+Monthly summary, yearly summary, financial ratios and 50/30/20 comparison.
+
+## LEVEL 5 — PROJECTION
+
+Investment growth and debt payoff simulations.
+
+## LEVEL 6 — GUIDANCE
+
+Financial tips.
+
+A calculator projection must never modify actual financial history unless the user explicitly saves something as a real transaction or plan.
+
+---
+
+# PART 96 — SCREEN RECONSTRUCTION
+
+The final application should include these major experiences.
+
+## DASHBOARD
+
+Include:
+
+```text
+Selected profile
+Selected month/year
+Monthly Net Income
+Money Left to Budget
+Essential Expenses
+Flexible Spending
+Savings
+Investing
+Debt allocation
+Monthly Summary
+Financial Tip
+```
+
+Advanced View may additionally include:
+
+```text
+Financial Health
+Yearly Summary
+```
+
+---
+
+## BUDGET
+
+Include allocation cards:
+
+```text
+Essential Bills & Expenses
+Flexible Spending & Fun
+Long-Term Growth (Investing)
+Savings Goals / Savings Allocation
+Debt Allocation
+```
+
+Every card:
+
+```text
+Target amount
+Target %
+Actual
+Actual %
+Remaining
+Progress
+Adjustment
+Items
+```
+
+---
+
+## TRANSACTIONS
+
+Include:
+
+```text
+Transaction list
+Add transaction
+Edit
+Delete
+Search
+Filters
+Payment method
+```
+
+---
+
+## PLANNING
+
+Include:
+
+```text
+Large Purchases
+Recurring Expenses
+Investment Growth Calculator
+Debt Paydown Planner
+```
+
+---
+
+## FINANCIAL HEALTH
+
+Include:
+
+```text
+Net Worth Statement
+Financial Ratios
+Financial Tip
+```
+
+---
+
+## REPORTS
+
+Include:
+
+```text
+Monthly Summary
+Yearly Summary
+Custom reports
+Excel export
+PDF export
+Backup
+```
+
+---
+
+## SETTINGS
+
+Include:
+
+```text
+Budget Profile
+Month / Year
+Currency
+Language
+Theme
+Advanced View
+Payment Methods
+Backup / Restore
+```
+
+---
+
+# PART 97 — WHAT NOT TO DO
+
+Do NOT turn Budget Wise into:
+
+* business accounting software
+* bookkeeping software
+* crypto portfolio tracker
+* stock trading application
+* banking app
+* subscription SaaS requiring login
+
+Those could become future integrations, but they are not the core product.
+
+---
+
+# PART 98 — DO NOT COPY THE EXTERNAL CALCULATOR
+
+The supplied “Invertir Desde Cero” screenshots are only a mathematical/functionality reference.
+
+Do not include:
+
+```text
+Invertir Desde Cero logo
+WhatsApp floating button
+Curso gratis button
+their branding
+their website navigation
+```
+
+Budget Wise must retain its own dark/purple design system.
+
+---
+
+# PART 99 — AUDIT BEFORE REWRITE
+
+If I provide an existing Budget Wise repository, ZIP, or source-code folder:
+
+DO NOT immediately rebuild it.
+
+First inspect all source files.
+
+Return:
+
+```text
+1. CURRENT FILE TREE
+
+2. CURRENT ARCHITECTURE
+
+3. CURRENT DATABASE
+
+4. CURRENT STATE MANAGEMENT
+
+5. EXISTING COMPONENTS
+
+6. EXISTING FEATURES
+
+7. BROKEN FEATURES
+
+8. MISSING FEATURES
+
+9. FIREBASE DEPENDENCIES
+
+10. DATA-LOSS RISKS
+
+11. DUPLICATED FINANCIAL LOGIC
+
+12. TYPESCRIPT PROBLEMS
+
+13. RESPONSIVE/MOBILE PROBLEMS
+
+14. PWA/OFFLINE STATUS
+
+15. GAP ANALYSIS AGAINST THIS BLUEPRINT
+```
+
+---
+
+# PART 100 — GAP CLASSIFICATION
+
+For every major requirement use:
+
+```text
+✅ IMPLEMENTED AND WORKING
+
+⚠️ IMPLEMENTED BUT INCOMPLETE
+
+🐛 IMPLEMENTED BUT BROKEN
+
+❌ MISSING
+
+🔄 SHOULD BE REFACTORED
+
+⚠️ DATA MIGRATION REQUIRED
+```
+
+---
+
+# PART 101 — FILE-LEVEL CHANGE PLAN
+
+After audit, list each file that should change.
+
+Example:
+
+```text
+src/db/database.ts
+Reason:
+Add migration for paymentMethods and recurringExpenses.
+
+Risk:
+HIGH because it affects persistent user data.
+
+Changes:
+...
+
+Tests:
+...
+```
+
+Do this before changing many interconnected files.
+
+---
+
+# PART 102 — DEBUGGING PROTOCOL
+
+Whenever I report a bug:
+
+Do NOT immediately rewrite the component.
+
+Follow:
+
+```text
+1. Reproduce mentally or through tests.
+2. Identify the source state.
+3. Follow data flow.
+4. Identify root cause.
+5. Identify affected files.
+6. Apply smallest safe fix.
+7. Test neighboring functionality.
+8. Run TypeScript/build.
+9. Test persistence.
+10. Test desktop.
+11. Test smartphone.
+12. Confirm that unrelated functionality remains unchanged.
+```
+
+---
+
+# PART 103 — BUG-FIX RESPONSE FORMAT
+
+When fixing future errors, respond in this format:
+
+```text
+ROOT CAUSE
+
+FILES INVOLVED
+
+WHY IT HAPPENED
+
+SAFE FIX
+
+CODE CHANGES
+
+DATA MIGRATION IMPACT
+
+REGRESSION RISKS
+
+TESTS PERFORMED
+
+RESULT
+```
+
+This is extremely important.
+
+Do not repeatedly make random changes until an error disappears.
+
+---
+
+# PART 104 — PRESERVE WORKING FEATURES
+
+When repairing the project:
+
+Do not remove existing functionality simply because implementing it is difficult.
+
+Especially preserve:
+
+```text
+profiles
+payment methods
+monthly period
+theme
+language
+advanced view
+large purchases
+recurring expenses
+investment calculator
+savings goals
+debt planner
+financial health
+monthly summary
+yearly summary
+financial tips
+```
+
+unless the existing implementation is truly corrupted.
+
+---
+
+# PART 105 — IMPLEMENTATION ORDER FOR A RECONSTRUCTION
+
+If the project must be reconstructed substantially, use this order.
+
+## PHASE 1 — AUDIT
+
+Understand existing project.
+
+## PHASE 2 — DATABASE
+
+Reconstruct `budgetwise_db`.
+
+Protect old data.
+
+## PHASE 3 — TYPES
+
+Create clean financial models.
+
+## PHASE 4 — CALCULATION ENGINE
+
+Implement and test financial mathematics.
+
+## PHASE 5 — PROFILES + SETTINGS
+
+Profile separation, month/year, currency, language, theme, Advanced View.
+
+## PHASE 6 — TRANSACTIONS
+
+Full CRUD.
+
+## PHASE 7 — MONTHLY BUDGET
+
+Income + allocation cards.
+
+## PHASE 8 — SAVINGS / INVESTING
+
+Goals and investment budget.
+
+## PHASE 9 — PLANNING
+
+Large Purchases + Recurring Expenses.
+
+## PHASE 10 — DEBT
+
+Debt database + Avalanche/Snowball planner.
+
+## PHASE 11 — FINANCIAL HEALTH
+
+Assets, liabilities and ratios.
+
+## PHASE 12 — SUMMARIES
+
+Monthly and yearly summaries.
+
+## PHASE 13 — INVESTMENT CALCULATOR
+
+Simple calculator first, then four-mode advanced calculator.
+
+## PHASE 14 — CALENDAR
+
+Monthly transaction calendar.
+
+## PHASE 15 — REPORTS / EXPORT / BACKUP
+
+## PHASE 16 — FINANCIAL TIP ENGINE
+
+## PHASE 17 — PWA/OFFLINE
+
+## PHASE 18 — MOBILE/DESKTOP POLISH
+
+## PHASE 19 — FINAL REGRESSION TESTING
+
+---
+
+# PART 106 — FINAL ACCEPTANCE CHECKLIST
+
+Budget Wise is not considered reconstructed until all applicable items pass.
+
+```text
+[ ] App opens without login
+
+[ ] budgetwise_db persists data
+
+[ ] Existing IndexedDB data is preserved
+
+[ ] Multiple budget profiles work
+
+[ ] Monthly period switching works
+
+[ ] Currency setting works
+
+[ ] Language setting works
+
+[ ] Dark/Light theme works
+
+[ ] Advanced View works
+
+[ ] Payment methods work
+
+[ ] Monthly Net Income works
+
+[ ] Essential Expenses work
+
+[ ] Flexible Spending works
+
+[ ] Investment allocation works
+
+[ ] Savings Goals work
+
+[ ] Budget Adjustments work
+
+[ ] Transactions work
+
+[ ] Large Purchases work
+
+[ ] Recurring Expenses work
+
+[ ] Investment Growth Calculator works
+
+[ ] Compound calculator math is tested
+
+[ ] Debt Paydown Planner works
+
+[ ] Avalanche works
+
+[ ] Snowball works
+
+[ ] Net Worth works
+
+[ ] Financial Ratios work
+
+[ ] Ratio tooltips work
+
+[ ] Financial Tip works offline
+
+[ ] Monthly Summary works
+
+[ ] Yearly Summary works
+
+[ ] Calendar works
+
+[ ] Excel export works
+
+[ ] PDF export works
+
+[ ] Backup works
+
+[ ] Restore works
+
+[ ] PWA installation works
+
+[ ] Offline usage works
+
+[ ] Smartphone layout works
+
+[ ] Desktop layout works
+
+[ ] npm run build passes
+
+[ ] Financial calculation tests pass
+```
+
+---
+
+# PART 107 — MOST IMPORTANT RULE
+
+The purpose is NOT to merely make the UI resemble screenshots.
+
+The objective is to reconstruct the actual FINANCIAL SYSTEM behind the UI.
+
+Every displayed number should trace back to one authoritative source.
+
+Example:
+
+```text
+Transaction
+→ Monthly totals
+→ Budget card
+→ Monthly Summary
+→ Yearly Summary
+→ Financial Ratios
+```
+
+If those areas display different numbers for the same financial event, the architecture is wrong.
+
+There must be a single financial source of truth.
+
+---
+
+# PART 108 — STARTING TASK
+
+If source code is supplied after this prompt:
+
+DO NOT WRITE CODE YET.
+
+First perform the complete audit described above.
+
+Then tell me:
+
+```text
+A. How much of the original Budget Wise still exists?
+
+B. Which features shown in this specification already exist?
+
+C. Which are missing?
+
+D. Which are broken?
+
+E. Does budgetwise_db still exist?
+
+F. Is user data at risk?
+
+G. What is the exact current file structure?
+
+H. Which Firebase dependencies remain?
+
+I. Which files should be repaired first?
+
+J. What should be preserved exactly?
+
+K. What should be refactored?
+
+L. What database migrations are required?
+
+M. What is the safest implementation order?
+```
+
+Wait for the audit to finish before attempting a large rewrite.
+
+If no source code is provided and I explicitly ask you to reconstruct the application from scratch, then follow the implementation phases in this blueprint.
+
+# END OF BUDGET WISE MASTER RECONSTRUCTION BLUEPRINT V2

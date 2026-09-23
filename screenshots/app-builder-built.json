@@ -1,0 +1,38 @@
+{
+  "url": "http://127.0.0.1:8081/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Budget Wise",
+      "hasCanvas": false,
+      "bodyTextLen": 6065,
+      "bodyTextHash": "30739ece13d9ad2759ad381923eec73245835d7f273ae6c08449438c6f3e4003",
+      "bodyTextPrefix": "Budget Wise LOCAL FINANCE Home Activity Calendar Calculator Repo",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Budget Wise",
+      "hasCanvas": false,
+      "bodyTextLen": 6152,
+      "bodyTextHash": "73dc5cb90276c4e1256c2d19abcc414aa2dd0a8bc99799e866b961aaae0449f3",
+      "bodyTextPrefix": "August 2026 Monthly net income for August 2026 € Type 4000+2000 ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-built.json",
+  "divergesFromBaseline": false,
+  "baselineReasons": []
+}
