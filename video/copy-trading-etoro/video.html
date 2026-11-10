@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Copy Trading en eToro — guía visual</title>
+<script src="timeline.js"></script>
+<style>
+:root{
+  --bg:#080d18; --bg2:#0e1729; --card:rgba(255,255,255,.055); --line:rgba(255,255,255,.10);
+  --tx:#eef3fb; --mut:#93a2bb; --grn:#2bd67b; --grn2:#12a85a; --blu:#5aa9ff; --amb:#ffb547; --red:#ff6b6b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#000;overflow:hidden}
+body{font-family:Inter,'Inter Display',system-ui,sans-serif;color:var(--tx);-webkit-font-smoothing:antialiased}
+#stage{position:absolute;left:0;top:0;width:1920px;height:1080px;overflow:hidden;transform-origin:0 0;
+  background:radial-gradient(1200px 800px at 78% 8%,#16264a 0%,transparent 60%),radial-gradient(900px 700px at 8% 100%,#0c2b28 0%,transparent 60%),linear-gradient(160deg,var(--bg2),var(--bg))}
+#grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.028) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);background-size:80px 80px}
+.scene{position:absolute;left:0;top:0;width:1920px;height:930px;padding:96px 120px 0;display:none}
+.kicker{font-size:24px;letter-spacing:.2em;text-transform:uppercase;color:var(--grn);font-weight:700}
+h1{font-size:118px;line-height:1.02;font-weight:800;letter-spacing:-.035em}
+h2{font-size:66px;line-height:1.08;font-weight:800;letter-spacing:-.028em;margin-top:14px}
+.sub{font-size:36px;color:var(--mut);font-weight:500;line-height:1.3}
+.g{color:var(--grn)} .r{color:var(--red)} .a{color:var(--amb)} .m{color:var(--mut)}
+.card{background:var(--card);border:1.5px solid var(--line);border-radius:28px}
+.chip{display:inline-flex;align-items:center;gap:14px;padding:14px 26px;border-radius:999px;background:rgba(43,214,123,.13);border:1.5px solid rgba(43,214,123,.4);color:var(--grn);font-weight:700;font-size:30px}
+.av{border-radius:50%;background:linear-gradient(135deg,#2bd67b,#1b7fd6);display:flex;align-items:center;justify-content:center;font-weight:800;color:#04130c;flex:none}
+.note{position:absolute;left:120px;right:120px;bottom:6px;font-size:21px;color:#74839c}
+/* top bar */
+#top{position:absolute;left:0;top:0;width:1920px;height:60px;display:flex;align-items:center;padding:0 120px;gap:20px;font-size:20px;color:var(--mut);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+#prog{position:absolute;left:0;top:0;height:5px;background:linear-gradient(90deg,var(--grn),var(--blu));width:0}
+#top b{color:var(--tx)}
+/* captions */
+#cap{position:absolute;left:0;bottom:0;width:1920px;height:150px;display:flex;align-items:center;justify-content:center;padding:0 200px;background:linear-gradient(180deg,transparent,rgba(0,0,0,.55) 45%)}
+#capt{font-size:35px;line-height:1.28;font-weight:600;text-align:center;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.6)}
+/* s2 */
+.who{width:520px;padding:38px;display:flex;flex-direction:column;align-items:center;gap:14px;position:absolute;top:300px}
+.who .nm{font-size:40px;font-weight:800}
+.who .rl{font-size:24px;color:var(--mut)}
+.pill{padding:14px 26px;border-radius:16px;font-size:28px;font-weight:800;width:100%;text-align:center;margin-top:8px}
+.buy{background:rgba(43,214,123,.16);color:var(--grn);border:1.5px solid rgba(43,214,123,.45)}
+.sell{background:rgba(255,107,107,.14);color:var(--red);border:1.5px solid rgba(255,107,107,.45)}
+/* s3 */
+.col{position:absolute;top:258px;width:810px;padding:34px 38px}
+.col h3{font-size:32px;font-weight:800;margin-bottom:6px}
+.col .cs{font-size:22px;color:var(--mut);margin-bottom:20px}
+.row{display:flex;align-items:center;gap:18px;height:62px}
+.row .tk{width:150px;font-size:26px;font-weight:700}
+.row .tr{flex:1;height:24px;border-radius:12px;background:rgba(255,255,255,.06);overflow:hidden}
+.row .br{height:100%;border-radius:12px;width:0}
+.row .vl{width:130px;text-align:right;font-size:28px;font-weight:800;font-variant-numeric:tabular-nums}
+/* s4 */
+.pan{position:absolute;top:262px;width:810px;height:470px;padding:34px 40px}
+.pan .hd{display:flex;align-items:center;gap:18px;font-size:30px;font-weight:800}
+.pos{margin-top:22px;padding:22px 26px;border-radius:20px;background:rgba(90,169,255,.10);border:1.5px solid rgba(90,169,255,.35);display:flex;justify-content:space-between;align-items:center}
+.pos .l{font-size:25px;color:var(--mut);font-weight:600}
+.pos .b{font-size:46px;font-weight:800}
+.chg{display:flex;justify-content:space-between;align-items:flex-end;margin-top:18px}
+.chg .pc{font-size:84px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.chg .ab{font-size:34px;font-weight:700;color:var(--mut);font-variant-numeric:tabular-nums;text-align:right}
+/* s5 */
+.tile{padding:24px 28px}
+.tile .n{font-size:58px;font-weight:800;letter-spacing:-.03em}
+.tile .t{font-size:22px;color:var(--mut);margin-top:4px;font-weight:500}
+/* s6 */
+.phone{position:absolute;left:150px;top:150px;width:400px;height:760px;border-radius:54px;background:#05080f;border:3px solid #2a3550;box-shadow:0 40px 90px rgba(0,0,0,.55);padding:16px}
+.scr{position:absolute;inset:16px;border-radius:40px;background:#f5f7fb;color:#0e1524;overflow:hidden;padding:54px 26px 26px}
+.scr h4{font-size:27px;font-weight:800;margin-bottom:18px}
+.fld{border:2px solid #d5dbe7;border-radius:14px;padding:15px 16px;font-size:20px;color:#5c6880;margin-bottom:12px;background:#fff}
+.btn{background:#13c636;color:#fff;border-radius:16px;padding:18px;text-align:center;font-weight:800;font-size:24px;margin-top:14px;position:relative}
+.ok{display:flex;gap:10px;align-items:center;font-size:20px;font-weight:700;color:#0a8f2c;margin-top:18px}
+.steps{position:absolute;left:660px;top:206px;width:1140px}
+.st{display:flex;align-items:center;gap:22px;height:78px;padding:0 24px;border-radius:20px;border:1.5px solid transparent}
+.st .no{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:25px;font-weight:800;background:rgba(255,255,255,.08);color:var(--mut);flex:none}
+.st .tx{font-size:32px;font-weight:600;color:var(--mut)}
+/* s7 */
+.ctl{width:390px;height:250px;padding:32px;display:flex;flex-direction:column;justify-content:space-between}
+.ctl .ic{width:76px;height:76px;border-radius:22px;display:flex;align-items:center;justify-content:center;font-size:42px;font-weight:800}
+.ctl .tt{font-size:33px;font-weight:800}
+/* s9 */
+.rule{display:flex;align-items:center;gap:30px;height:108px}
+.rule .no{width:72px;height:72px;border-radius:22px;background:rgba(43,214,123,.14);border:1.5px solid rgba(43,214,123,.45);color:var(--grn);font-size:36px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
+.rule .tx{font-size:46px;font-weight:700;letter-spacing:-.015em}
+svg text{font-family:Inter,sans-serif}
+</style>
+</head>
+<body>
+<div id="stage">
+<div id="grid"></div>
+
+<!-- S1 -->
+<section class="scene" id="s1">
+  <svg style="position:absolute;left:0;top:0" width="1920" height="1080"><path id="s1line" d="M-20,880 C200,860 300,760 460,780 S700,640 860,660 S1090,520 1240,560 S1480,360 1620,400 S1820,220 1960,170" fill="none" stroke="rgba(43,214,123,.38)" stroke-width="6" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+  <div style="position:absolute;left:120px;top:210px;width:1500px">
+    <div class="kicker" data-at="s1" data-d=".2">Guía visual · paso a paso</div>
+    <h1 style="margin-top:26px" data-at="s1" data-d=".45">Copy Trading<br>en <span class="g">eToro</span></h1>
+    <div class="sub" style="margin-top:34px;font-size:44px" data-at="s1" data-d=".9">Invierte copiando a quien ya invierte.</div>
+    <div style="margin-top:54px;display:flex;gap:22px;align-items:center" data-at="s1.b2">
+      <div class="chip"><div class="av" style="width:48px;height:48px;font-size:19px">AG</div>@AlejandroGarciaO</div>
+      <div class="sub" style="font-size:30px">Qué es · Cómo funciona · Cómo copiar</div>
+    </div>
+  </div>
+</section>
+
+<!-- S2 -->
+<section class="scene" id="s2">
+  <div class="kicker">01 · Qué es</div>
+  <h2>Tu cuenta <span class="g">replica</span> la de un inversor.</h2>
+  <div class="card who" style="left:200px" data-at="s2.b1">
+    <div class="av" style="width:130px;height:130px;font-size:48px">AG</div>
+    <div class="nm">El inversor</div><div class="rl">Decide qué comprar y vender</div>
+    <div class="pill buy" data-at="s2.b2" data-fx="scale">COMPRA · MSFT</div>
+    <div class="pill sell" data-at="s2.b3" data-fx="scale">VENDE · TSLA</div>
+  </div>
+  <svg style="position:absolute;left:720px;top:300px" width="480" height="420">
+    <line x1="10" y1="110" x2="470" y2="110" stroke="rgba(255,255,255,.22)" stroke-width="4" stroke-dasharray="4 14" stroke-linecap="round"/>
+    <circle id="s2dot" cx="10" cy="110" r="15" fill="#2bd67b" opacity="0"/>
+    <text x="240" y="70" text-anchor="middle" fill="#93a2bb" font-size="24" font-weight="700" letter-spacing="3">COPIA AUTOMÁTICA</text>
+  </svg>
+  <div class="card who" style="left:1200px" data-at="s2.b1" data-d=".5">
+    <div class="av" style="width:130px;height:130px;font-size:48px;background:linear-gradient(135deg,#5aa9ff,#8e7dff);color:#fff">Tú</div>
+    <div class="nm">Tu cuenta</div><div class="rl">Hace lo mismo, a tu escala</div>
+    <div class="pill buy" data-at="s2.b2" data-d=".85" data-fx="scale">COMPRA · MSFT</div>
+    <div class="pill sell" data-at="s2.b3" data-d=".85" data-fx="scale">VENDE · TSLA</div>
+  </div>
+  <div style="position:absolute;left:0;width:1920px;top:810px;text-align:center" data-at="s2.b4"><span class="chip">⚡ En tiempo real · sin que hagas nada</span></div>
+</section>
+
+<!-- S3 -->
+<section class="scene" id="s3">
+  <div class="kicker">02 · Cómo funciona</div>
+  <h2>La copia es <span class="g">proporcional</span>.</h2>
+  <div class="card col" style="left:120px" data-at="s3.b2" data-d="-.3">
+    <h3>Portafolio de @AlejandroGarciaO</h3><div class="cs">% de su portafolio en cada posición</div><div id="s3L"></div>
+  </div>
+  <div class="card col" style="left:990px;border-color:rgba(90,169,255,.4)" data-at="s3.b3" data-d="-.2">
+    <h3>Tu copia de <span style="color:var(--blu)">$1.000</span></h3><div class="cs">Los mismos porcentajes, en tu dinero</div><div id="s3R"></div>
+  </div>
+  <div class="note">Portafolio público en eToro al 10 nov 2026 (cambia con el tiempo). Las posiciones que quedarían por debajo de $1 no se abren.</div>
+</section>
+
+<!-- S4 -->
+<section class="scene" id="s4">
+  <div class="kicker">03 · Cómo se mueve</div>
+  <h2>Se mueve <span class="g">1 a 1</span> con el suyo.</h2>
+  <div class="card pan" style="left:120px" data-at="s4.b1" data-d="-.3">
+    <div class="hd"><div class="av" style="width:58px;height:58px;font-size:22px">AG</div>Alejandro</div>
+    <div class="pos" data-at="s4.b1" data-d="1.6" data-fx="scale"><div><div class="l">Nueva posición</div><div class="b">5% <span class="m" style="font-size:26px">de su portafolio</span></div></div></div>
+    <div class="chg"><div class="pc" id="s4p1">0,0%</div><svg width="300" height="120"><path class="s4sp" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  </div>
+  <div class="card pan" style="left:990px;border-color:rgba(90,169,255,.4)" data-at="s4.b1" data-d="-.1">
+    <div class="hd"><div class="av" style="width:58px;height:58px;font-size:20px;background:linear-gradient(135deg,#5aa9ff,#8e7dff);color:#fff">Tú</div>Tu copia de $1.000</div>
+    <div class="pos" data-at="s4.b1" data-d="6.4" data-fx="scale"><div><div class="l">Misma posición</div><div class="b">5% <span class="m" style="font-size:26px">de tu copia</span></div></div><div class="b" style="color:var(--blu)" id="s4v">$50,00</div></div>
+    <div class="chg"><div class="pc" id="s4p2">0,0%</div><div class="ab" id="s4d">$0,00</div></div>
+  </div>
+  <div style="position:absolute;left:0;width:1920px;top:770px;text-align:center;font-size:54px;font-weight:800;letter-spacing:-.02em" data-at="s4.b4">Mismo <span class="g">porcentaje</span>. Distinto <span style="color:var(--blu)">tamaño</span>.</div>
+  <div class="note">Ejemplo ilustrativo. Las cifras reales dependen del precio de ejecución y de los costes de cada operación.</div>
+</section>
+
+<!-- S5 -->
+<section class="scene" id="s5">
+  <div style="display:flex;align-items:center;gap:30px" data-at="s5">
+    <div class="av" style="width:128px;height:128px;font-size:48px">AG</div>
+    <div><div class="kicker">04 · A quién copias</div><h2 style="margin-top:6px">@AlejandroGarciaO</h2></div>
+    <div class="chip" style="margin-left:26px;margin-top:38px" data-at="s5.b1" data-d="2.2" data-fx="scale">★ Popular Investor · Elite</div>
+  </div>
+  <div style="position:absolute;left:120px;top:270px;display:flex;gap:16px" data-at="s5.b2">
+    <span class="chip" style="background:rgba(255,255,255,.06);border-color:var(--line);color:var(--tx);font-size:26px">Largo plazo</span>
+    <span class="chip" style="background:rgba(255,255,255,.06);border-color:var(--line);color:var(--tx);font-size:26px">Sin apalancamiento</span>
+    <span class="chip" style="background:rgba(255,255,255,.06);border-color:var(--line);color:var(--tx);font-size:26px">Tecnología y grandes empresas</span>
+    <span class="chip" style="background:rgba(255,255,255,.06);border-color:var(--line);color:var(--tx);font-size:26px">28 copiadores</span>
+  </div>
+  <div class="card" style="position:absolute;left:120px;top:366px;width:1100px;height:490px;padding:26px 30px" data-at="s5.b3" data-d="-.4">
+    <div style="font-size:24px;color:var(--mut);font-weight:600">Rentabilidad acumulada · abr 2022 – nov 2026</div>
+    <svg id="s5svg" width="1040" height="410" style="margin-top:8px"></svg>
+  </div>
+  <div style="position:absolute;left:1250px;top:366px;width:550px;display:grid;grid-template-columns:1fr 1fr;gap:18px">
+    <div class="card tile" data-at="s5.b3" data-d=".2"><div class="n g" id="s5n1">+0%</div><div class="t">desde abril 2022</div></div>
+    <div class="card tile" data-at="s5.b3" data-d="3.6"><div class="n g">9,8%</div><div class="t">anualizado</div></div>
+    <div class="card tile" data-at="s5.b3" data-d="6.4"><div class="n" style="color:var(--blu)">3<span style="font-size:32px" class="m">/10</span></div><div class="t">nivel de riesgo actual</div></div>
+    <div class="card tile" data-at="s5.b3" data-d="6.8"><div class="n">+30,1%</div><div class="t">últimos 2 años</div></div>
+    <div class="card tile" style="grid-column:1/3;border-color:rgba(255,181,71,.4)" data-at="s5.b4" data-d=".6"><div class="n a">−24,6%</div><div class="t">peor caída registrada · 60% de meses en positivo (2 años)</div></div>
+  </div>
+  <div class="note">Fuente: estadísticas públicas de eToro al 10 nov 2026. Rentabilidades pasadas no garantizan resultados futuros.</div>
+</section>
+
+<!-- S6 -->
+<section class="scene" id="s6">
+  <div style="position:absolute;left:660px;top:96px"><div class="kicker">05 · Paso a paso</div><h2>Cómo copiarlo en <span class="g">8 pasos</span></h2></div>
+  <div class="phone" data-at="s6" data-d=".2">
+    <div class="scr" data-ph="1"><h4>Crea tu cuenta</h4><div class="fld">tu@email.com</div><div class="fld">••••••••••</div><div class="btn">Crear cuenta</div><div class="ok" data-at="s6.b1" data-d="2.2">✓ Identidad verificada</div></div>
+    <div class="scr" data-ph="2"><h4>Depositar fondos</h4><div class="fld" style="font-size:40px;font-weight:800;color:#0e1524;text-align:center;padding:26px">$500</div><div class="fld">💳 Tarjeta</div><div class="fld">🏦 Transferencia bancaria</div><div class="btn">Depositar</div></div>
+    <div class="scr" data-ph="3"><h4>Buscar</h4><div class="fld" style="border-color:#13c636;color:#0e1524;font-weight:600">🔍 <span id="s6type"></span><span style="color:#13c636">|</span></div>
+      <div id="s6res" style="display:flex;gap:14px;align-items:center;padding:14px;border-radius:14px;background:#fff;border:2px solid #e3e8f1"><div class="av" style="width:54px;height:54px;font-size:20px">AG</div><div><div style="font-weight:800;font-size:20px">@AlejandroGarciaO</div><div style="font-size:16px;color:#5c6880">Popular Investor · Elite</div></div></div></div>
+    <div class="scr" data-ph="4"><div style="display:flex;gap:12px;align-items:center;margin-bottom:16px"><div class="av" style="width:58px;height:58px;font-size:21px">AG</div><div><div style="font-weight:800;font-size:20px">@AlejandroGarciaO</div><div style="font-size:15px;color:#5c6880">★ Elite</div></div></div>
+      <div style="font-size:16px;color:#5c6880;font-weight:600">Estadísticas</div>
+      <svg width="316" height="150" style="margin:6px 0"><path id="s6mini" fill="none" stroke="#13c636" stroke-width="4" stroke-linejoin="round"/></svg>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="fld" style="margin:0"><b style="color:#0a8f2c;font-size:24px">+54,6%</b><br><span style="font-size:14px">desde 2022</span></div><div class="fld" style="margin:0;border-color:#13c636"><b style="color:#0e1524;font-size:24px">Riesgo 3</b><br><span style="font-size:14px">de 10</span></div></div></div>
+    <div class="scr" data-ph="5"><div style="display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:30px"><div class="av" style="width:120px;height:120px;font-size:44px">AG</div><div style="font-weight:800;font-size:24px">@AlejandroGarciaO</div><div style="font-size:17px;color:#5c6880">Popular Investor · Elite</div></div>
+      <div class="btn" style="margin-top:44px;font-size:28px;padding:22px">Copiar<div id="s6tap" style="position:absolute;left:50%;top:50%;width:90px;height:90px;margin:-45px;border-radius:50%;border:5px solid #0e1524;opacity:0"></div></div></div>
+    <div class="scr" data-ph="6"><h4>Importe a invertir</h4><div class="fld" style="font-size:46px;font-weight:800;color:#0e1524;text-align:center;padding:30px;border-color:#13c636">$<span id="s6amt">0</span></div><div style="font-size:18px;color:#5c6880;text-align:center">Mínimo para copiar: <b>$200</b></div><div class="btn" style="margin-top:40px;opacity:.45">Copiar</div></div>
+    <div class="scr" data-ph="7"><h4>Stop Loss de la copia</h4><div style="font-size:17px;color:#5c6880;margin-bottom:26px">La copia se cierra sola si su valor cae hasta este nivel.</div>
+      <div style="height:12px;border-radius:6px;background:#dfe5ef;position:relative;margin:40px 8px"><div id="s6slf" style="position:absolute;left:0;top:0;height:100%;border-radius:6px;background:#ff6b6b;width:0"></div><div id="s6slk" style="position:absolute;top:-12px;width:36px;height:36px;margin-left:-18px;border-radius:50%;background:#fff;border:4px solid #ff6b6b;left:0"></div></div>
+      <div class="fld" style="text-align:center;color:#0e1524"><b style="font-size:34px" id="s6slv">$1.000</b><br><span style="font-size:16px;color:#5c6880" id="s6slp">pérdida máx. 0%</span></div><div style="font-size:15px;color:#5c6880;text-align:center">Tú eliges el nivel</div></div>
+    <div class="scr" data-ph="8" style="background:#eafaf0"><div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;margin-top:110px"><div id="s6chk" style="width:150px;height:150px;border-radius:50%;background:#13c636;color:#fff;font-size:86px;font-weight:800;display:flex;align-items:center;justify-content:center">✓</div><div style="font-weight:800;font-size:30px;line-height:1.2">¡Ya estás copiando!</div><div style="font-size:19px;color:#3d4a61">@AlejandroGarciaO<br>Copia activa · $1.000</div></div></div>
+  </div>
+  <div class="steps" id="s6steps"></div>
+</section>
+
+<!-- S7 -->
+<section class="scene" id="s7">
+  <div class="kicker">06 · Después de copiar</div>
+  <h2>Tú tienes el <span class="g">control</span>.</h2>
+  <div style="position:absolute;left:120px;top:300px;display:flex;gap:40px">
+    <div class="card ctl" data-at="s7.b1" data-d="2.1"><div class="ic" style="background:rgba(43,214,123,.15);color:var(--grn)">+</div><div class="tt">Añadir fondos</div></div>
+    <div class="card ctl" data-at="s7.b1" data-d="2.8"><div class="ic" style="background:rgba(90,169,255,.15);color:var(--blu)">−</div><div class="tt">Retirar fondos</div></div>
+    <div class="card ctl" data-at="s7.b1" data-d="3.9"><div class="ic" style="background:rgba(255,181,71,.15);color:var(--amb);font-size:32px;letter-spacing:4px">❙❙</div><div class="tt">Pausar la copia</div></div>
+    <div class="card ctl" data-at="s7.b1" data-d="5"><div class="ic" style="background:rgba(255,107,107,.15);color:var(--red)">×</div><div class="tt">Dejar de copiar</div></div>
+  </div>
+  <div class="card" style="position:absolute;left:120px;top:610px;width:1680px;padding:36px 44px;display:flex;align-items:center;gap:34px;border-color:rgba(43,214,123,.4);background:rgba(43,214,123,.07)" data-at="s7.b2">
+    <div style="font-size:74px;font-weight:800;letter-spacing:-.03em" class="g">$100.000</div>
+    <div><div style="font-size:36px;font-weight:800">Cuenta virtual para practicar</div><div class="sub" style="font-size:28px">Prueba a copiar con dinero de prueba antes de usar el tuyo.</div></div>
+  </div>
+</section>
+
+<!-- S8 -->
+<section class="scene" id="s8">
+  <div class="kicker">07 · El camino</div>
+  <h2>Libertad financiera: <span class="g">constancia + tiempo</span>.</h2>
+  <div style="position:absolute;left:120px;top:290px;width:470px;display:flex;flex-direction:column;gap:20px">
+    <div class="card" style="padding:26px 30px" data-at="s8.b2" data-d=".9"><div style="font-size:36px;font-weight:800">① Constancia</div><div class="sub" style="font-size:25px">Aportar todos los meses</div></div>
+    <div class="card" style="padding:26px 30px" data-at="s8.b2" data-d="1.9"><div style="font-size:36px;font-weight:800">② Tiempo</div><div class="sub" style="font-size:25px">Años, no semanas</div></div>
+    <div class="card" style="padding:26px 30px" data-at="s8.b2" data-d="2.7"><div style="font-size:36px;font-weight:800">③ Interés compuesto</div><div class="sub" style="font-size:25px">Las ganancias generan ganancias</div></div>
+  </div>
+  <div class="card" style="position:absolute;left:630px;top:290px;width:1170px;height:570px;padding:26px 30px" data-at="s8.b3" data-d="-.2">
+    <div style="display:flex;justify-content:space-between;font-size:24px;font-weight:600;color:var(--mut)"><span>$300 al mes · 8% anual hipotético</span><span><span class="g">■</span> Valor &nbsp; <span style="color:#6b7a94">■</span> Aportado</span></div>
+    <svg id="s8svg" width="1110" height="490" style="margin-top:6px"></svg>
+  </div>
+  <div class="note">Ejemplo hipotético con rentabilidad constante; no es una previsión ni una promesa. La rentabilidad real varía cada año y puede ser negativa.</div>
+</section>
+
+<!-- S9 -->
+<section class="scene" id="s9">
+  <div class="kicker">08 · Antes de empezar</div>
+  <h2>Cinco <span class="g">reglas de oro</span></h2>
+  <div style="position:absolute;left:120px;top:286px">
+    <div class="rule" data-at="s9.b1" data-fx="left"><div class="no">1</div><div class="tx">Invierte solo dinero que no vayas a necesitar pronto.</div></div>
+    <div class="rule" data-at="s9.b2" data-fx="left"><div class="no">2</div><div class="tx">Piensa en años, no en semanas.</div></div>
+    <div class="rule" data-at="s9.b3" data-fx="left"><div class="no">3</div><div class="tx">Aporta todos los meses.</div></div>
+    <div class="rule" data-at="s9.b4" data-fx="left"><div class="no">4</div><div class="tx">Diversifica: puedes copiar a varios inversores.</div></div>
+    <div class="rule" data-at="s9.b5" data-fx="left"><div class="no">5</div><div class="tx">No vendas por pánico cuando el mercado cae.</div></div>
+  </div>
+</section>
+
+<!-- S10 -->
+<section class="scene" id="s10">
+  <div style="position:absolute;left:0;width:1920px;top:170px;text-align:center">
+    <div class="kicker" data-at="s10">Empieza hoy</div>
+    <h1 style="font-size:104px;margin-top:22px" data-at="s10" data-d=".25">Da el <span class="g">primer paso</span>.</h1>
+    <div style="margin:60px auto 0;width:980px;padding:30px 40px;border-radius:999px;background:#fff;color:#0e1524;font-size:46px;font-weight:700;display:flex;align-items:center;gap:24px;box-shadow:0 30px 80px rgba(0,0,0,.45)" data-at="s10.b1" data-d=".8" data-fx="scale"><span style="opacity:.5">🔍</span><div class="av" style="width:64px;height:64px;font-size:24px">AG</div>AlejandroGarciaO<span style="margin-left:auto;background:#13c636;color:#fff;border-radius:999px;padding:12px 34px;font-size:34px">Copiar</span></div>
+    <div class="sub" style="margin-top:36px" data-at="s10.b1" data-d="1.6">Búscalo en eToro · Popular Investor Elite</div>
+    <div style="margin:70px auto 0;width:1300px;font-size:27px;color:#aab6ca;line-height:1.4" data-at="s10.b2">Las rentabilidades pasadas no garantizan resultados futuros. Tu capital está en riesgo.<br>Contenido educativo; no es asesoramiento financiero.</div>
+  </div>
+</section>
+
+<div id="top"><div id="prog"></div><span>Copy Trading en eToro</span><span>·</span><b id="chap"></b></div>
+<div id="cap"><div id="capt"></div></div>
+</div>
+
+<script>
+const TL = window.TL, $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const SC = {}, BT = {};
+TL.scenes.forEach(s => { SC[s.id] = s; s.beats.forEach(b => BT[s.id + '.' + b.id] = b); });
+const at = id => id.includes('.') ? BT[id].start : SC[id].start;
+const cl = x => Math.max(0, Math.min(1, x));
+const eo = x => 1 - Math.pow(1 - cl(x), 3);
+const eio = x => { x = cl(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
+const P = (t, s, d = .6) => eo((t - s) / d);
+const es = (n, d = 0) => n.toLocaleString('de-DE', { minimumFractionDigits: d, maximumFractionDigits: d });
+const anims = [];
+
+/* ---------- datos reales (eToro, 10 nov 2026) ---------- */
+const PORT = [['META', 12.48, '#5aa9ff'], ['MSFT', 9.63, '#2bd67b'], ['ISRG', 7.02, '#b18cff'], ['SPOT', 6.43, '#3ddbc0'], ['TSLA', 6.02, '#ff8a8a'], ['Otros', 0.11, '#93a2bb'], ['Efectivo', 58.31, '#ffb547']];
+const GAINS = [-.0322, -.0354, -.1077, .0124, .0155, -.0166, -.0238, .0472, -.0335, .1168, -.0444, .0648, -.0022, -.0196, .0432, .0347, -.046, -.0407, -.038, .1171, .0684, -.0291, .0873, .0259, -.0678, .0339, .0253, .0267, .0051, .0058, -.0034, .0256, -.0233, .0127, -.0016, -.0308, .0199, .0676, .0599, -.0021, .0355, .0571, .0338, -.0424, .0057, .0267, -.0592, -.0447, .1467, .2004, -.0392, -.1381, .1277, .0444, -.1311, .0036];
+const CUM = [0]; GAINS.forEach(g => CUM.push((1 + CUM[CUM.length - 1]) * (1 + g) - 1));
+
+/* ---------- S1 ---------- */
+anims.push(t => { $('#s1line').style.strokeDashoffset = 1 - eio((t - at('s1') - .3) / 5); });
+
+/* ---------- S2 ---------- */
+anims.push(t => {
+  const d = $('#s2dot'); let x = -1, col = '#2bd67b';
+  for (const [b, c] of [['s2.b2', '#2bd67b'], ['s2.b3', '#ff6b6b']]) { const u = (t - at(b) - .2) / .65; if (u > 0 && u < 1) { x = u; col = c; } }
+  d.setAttribute('opacity', x < 0 ? 0 : 1); d.setAttribute('cx', 10 + 460 * eio(Math.max(0, x))); d.setAttribute('fill', col);
+});
+
+/* ---------- S3 ---------- */
+(() => {
+  const L = $('#s3L'), R = $('#s3R');
+  PORT.forEach(([k, p, c], i) => {
+    L.insertAdjacentHTML('beforeend', `<div class="row"><div class="tk">${k}</div><div class="tr"><div class="br" style="background:${c}"></div></div><div class="vl">${es(p, 1)}%</div></div>`);
+    R.insertAdjacentHTML('beforeend', `<div class="row"><div class="tk">${k}</div><div class="tr"><div class="br" style="background:${c}"></div></div><div class="vl" style="color:#5aa9ff"></div></div>`);
+  });
+  const lr = $$('.row', L), rr = $$('.row', R);
+  anims.push(t => {
+    PORT.forEach(([k, p], i) => {
+      const a = P(t, at('s3.b2') + .5 + i * .55, .8), b = P(t, at('s3.b3') + 1.6 + i * .28, .8);
+      lr[i].style.opacity = a; $('.br', lr[i]).style.width = (p / 60 * 100 * a) + '%';
+      rr[i].style.opacity = b; $('.br', rr[i]).style.width = (p / 60 * 100 * b) + '%';
+      $('.vl', rr[i]).textContent = '$' + es(Math.round(p * 10 * b));
+    });
+  });
+})();
+
+/* ---------- S4 ---------- */
+(() => {
+  const pts = []; // curva de precio: 0 -> +10 -> -10
+  const f = u => u < 1 ? 10 * eio(u) + Math.sin(u * 14) * .7 * Math.sin(u * Math.PI) : 10 - 20 * eio(u - 1) + Math.sin(u * 13) * .8 * Math.sin((u - 1) * Math.PI);
+  const val = t => { const a = at('s4.b2') + .3, b = at('s4.b3') + .1; if (t < a) return [0, 0]; if (t < b) return [f(cl((t - a) / 2.6)), cl((t - a) / 2.6)]; const u = 1 + cl((t - b) / 2.2); return [f(u), u]; };
+  const sp = $('.s4sp');
+  anims.push(t => {
+    const [v, u] = val(t), col = v >= 0 ? '#2bd67b' : '#ff6b6b', sg = v >= 0 ? '+' : '−';
+    const txt = sg + es(Math.abs(v), 1) + '%';
+    for (const id of ['#s4p1', '#s4p2']) { $(id).textContent = txt; $(id).style.color = u === 0 ? '#93a2bb' : col; }
+    $('#s4v').textContent = '$' + es(50 * (1 + v / 100), 2);
+    $('#s4d').textContent = sg + '$' + es(Math.abs(50 * v / 100), 2); $('#s4d').style.color = u === 0 ? '#93a2bb' : col;
+    let d = ''; const n = 60;
+    for (let i = 0; i <= n; i++) { const uu = u * i / n; d += (i ? 'L' : 'M') + (uu / 2 * 290 + 5).toFixed(1) + ',' + (60 - f(uu) * 4.6).toFixed(1); }
+    sp.setAttribute('d', d); sp.setAttribute('stroke', col);
+  });
+})();
+
+/* ---------- S5 ---------- */
+(() => {
+  const W = 1040, H = 410, pl = 70, pr = 20, ptp = 20, pb = 40, mn = -.25, mx = .85;
+  const X = i => pl + (W - pl - pr) * i / (CUM.length - 1), Y = v => ptp + (H - ptp - pb) * (1 - (v - mn) / (mx - mn));
+  let s = '';
+  for (const v of [-.2, 0, .2, .4, .6, .8]) s += `<line x1="${pl}" x2="${W - pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="rgba(255,255,255,${v === 0 ? .28 : .08})" stroke-width="1.5"/><text x="${pl - 12}" y="${Y(v) + 7}" fill="#93a2bb" font-size="20" text-anchor="end">${v > 0 ? '+' : ''}${Math.round(v * 100)}%</text>`;
+  [['2022', 0], ['2023', 9], ['2024', 21], ['2025', 33], ['2026', 45]].forEach(([y, i]) => s += `<text x="${X(i)}" y="${H - 8}" fill="#93a2bb" font-size="20" text-anchor="middle">${y}</text>`);
+  const d = CUM.map((v, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ',' + Y(v).toFixed(1)).join('');
+  s += `<defs><linearGradient id="g5" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2bd67b" stop-opacity=".35"/><stop offset="1" stop-color="#2bd67b" stop-opacity="0"/></linearGradient><clipPath id="c5"><rect id="c5r" x="0" y="0" width="0" height="${H}"/></clipPath></defs>`;
+  s += `<g clip-path="url(#c5)"><path d="${d}L${X(CUM.length - 1)},${Y(0)}L${X(0)},${Y(0)}Z" fill="url(#g5)"/><path d="${d}" fill="none" stroke="#2bd67b" stroke-width="5" stroke-linejoin="round"/></g><circle id="c5d" r="10" fill="#2bd67b" stroke="#08101c" stroke-width="4"/>`;
+  $('#s5svg').innerHTML = s;
+  anims.push(t => {
+    const u = eio((t - at('s5.b3')) / 4.2), fi = u * (CUM.length - 1), i0 = Math.floor(fi), i1 = Math.min(CUM.length - 1, i0 + 1), fr = fi - i0;
+    const v = CUM[i0] + (CUM[i1] - CUM[i0]) * fr, x = X(i0) + (X(i1) - X(i0)) * fr;
+    $('#c5r').setAttribute('width', x); $('#c5d').setAttribute('cx', x); $('#c5d').setAttribute('cy', Y(v));
+    $('#s5n1').textContent = (v >= 0 ? '+' : '−') + es(Math.abs(v * 100), 1) + '%';
+  });
+  // mini gráfico del teléfono
+  $('#s6mini').setAttribute('d', CUM.map((v, i) => (i ? 'L' : 'M') + (4 + 308 * i / (CUM.length - 1)).toFixed(1) + ',' + (120 - v * 135).toFixed(1)).join(''));
+})();
+
+/* ---------- S6 ---------- */
+(() => {
+  const txt = ['Crea tu cuenta y verifica tu identidad', 'Deposita fondos', 'Busca “AlejandroGarciaO”', 'Revisa estadísticas y riesgo', 'Pulsa “Copiar”', 'Escribe el importe (mín. $200)', 'Ajusta el Stop Loss de la copia', 'Confirma: ¡ya lo estás copiando!'];
+  $('#s6steps').innerHTML = txt.map((x, i) => `<div class="st"><div class="no">${i + 1}</div><div class="tx">${x}</div></div>`).join('');
+  const st = $$('.st'), ph = $$('[data-ph]'), name = 'AlejandroGarciaO';
+  anims.push(t => {
+    let cur = 0; for (let i = 1; i <= 8; i++) if (t >= at('s6.b' + i) - .15) cur = i;
+    st.forEach((e, i) => {
+      const n = i + 1, on = n === cur, done = n < cur, a = on ? P(t, at('s6.b' + n) - .15, .4) : 0;
+      e.style.background = on ? `rgba(43,214,123,${.13 * a})` : 'transparent'; e.style.borderColor = on ? `rgba(43,214,123,${.5 * a})` : 'transparent';
+      $('.tx', e).style.color = on ? '#fff' : done ? '#c5cfdf' : '#6f7e97'; $('.tx', e).style.fontWeight = on ? 800 : 600;
+      const no = $('.no', e); no.textContent = done ? '✓' : n; no.style.background = on || done ? '#2bd67b' : 'rgba(255,255,255,.08)'; no.style.color = on || done ? '#04130c' : '#93a2bb';
+      e.style.opacity = P(t, at('s6') + .5 + i * .09, .5);
+    });
+    ph.forEach(e => { const n = +e.dataset.ph, show = n === Math.max(1, cur); e.style.opacity = show ? (cur ? P(t, at('s6.b' + n) - .15, .35) : 1) : 0; e.style.zIndex = show ? 2 : 1; });
+    const u3 = cl((t - at('s6.b3') - .5) / 1.5); $('#s6type').textContent = name.slice(0, Math.round(u3 * name.length)); $('#s6res').style.opacity = P(t, at('s6.b3') + 2.1, .4);
+    const u5 = (t - at('s6.b5') - 1.1) / .7, tp = $('#s6tap'); tp.style.opacity = u5 > 0 && u5 < 1 ? 1 - u5 : 0; tp.style.transform = `scale(${.4 + cl(u5) * 1.3})`;
+    $('#s6amt').textContent = es(Math.round(1000 * eio((t - at('s6.b6') - .5) / 1.2)));
+    const u7 = eio((t - at('s6.b7') - .8) / 1.6) * .4; $('#s6slf').style.width = $('#s6slk').style.left = (u7 * 100) + '%';
+    $('#s6slv').textContent = '$' + es(Math.round(1000 * (1 - u7))); $('#s6slp').textContent = 'pérdida máx. ' + Math.round(u7 * 100) + '% (−$' + es(Math.round(1000 * u7)) + ')';
+    const u8 = P(t, at('s6.b8') + 1.1, .5); $('#s6chk').style.transform = `scale(${.3 + .7 * u8 + Math.sin(u8 * Math.PI) * .12})`; $('#s6chk').style.opacity = u8;
+  });
+})();
+
+/* ---------- S8 ---------- */
+(() => {
+  const W = 1110, H = 490, pl = 20, pr = 150, ptp = 30, pb = 44, r = .08 / 12, val = [0], con = [0];
+  for (let m = 1; m <= 360; m++) { val.push(val[m - 1] * (1 + r) + 300); con.push(300 * m); }
+  const mx = 470000, X = m => pl + (W - pl - pr) * m / 360, Y = v => ptp + (H - ptp - pb) * (1 - v / mx);
+  const path = a => a.map((v, m) => (m ? 'L' : 'M') + X(m).toFixed(1) + ',' + Y(v).toFixed(1)).join('');
+  let s = `<line x1="${pl}" x2="${W - pr}" y1="${Y(0)}" y2="${Y(0)}" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>`;
+  [0, 10, 20, 30].forEach(y => s += `<text x="${X(y * 12)}" y="${H - 8}" fill="#93a2bb" font-size="21" text-anchor="middle">${y ? y + ' años' : 'Hoy'}</text>`);
+  s += `<defs><linearGradient id="g8" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2bd67b" stop-opacity=".4"/><stop offset="1" stop-color="#2bd67b" stop-opacity=".02"/></linearGradient><clipPath id="c8"><rect id="c8r" x="0" y="0" width="0" height="${H}"/></clipPath></defs>`;
+  s += `<g clip-path="url(#c8)"><path d="${path(val)}L${X(360)},${Y(0)}L${X(0)},${Y(0)}Z" fill="url(#g8)"/><path d="${path(con)}L${X(360)},${Y(0)}L${X(0)},${Y(0)}Z" fill="rgba(107,122,148,.35)"/><path d="${path(con)}" fill="none" stroke="#6b7a94" stroke-width="3"/><path d="${path(val)}" fill="none" stroke="#2bd67b" stroke-width="5"/></g>`;
+  [10, 20, 30].forEach(y => { const m = y * 12; s += `<g class="mk8" data-y="${y}"><line x1="${X(m)}" x2="${X(m)}" y1="${Y(val[m])}" y2="${Y(0)}" stroke="rgba(255,255,255,.25)" stroke-dasharray="4 6" stroke-width="2"/><circle cx="${X(m)}" cy="${Y(val[m])}" r="10" fill="#2bd67b" stroke="#08101c" stroke-width="4"/><text x="${X(m) - (y === 30 ? 26 : 0)}" y="${Y(val[m]) - (y === 30 ? -16 : 24)}" fill="#fff" font-size="${y === 30 ? 46 : 34}" font-weight="800" text-anchor="${y === 30 ? 'end' : 'middle'}">$${es(Math.round(val[m]))}</text>${y === 30 ? `<text x="${X(m) + 16}" y="${Y(con[m]) + 8}" fill="#aab6ca" font-size="23" font-weight="600">Aportado</text><text x="${X(m) + 16}" y="${Y(con[m]) + 36}" fill="#aab6ca" font-size="23" font-weight="700">$108.000</text>` : ''}</g>`; });
+  $('#s8svg').innerHTML = s;
+  const mk = $$('.mk8');
+  anims.push(t => {
+    const seg = [[at('s8.b3') + .3, 0, 0], [at('s8.b4') + 1.9, 0, 120], [at('s8.b5') + 1.7, 120, 240], [at('s8.b6') + 2.4, 240, 360]];
+    let m = 0; for (let i = 1; i < seg.length; i++) { const u = eio((t - seg[i - 1][0] - (i === 1 ? 0 : .25)) / (seg[i][0] - seg[i - 1][0] - (i === 1 ? 0 : .25))); if (u > 0) m = seg[i][1] + (seg[i][2] - seg[i][1]) * u; }
+    $('#c8r').setAttribute('width', X(m) + 3);
+    mk.forEach((e, i) => { e.style.opacity = P(t, seg[i + 1][0] - .15, .4); });
+  });
+})();
+
+/* ---------- motor ---------- */
+const scenes = $$('.scene'), fx = $$('[data-at]').map(e => ({ e, s: at(e.dataset.at) + (+e.dataset.d || 0), f: e.dataset.fx || 'up' }));
+function setT(t) {
+  for (const el of scenes) {
+    const s = SC[el.id], on = t >= s.start && t < s.end + .001;
+    el.style.display = on ? 'block' : 'none';
+    if (on) el.style.opacity = Math.min(cl((t - s.start) / .45), el.id === 's10' ? 1 : cl((s.end - t) / .35));
+  }
+  for (const { e, s, f } of fx) {
+    const p = P(t, s, .6); e.style.opacity = p;
+    e.style.transform = f === 'scale' ? `scale(${.86 + .14 * p})` : f === 'left' ? `translateX(${(p - 1) * 50}px)` : f === 'fade' ? '' : `translateY(${(1 - p) * 34}px)`;
+  }
+  for (const a of anims) a(t);
+  let sc = TL.scenes[0], cap = '', co = 0;
+  for (const s of TL.scenes) if (t >= s.start) sc = s;
+  for (const b of sc.beats) if (t >= b.start - .12 && t < b.end + .3) { cap = b.text; co = Math.min(cl((t - b.start + .12) / .2), cl((b.end + .3 - t) / .2)); }
+  $('#chap').textContent = sc.title; $('#prog').style.width = (t / TL.total * 1920) + 'px';
+  $('#capt').textContent = cap; $('#capt').style.opacity = co;
+}
+window.setT = setT; setT(0);
+
+/* vista previa en el navegador (fuera del render): reproduce con el audio */
+if (!window.__RENDER__) {
+  const fit = () => { const k = Math.min(innerWidth / 1920, innerHeight / 1080); $('#stage').style.transform = `scale(${k})`; };
+  fit(); addEventListener('resize', fit);
+  const au = new Audio('copy-trading-etoro.mp4'); let t0 = null;
+  addEventListener('click', () => { if (t0 === null) { au.play().catch(() => {}); t0 = performance.now(); (function loop() { const t = au.currentTime || (performance.now() - t0) / 1000; setT(Math.min(t, TL.total)); requestAnimationFrame(loop); })(); } });
+}
+</script>
+</body>
+</html>
