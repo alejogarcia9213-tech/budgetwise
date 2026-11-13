@@ -153,7 +153,7 @@ window.TL = {
      "id": "b1",
      "start": 103.087,
      "end": 108.152,
-     "text": "@AlejandroGarciaO es Popular Investor de nivel Elite en eToro."
+     "text": "@AlejandroGarciaO es Popular Investor Champion en eToro."
     },
     {
      "id": "b2",

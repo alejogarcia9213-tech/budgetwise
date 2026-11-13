@@ -1,10 +1,12 @@
 """Genera narration.wav y timeline.js a partir de narration.json (voz Kokoro, local).
-Uso: python3 build_audio.py <kokoro.onnx> <voices.bin>"""
+Uso: python3 build_audio.py <kokoro.onnx> <voices.bin> [nombre]   (nombre: narration | narration-ep09 ...)"""
 import json, sys, numpy as np, soundfile as sf
 from kokoro_onnx import Kokoro
 
 LEAD, GAP, TAIL = 0.7, 0.38, 0.9
-spec = json.load(open("narration.json", encoding="utf-8"))
+NAME = sys.argv[3] if len(sys.argv) > 3 else "narration"
+TLNAME = NAME.replace("narration", "timeline")
+spec = json.load(open(NAME + ".json", encoding="utf-8"))
 k = Kokoro(sys.argv[1], sys.argv[2])
 sr = 24000
 chunks, cursor, scenes = [], 0.0, []
@@ -29,8 +31,8 @@ for sc in spec["scenes"]:
 
 full = np.concatenate(chunks)
 full = full / max(1e-6, np.abs(full).max()) * 0.89
-sf.write("build/narration.wav", full, sr)
+sf.write("build/" + NAME + ".wav", full, sr)
 tl = {"total": round(cursor, 3), "scenes": scenes}
-open("timeline.js", "w", encoding="utf-8").write("window.TL = " + json.dumps(tl, ensure_ascii=False, indent=1) + ";\n")
+open(TLNAME + ".js", "w", encoding="utf-8").write("window.TL = " + json.dumps(tl, ensure_ascii=False, indent=1) + ";\n")
 for s in scenes: print(s["id"], s["start"], s["end"])
 print("total", tl["total"])

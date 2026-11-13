@@ -1,0 +1,113 @@
+{
+ "voice": "em_alex",
+ "speed": 1.06,
+ "scenes": [
+  {
+   "id": "ah",
+   "title": "Inicio",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "¿Qué pasa en tu cuenta cuando copias a un inversor en etoro? Te lo muestro por dentro.",
+     "show": ""
+    }
+   ]
+  },
+  {
+   "id": "a1",
+   "title": "Qué es",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Tú eliges a un inversor, y tu cuenta copia cada una de sus operaciones, de forma automática y proporcional.",
+     "show": "Tú eliges a un inversor y tu cuenta copia cada operación, de forma automática y proporcional."
+    },
+    {
+     "id": "p2",
+     "say": "Cuando él compra, tú compras. Cuando vende, tú vendes.",
+     "show": "Cuando él compra, tú compras. Cuando vende, tú vendes."
+    }
+   ]
+  },
+  {
+   "id": "a2",
+   "title": "Proporcional",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Este es mi portafolio público: doce coma cinco por ciento en Meta, nueve coma seis en Máicrosoft, otras posiciones, y cerca del cincuenta y ocho por ciento en efectivo.",
+     "show": "Mi portafolio público: 12,5% en Meta, 9,6% en Microsoft, otras posiciones y cerca del 58% en efectivo."
+    },
+    {
+     "id": "p2",
+     "say": "Si me copias con mil dólares, tu dinero se reparte exactamente igual: ciento veinticinco en Meta, noventa y seis en Máicrosoft, y así con cada posición.",
+     "show": "Si me copias con $1.000, tu dinero se reparte igual: $125 en Meta, $96 en Microsoft, y así con cada posición."
+    }
+   ]
+  },
+  {
+   "id": "a3",
+   "title": "Compra y vende",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Si yo uso el cinco por ciento de mi portafolio para comprar una acción nueva, por ejemplo Envidia, tu copia usa el cinco por ciento de tu dinero, cincuenta dólares, para comprar la misma.",
+     "show": "Si uso el 5% de mi portafolio para comprar, por ejemplo, Nvidia, tu copia usa el 5% de tu dinero ($50) para comprar la misma."
+    },
+    {
+     "id": "p2",
+     "say": "Y si cierro mi posición en Tesla, tu copia también la cierra, y ese dinero vuelve a tu efectivo.",
+     "show": "Si cierro mi posición en Tesla, tu copia también la cierra y ese dinero vuelve a tu efectivo."
+    },
+    {
+     "id": "p3",
+     "say": "Todo se reacomoda solo, tras bambalinas, sin que hagas nada.",
+     "show": "Todo se reacomoda solo, tras bambalinas, sin que hagas nada."
+    }
+   ]
+  },
+  {
+   "id": "a4",
+   "title": "Uno a uno",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "El valor también se mueve uno a uno. Si una posición sube un diez por ciento, sube un diez por ciento para los dos. Mismo porcentaje, distinto tamaño.",
+     "show": "Si una posición sube un 10%, sube un 10% para los dos. Mismo porcentaje, distinto tamaño."
+    },
+    {
+     "id": "p2",
+     "say": "Eso sí: tu resultado puede variar un poco. Entras a precios distintos, las posiciones de menos de un dólar no se abren, y cada operación tiene costes.",
+     "show": "Tu resultado puede variar un poco: precios de entrada, mínimo de $1 por posición y costes."
+    }
+   ]
+  },
+  {
+   "id": "a5",
+   "title": "Control",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Tú mantienes el control: puedes añadir o retirar fondos, pausar la copia, o dejar de copiar cuando quieras.",
+     "show": "Puedes añadir o retirar fondos, pausar la copia o dejar de copiar cuando quieras."
+    },
+    {
+     "id": "p2",
+     "say": "Y si prefieres practicar primero, etoro te da una cuenta virtual con cien mil dólares.",
+     "show": "Si prefieres practicar primero, eToro te da una cuenta virtual con $100.000."
+    }
+   ]
+  },
+  {
+   "id": "ae",
+   "title": "Cierre",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Guarda este video si estás aprendiendo cómo funciona el copi tréiding. En el siguiente te muestro cómo crece una copia aportando cada mes.",
+     "show": ""
+    }
+   ]
+  }
+ ]
+}

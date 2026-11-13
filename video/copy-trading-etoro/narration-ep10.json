@@ -1,0 +1,137 @@
+{
+ "voice": "em_alex",
+ "speed": 1.06,
+ "scenes": [
+  {
+   "id": "bh",
+   "title": "Inicio",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Invertir una sola vez y olvidarte, rara vez alcanza. Aportar un monto fijo cada mes cambia la historia. Mira.",
+     "show": ""
+    }
+   ]
+  },
+  {
+   "id": "b1",
+   "title": "Quién soy",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Soy Alejandro García O, Pópiular Invéstor Chámpion en etoro. Invierto a largo plazo, sin apalancamiento alto, con riesgo tres.",
+     "show": "Soy @AlejandroGarciaO, Popular Investor Champion en eToro. Largo plazo, sin apalancamiento alto, riesgo 3."
+    },
+    {
+     "id": "p2",
+     "say": "Desde abril de dos mil veintidós, mi portafolio acumula un cincuenta y tres por ciento.",
+     "show": "Desde abril de 2022, mi portafolio acumula un 53%."
+    }
+   ]
+  },
+  {
+   "id": "b2",
+   "title": "Año a año",
+   "beats": [
+    {
+     "id": "p0",
+     "say": "Estos son mis resultados reales, año por año.",
+     "show": "Estos son mis resultados reales, año por año."
+    },
+    {
+     "id": "p1",
+     "say": "Dos mil veintidós, negativo: menos dieciséis coma ocho por ciento.",
+     "show": "2022, negativo: −16,8%."
+    },
+    {
+     "id": "p2",
+     "say": "Dos mil veintitrés, más veintiséis.",
+     "show": "2023: +26,1%."
+    },
+    {
+     "id": "p3",
+     "say": "Dos mil veinticuatro, más diez coma nueve.",
+     "show": "2024: +10,9%."
+    },
+    {
+     "id": "p4",
+     "say": "Dos mil veinticinco, más veintitrés.",
+     "show": "2025: +23,0%."
+    },
+    {
+     "id": "p5",
+     "say": "Y en lo que va de dos mil veintiséis, más siete coma uno. Quien me copia obtiene prácticamente esos mismos porcentajes.",
+     "show": "2026 hasta hoy: +7,1%. Quien me copia obtiene prácticamente esos mismos porcentajes."
+    }
+   ]
+  },
+  {
+   "id": "b3",
+   "title": "Bola de nieve",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Ahora imagina que me copias aportando trescientos dólares cada mes, desde abril de dos mil veintidós.",
+     "show": "Imagina que me copias aportando $300 cada mes, desde abril de 2022."
+    },
+    {
+     "id": "p2",
+     "say": "El primer año mi portafolio cayó casi un diecisiete por ciento. Pero tú seguiste aportando, y cada aporte compró más barato. Al cierre de ese año apenas perdías un cinco por ciento.",
+     "show": "El primer año caí casi un 17%. Pero seguiste aportando y cada aporte compró más barato: al cierre apenas perdías un 5%."
+    },
+    {
+     "id": "p3",
+     "say": "Cuando llegó la recuperación, todo lo que compraste barato subió conmigo. La bola de nieve crece: aportes, más ganancias que generan nuevas ganancias.",
+     "show": "Con la recuperación, lo que compraste barato subió conmigo. La bola de nieve crece: aportes más ganancias sobre ganancias."
+    },
+    {
+     "id": "p4",
+     "say": "Hoy habrías aportado dieciséis mil ochocientos dólares, y tendrías unos veintitrés mil doscientos.",
+     "show": "Hoy habrías aportado $16.800 y tendrías unos $23.200."
+    },
+    {
+     "id": "p5",
+     "say": "Los porcentajes de cada mes son los mismos que los míos. Pero al comprar más en las caídas, tu dinero rindió cerca de un catorce por ciento anual, frente a casi un diez de una sola inversión al inicio.",
+     "show": "Mismos porcentajes que yo. Pero al comprar más en las caídas, tu dinero rindió cerca de un 14% anual, frente a casi un 10% de una sola inversión inicial."
+    }
+   ]
+  },
+  {
+   "id": "b4",
+   "title": "Número FIRE",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "¿Hasta cuándo? Hasta tu número fáier: tus gastos de un año, multiplicados por veinticinco.",
+     "show": "¿Hasta cuándo? Hasta tu número FIRE: tus gastos de un año × 25."
+    },
+    {
+     "id": "p2",
+     "say": "Si vives con mil quinientos dólares al mes, tu número es cuatrocientos cincuenta mil.",
+     "show": "Si vives con $1.500 al mes, tu número es $450.000."
+    },
+    {
+     "id": "p3",
+     "say": "Con un ocho por ciento anual hipotético, aportando trescientos al mes llegarías en unos treinta años. Con seiscientos, en veintidós y medio. Con mil, en unos diecisiete.",
+     "show": "A un 8% anual hipotético: $300 al mes, unos 30 años; $600, 22 y medio; $1.000, unos 17."
+    },
+    {
+     "id": "p4",
+     "say": "La clave: un monto fijo, todos los meses, también cuando el mercado cae.",
+     "show": "La clave: un monto fijo, todos los meses, también cuando el mercado cae."
+    }
+   ]
+  },
+  {
+   "id": "be",
+   "title": "Cierre",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Si quieres conocer mi estrategia, busca Alejandro García O en etoro.",
+     "show": ""
+    }
+   ]
+  }
+ ]
+}
