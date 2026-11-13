@@ -71,13 +71,34 @@
    ]
   },
   {
+   "id": "sx",
+   "title": "Compra y vende",
+   "beats": [
+    {
+     "id": "b1",
+     "say": "¿Qué pasa cuando Alejandro compra una acción nueva? Por ejemplo, usa el cinco por ciento de su portafolio para comprar Envidia. En ese mismo instante, tu copia usa el cinco por ciento de tu dinero, cincuenta dólares, para comprar la misma acción.",
+     "show": "Si Alejandro usa el 5% de su portafolio para comprar, por ejemplo, Nvidia, tu copia usa el 5% de tu dinero ($50) para comprar la misma acción."
+    },
+    {
+     "id": "b2",
+     "say": "¿Y cuando vende? Si cierra su posición en Tesla, tu copia también la cierra, y ese dinero vuelve a tu efectivo dentro de la copia.",
+     "show": "¿Y cuando vende? Si cierra su posición en Tesla, tu copia también la cierra y ese dinero vuelve a tu efectivo dentro de la copia."
+    },
+    {
+     "id": "b3",
+     "say": "Todo se reacomoda solo, tras bambalinas. Tú no haces nada, y tu portafolio queda siempre alineado con el suyo.",
+     "show": "Todo se reacomoda solo, tras bambalinas. Tú no haces nada y tu portafolio queda siempre alineado con el suyo."
+    }
+   ]
+  },
+  {
    "id": "s4",
    "title": "Se mueve 1 a 1",
    "beats": [
     {
      "id": "b1",
-     "say": "Y se mueve uno a uno. Si Alejandro abre una posición nueva con el cinco por ciento de su portafolio, tú abres la misma con el cinco por ciento de tu copia: cincuenta dólares.",
-     "show": "Si Alejandro abre una posición con el 5% de su portafolio, tú abres la misma con el 5% de tu copia: $50."
+     "say": "Y el valor también se mueve uno a uno. Tomemos una posición del cinco por ciento. En tu copia, son cincuenta dólares.",
+     "show": "El valor también se mueve 1 a 1. Una posición del 5%: en tu copia, son $50."
     },
     {
      "id": "b2",

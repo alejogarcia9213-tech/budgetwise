@@ -91,6 +91,12 @@ svg text{font-family:Inter,sans-serif}
 .cmp{flex:1;padding:20px 28px;display:flex;align-items:center;gap:24px}.cmp .n{font-size:60px;font-weight:800;letter-spacing:-.03em}.cmp .t{font-size:24px;font-weight:600;line-height:1.25}
 /* sf */
 .fr{display:flex;align-items:center;gap:26px;height:74px}.fr .lb{width:290px;white-space:nowrap;font-size:34px;font-weight:800}.fr .trk{flex:1;height:34px;border-radius:17px;background:rgba(255,255,255,.06);overflow:hidden}.fr .bar{height:100%;border-radius:17px;width:0}.fr .yr{width:340px;white-space:nowrap;font-size:34px;font-weight:800}
+.pp{display:flex;align-items:center;gap:26px}.lg{flex:1}
+.lr{display:flex;align-items:center;gap:14px;height:43px;overflow:hidden}
+.lr img,.lr .dt{width:34px;height:34px;border-radius:50%;flex:none}
+.dt{display:flex;align-items:center;justify-content:center;font-weight:800;color:#08101c;font-size:22px}
+.lr .nm{font-size:25px;font-weight:700;flex:1}.lr .vl{font-size:27px;font-weight:800;font-variant-numeric:tabular-nums}
+.evt{position:absolute;top:786px;width:810px;text-align:center;font-size:29px;font-weight:800;padding:15px;border-radius:18px;border:1.5px solid}
 </style>
 </head>
 <body>
@@ -140,26 +146,41 @@ svg text{font-family:Inter,sans-serif}
   <div class="kicker">02 · Cómo funciona</div>
   <h2>La copia es <span class="g">proporcional</span>.</h2>
   <div class="card col" style="left:120px" data-at="s3.b2" data-d="-.3">
-    <h3>Portafolio de @AlejandroGarciaO</h3><div class="cs">% de su portafolio en cada posición</div><div id="s3L"></div>
+    <h3>Portafolio de @AlejandroGarciaO</h3><div class="cs">% de su portafolio en cada posición</div><div class="pp" id="s3L"></div>
   </div>
   <div class="card col" style="left:990px;border-color:rgba(90,169,255,.4)" data-at="s3.b3" data-d="-.2">
-    <h3>Tu copia de <span style="color:var(--blu)">$1.000</span></h3><div class="cs">Los mismos porcentajes, en tu dinero</div><div id="s3R"></div>
+    <h3>Tu copia de <span style="color:var(--blu)">$1.000</span></h3><div class="cs">Los mismos porcentajes, en tu dinero</div><div class="pp" id="s3R"></div>
   </div>
   <div class="note">Portafolio público en eToro al 10 nov 2026 (cambia con el tiempo). Las posiciones que quedarían por debajo de $1 no se abren.</div>
 </section>
 
+<!-- SX -->
+<section class="scene" id="sx">
+  <div class="kicker">03 · Compra y vende</div>
+  <h2>Tu copia se <span class="g">reacomoda sola</span>.</h2>
+  <div class="card col" style="left:120px" data-at="sx" data-d=".2">
+    <h3>Portafolio de @AlejandroGarciaO</h3><div class="cs">Él decide qué comprar y qué vender</div><div class="pp" id="sxL"></div>
+  </div>
+  <div class="card col" style="left:990px;border-color:rgba(90,169,255,.4)" data-at="sx" data-d=".4">
+    <h3>Tu copia de <span style="color:var(--blu)">$1.000</span></h3><div class="cs">Se ajusta al instante, automáticamente</div><div class="pp" id="sxR"></div>
+  </div>
+  <div class="evt" id="sxe1" style="left:120px"></div><div class="evt" id="sxe2" style="left:990px"></div>
+  <div style="position:absolute;left:0;width:1920px;top:790px;text-align:center" data-at="sx.b3" data-d=".3"><span class="chip">⚙ Tras bambalinas · automático · sin que hagas nada</span></div>
+  <div class="note">Ejemplo ilustrativo sobre el portafolio público del 10 nov 2026. No es una recomendación de compra ni de venta.</div>
+</section>
+
 <!-- S4 -->
 <section class="scene" id="s4">
-  <div class="kicker">03 · Cómo se mueve</div>
+  <div class="kicker">04 · El valor</div>
   <h2>Se mueve <span class="g">1 a 1</span> con el suyo.</h2>
   <div class="card pan" style="left:120px" data-at="s4.b1" data-d="-.3">
     <div class="hd"><div class="av" style="width:58px;height:58px;font-size:22px">AG</div>Alejandro</div>
-    <div class="pos" data-at="s4.b1" data-d="1.6" data-fx="scale"><div><div class="l">Nueva posición</div><div class="b">5% <span class="m" style="font-size:26px">de su portafolio</span></div></div></div>
+    <div class="pos" data-at="s4.b1" data-d="2.4" data-fx="scale"><div><div class="l">Una posición</div><div class="b">5% <span class="m" style="font-size:26px">de su portafolio</span></div></div></div>
     <div class="chg"><div class="pc" id="s4p1">0,0%</div><svg width="300" height="120"><path class="s4sp" fill="none" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
   </div>
   <div class="card pan" style="left:990px;border-color:rgba(90,169,255,.4)" data-at="s4.b1" data-d="-.1">
     <div class="hd"><div class="av" style="width:58px;height:58px;font-size:20px;background:linear-gradient(135deg,#5aa9ff,#8e7dff);color:#fff">Tú</div>Tu copia de $1.000</div>
-    <div class="pos" data-at="s4.b1" data-d="6.4" data-fx="scale"><div><div class="l">Misma posición</div><div class="b">5% <span class="m" style="font-size:26px">de tu copia</span></div></div><div class="b" style="color:var(--blu)" id="s4v">$50,00</div></div>
+    <div class="pos" data-at="s4.b1" data-d="5.2" data-fx="scale"><div><div class="l">Misma posición</div><div class="b">5% <span class="m" style="font-size:26px">de tu copia</span></div></div><div class="b" style="color:var(--blu)" id="s4v">$50,00</div></div>
     <div class="chg"><div class="pc" id="s4p2">0,0%</div><div class="ab" id="s4d">$0,00</div></div>
   </div>
   <div style="position:absolute;left:0;width:1920px;top:770px;text-align:center;font-size:54px;font-weight:800;letter-spacing:-.02em" data-at="s4.b4">Mismo <span class="g">porcentaje</span>. Distinto <span style="color:var(--blu)">tamaño</span>.</div>
@@ -170,7 +191,7 @@ svg text{font-family:Inter,sans-serif}
 <section class="scene" id="s5">
   <div style="display:flex;align-items:center;gap:30px" data-at="s5">
     <div class="av" style="width:128px;height:128px;font-size:48px">AG</div>
-    <div><div class="kicker">04 · A quién copias</div><h2 style="margin-top:6px">@AlejandroGarciaO</h2></div>
+    <div><div class="kicker">05 · A quién copias</div><h2 style="margin-top:6px">@AlejandroGarciaO</h2></div>
     <div class="chip" style="margin-left:26px;margin-top:38px" data-at="s5.b1" data-d="2.2" data-fx="scale">★ Popular Investor · Elite</div>
   </div>
   <div style="position:absolute;left:120px;top:270px;display:flex;gap:16px" data-at="s5.b2">
@@ -196,7 +217,7 @@ svg text{font-family:Inter,sans-serif}
 
 <!-- SY -->
 <section class="scene" id="sy">
-  <div class="kicker">05 · Resultados reales</div>
+  <div class="kicker">06 · Resultados reales</div>
   <h2>Año por año, <span class="g">lo bueno y lo malo</span>.</h2>
   <div class="shot" data-at="sy" data-d=".3"><img data-yr="max" src="assets/perfil-max.jpg"><img data-yr="2022" src="assets/perfil-2022.jpg"><img data-yr="2023" src="assets/perfil-2023.jpg"><img data-yr="2024" src="assets/perfil-2024.jpg"><img data-yr="2025" src="assets/perfil-2025.jpg"><img data-yr="2026" src="assets/perfil-2026.jpg"></div>
   <div class="shotl" data-at="sy" data-d=".6">Captura del perfil en eToro · 13 nov 2026</div>
@@ -209,7 +230,7 @@ svg text{font-family:Inter,sans-serif}
 
 <!-- S6 -->
 <section class="scene" id="s6">
-  <div style="position:absolute;left:660px;top:96px"><div class="kicker">06 · Paso a paso</div><h2>Cómo copiarlo en <span class="g">8 pasos</span></h2></div>
+  <div style="position:absolute;left:660px;top:96px"><div class="kicker">07 · Paso a paso</div><h2>Cómo copiarlo en <span class="g">8 pasos</span></h2></div>
   <div class="phone" data-at="s6" data-d=".2">
     <div class="scr" data-ph="1"><h4>Crea tu cuenta</h4><div class="fld">tu@email.com</div><div class="fld">••••••••••</div><div class="btn">Crear cuenta</div><div class="ok" data-at="s6.b1" data-d="2.2">✓ Identidad verificada</div></div>
     <div class="scr" data-ph="2"><h4>Depositar fondos</h4><div class="fld" style="font-size:40px;font-weight:800;color:#0e1524;text-align:center;padding:26px">$500</div><div class="fld">💳 Tarjeta</div><div class="fld">🏦 Transferencia bancaria</div><div class="btn">Depositar</div></div>
@@ -232,7 +253,7 @@ svg text{font-family:Inter,sans-serif}
 
 <!-- S7 -->
 <section class="scene" id="s7">
-  <div class="kicker">07 · Después de copiar</div>
+  <div class="kicker">08 · Después de copiar</div>
   <h2>Tú tienes el <span class="g">control</span>.</h2>
   <div style="position:absolute;left:120px;top:300px;display:flex;gap:40px">
     <div class="card ctl" data-at="s7.b1" data-d="2.1"><div class="ic" style="background:rgba(43,214,123,.15);color:var(--grn)">+</div><div class="tt">Añadir fondos</div></div>
@@ -249,7 +270,7 @@ svg text{font-family:Inter,sans-serif}
 
 <!-- SD -->
 <section class="scene" id="sd">
-  <div class="kicker">08 · La bola de nieve</div>
+  <div class="kicker">09 · La bola de nieve</div>
   <h2>Un monto fijo, <span class="g">todos los meses</span>.</h2>
   <div class="card" style="position:absolute;left:120px;top:262px;width:1250px;height:440px;padding:22px 28px" data-at="sd.b2" data-d="-.2">
     <div style="display:flex;justify-content:space-between;font-size:23px;font-weight:600;color:var(--mut)"><span>$300 al mes copiando a @AlejandroGarciaO · rentabilidades mensuales reales</span><span><span class="g">■</span> Valor &nbsp; <span style="color:#6b7a94">■</span> Aportado</span></div>
@@ -269,7 +290,7 @@ svg text{font-family:Inter,sans-serif}
 
 <!-- S8 -->
 <section class="scene" id="s8">
-  <div class="kicker">09 · El largo plazo</div>
+  <div class="kicker">10 · El largo plazo</div>
   <h2>Libertad financiera: <span class="g">constancia + tiempo</span>.</h2>
   <div style="position:absolute;left:120px;top:290px;width:470px;display:flex;flex-direction:column;gap:20px">
     <div class="card" style="padding:26px 30px" data-at="s8.b2" data-d=".9"><div style="font-size:36px;font-weight:800">① Constancia</div><div class="sub" style="font-size:25px">Aportar todos los meses</div></div>
@@ -286,7 +307,7 @@ svg text{font-family:Inter,sans-serif}
 
 <!-- SF -->
 <section class="scene" id="sf">
-  <div class="kicker">10 · La meta</div>
+  <div class="kicker">11 · La meta</div>
   <h2>Tu número <span class="g">FIRE</span></h2>
   <div class="card" style="position:absolute;left:120px;top:262px;width:1680px;padding:30px 44px;display:flex;align-items:center;gap:34px;font-size:54px;font-weight:800;letter-spacing:-.02em" data-at="sf.b1" data-d="1.4">
     <span>Gastos de un año</span><span class="m">×</span><span class="g">25</span><span class="m">=</span><span>tu número FIRE</span>
@@ -304,7 +325,7 @@ svg text{font-family:Inter,sans-serif}
 
 <!-- S9 -->
 <section class="scene" id="s9">
-  <div class="kicker">11 · Antes de empezar</div>
+  <div class="kicker">12 · Antes de empezar</div>
   <h2>Cinco <span class="g">reglas de oro</span></h2>
   <div style="position:absolute;left:120px;top:286px">
     <div class="rule" data-at="s9.b1" data-fx="left"><div class="no">1</div><div class="tx">Invierte solo dinero que no vayas a necesitar pronto.</div></div>
@@ -357,21 +378,46 @@ anims.push(t => {
   d.setAttribute('opacity', x < 0 ? 0 : 1); d.setAttribute('cx', 10 + 460 * eio(Math.max(0, x))); d.setAttribute('fill', col);
 });
 
-/* ---------- S3 ---------- */
-(() => {
-  const L = $('#s3L'), R = $('#s3R');
-  PORT.forEach(([k, p, c], i) => {
-    L.insertAdjacentHTML('beforeend', `<div class="row"><div class="tk">${k}</div><div class="tr"><div class="br" style="background:${c}"></div></div><div class="vl">${es(p, 1)}%</div></div>`);
-    R.insertAdjacentHTML('beforeend', `<div class="row"><div class="tk">${k}</div><div class="tr"><div class="br" style="background:${c}"></div></div><div class="vl" style="color:#5aa9ff"></div></div>`);
-  });
-  const lr = $$('.row', L), rr = $$('.row', R);
-  anims.push(t => {
-    PORT.forEach(([k, p], i) => {
-      const a = P(t, at('s3.b2') + .5 + i * .55, .8), b = P(t, at('s3.b3') + 1.6 + i * .28, .8);
-      lr[i].style.opacity = a; $('.br', lr[i]).style.width = (p / 60 * 100 * a) + '%';
-      rr[i].style.opacity = b; $('.br', rr[i]).style.width = (p / 60 * 100 * b) + '%';
-      $('.vl', rr[i]).textContent = '$' + es(Math.round(p * 10 * b));
+/* ---------- S3 + SX: donuts con logos ---------- */
+const IT = [['META', 'meta', '#5aa9ff'], ['MSFT', 'msft', '#2bd67b'], ['ISRG', 'isrg', '#b18cff'], ['SPOT', 'spot', '#3ddbc0'], ['TSLA', 'tsla', '#ff8a8a'], ['NVDA', 'nvda', '#c6f03c'], ['Otros', null, '#93a2bb'], ['Efectivo', null, '#ffb547']];
+const W0 = [12.48, 9.63, 7.02, 6.43, 6.02, 0, 0.11, 58.31];
+function panel(el, c1, c2) {
+  el.innerHTML = `<svg width="330" height="330" viewBox="0 0 330 330">${IT.map(it => `<path fill="${it[2]}"/>`).join('')}${IT.map(it => it[1] ? `<image href="assets/logos/${it[1]}.svg" width="48" height="48"/>` : '<g></g>').join('')}<text x="165" y="156" text-anchor="middle" font-size="22" fill="#93a2bb" font-weight="600">${c1}</text><text x="165" y="198" text-anchor="middle" font-size="42" font-weight="800" fill="#fff">${c2}</text></svg><div class="lg">${IT.map(it => `<div class="lr">${it[1] ? `<img src="assets/logos/${it[1]}.svg">` : `<span class="dt" style="background:${it[2]}">${it[0] === 'Efectivo' ? '$' : '…'}</span>`}<span class="nm">${it[0]}</span><span class="vl"></span></div>`).join('')}</div>`;
+  const kids = [...el.querySelector('svg').children], paths = kids.slice(0, IT.length), imgs = kids.slice(IT.length, 2 * IT.length), rows = $$('.lr', el);
+  const R = 160, r = 100, cx = 165, cy = 165, pt = (rad, a) => (cx + rad * Math.cos(a)).toFixed(2) + ' ' + (cy + rad * Math.sin(a)).toFixed(2);
+  return (w, sweep, rowP, fmt) => {
+    let a = -Math.PI / 2;
+    w.forEach((x, i) => {
+      const da = x / 100 * 2 * Math.PI * sweep, a0 = a + .012, a1 = a + da - .012, big = a1 - a0 > Math.PI ? 1 : 0;
+      paths[i].setAttribute('d', da < .03 ? '' : `M${pt(R, a0)}A${R} ${R} 0 ${big} 1 ${pt(R, a1)}L${pt(r, a1)}A${r} ${r} 0 ${big} 0 ${pt(r, a0)}Z`);
+      if (IT[i][1]) { const m = a + da / 2, rr = (R + r) / 2; imgs[i].setAttribute('x', cx + rr * Math.cos(m) - 24); imgs[i].setAttribute('y', cy + rr * Math.sin(m) - 24); imgs[i].style.opacity = cl((da - .2) / .1); }
+      a += da;
+      const p = rowP(i) * cl(x / .1); rows[i].style.height = (43 * cl(x / (i === 6 ? .1 : 2))) + 'px'; rows[i].style.opacity = p; $('.vl', rows[i]).textContent = fmt(x, p);
     });
+  };
+}
+(() => {
+  const L = panel($('#s3L'), 'Portafolio', '100%'), R = panel($('#s3R'), 'Tu copia', '$1.000');
+  $$('#s3R .vl').forEach(e => e.style.color = '#5aa9ff');
+  anims.push(t => {
+    L(W0, eio((t - at('s3.b2') - .2) / 1.8), i => P(t, at('s3.b2') + .6 + i * .5, .6), x => es(x, 1) + '%');
+    R(W0, eio((t - at('s3.b3') - .5) / 1.8), i => P(t, at('s3.b3') + 1.5 + i * .25, .6), (x, p) => '$' + es(Math.round(x * 10 * p)));
+  });
+})();
+(() => {
+  const L = panel($('#sxL'), 'Portafolio', '100%'), R = panel($('#sxR'), 'Tu copia', '$1.000');
+  $$('#sxR .vl').forEach(e => e.style.color = '#5aa9ff');
+  const b1 = BT['sx.b1'], b2 = BT['sx.b2'], d1 = b1.end - b1.start, d2 = b2.end - b2.start;
+  const tb = [b1.start + d1 * .30, b1.start + d1 * .66], ts = [b2.start + d2 * .22, b2.start + d2 * .50];
+  const W = (ub, us) => [12.48, 9.63, 7.02, 6.43, 6.02 * (1 - us), 5 * ub, 0.11, 58.31 - 5 * ub + 6.02 * us];
+  const e1 = $('#sxe1'), e2 = $('#sxe2'), sty = (e, txt, c, o) => { e.textContent = txt; e.style.color = c; e.style.borderColor = c; e.style.background = c === '#2bd67b' ? 'rgba(43,214,123,.12)' : 'rgba(255,107,107,.12)'; e.style.opacity = o; e.style.transform = `scale(${.9 + .1 * o})`; };
+  anims.push(t => {
+    const u = (s) => eio((t - s) / 1.5);
+    L(W(u(tb[0]), u(ts[0])), 1, () => 1, x => es(x, 1) + '%');
+    R(W(u(tb[1]), u(ts[1])), 1, () => 1, x => '$' + es(Math.round(x * 10)));
+    const sell = t >= b2.start - .3, out = 1 - P(t, at('sx.b3') - .2, .4), fo = sell ? 1 : 1 - P(t, b2.start - .7, .4);
+    sty(e1, sell ? 'VENDE · TSLA' : 'COMPRA · NVDA · 5% del portafolio', sell ? '#ff6b6b' : '#2bd67b', P(t, (sell ? ts[0] : tb[0]) - .2, .4) * out * fo);
+    sty(e2, sell ? 'TU COPIA VENDE · TSLA → +$60 a efectivo' : 'TU COPIA COMPRA · NVDA · $50', sell ? '#ff6b6b' : '#2bd67b', P(t, (sell ? ts[1] : tb[1]) - .2, .4) * out * fo);
   });
 })();
 

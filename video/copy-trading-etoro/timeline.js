@@ -1,5 +1,5 @@
 window.TL = {
- "total": 325.821,
+ "total": 351.973,
  "scenes": [
   {
    "id": "s1",
@@ -86,33 +86,59 @@ window.TL = {
    ]
   },
   {
-   "id": "s4",
-   "title": "Se mueve 1 a 1",
+   "id": "sx",
+   "title": "Compra y vende",
    "start": 55.027,
-   "end": 76.235,
+   "end": 84.614,
    "beats": [
     {
      "id": "b1",
      "start": 55.727,
-     "end": 65.784,
-     "text": "Si Alejandro abre una posición con el 5% de su portafolio, tú abres la misma con el 5% de tu copia: $50."
+     "end": 69.219,
+     "text": "Si Alejandro usa el 5% de su portafolio para comprar, por ejemplo, Nvidia, tu copia usa el 5% de tu dinero ($50) para comprar la misma acción."
     },
     {
      "id": "b2",
-     "start": 66.164,
-     "end": 70.247,
+     "start": 69.599,
+     "end": 76.797,
+     "text": "¿Y cuando vende? Si cierra su posición en Tesla, tu copia también la cierra y ese dinero vuelve a tu efectivo dentro de la copia."
+    },
+    {
+     "id": "b3",
+     "start": 77.177,
+     "end": 83.714,
+     "text": "Todo se reacomoda solo, tras bambalinas. Tú no haces nada y tu portafolio queda siempre alineado con el suyo."
+    }
+   ]
+  },
+  {
+   "id": "s4",
+   "title": "Se mueve 1 a 1",
+   "start": 84.614,
+   "end": 102.387,
+   "beats": [
+    {
+     "id": "b1",
+     "start": 85.314,
+     "end": 91.936,
+     "text": "El valor también se mueve 1 a 1. Una posición del 5%: en tu copia, son $50."
+    },
+    {
+     "id": "b2",
+     "start": 92.316,
+     "end": 96.4,
      "text": "Si esa acción sube un 10%, los dos ganan un 10%."
     },
     {
      "id": "b3",
-     "start": 70.627,
-     "end": 72.663,
+     "start": 96.78,
+     "end": 98.816,
      "text": "Y si baja, los dos bajan igual."
     },
     {
      "id": "b4",
-     "start": 73.043,
-     "end": 75.335,
+     "start": 99.196,
+     "end": 101.487,
      "text": "Mismo porcentaje, distinto tamaño."
     }
    ]
@@ -120,31 +146,31 @@ window.TL = {
   {
    "id": "s5",
    "title": "A quién copias",
-   "start": 76.235,
-   "end": 104.461,
+   "start": 102.387,
+   "end": 130.614,
    "beats": [
     {
      "id": "b1",
-     "start": 76.935,
-     "end": 82.0,
+     "start": 103.087,
+     "end": 108.152,
      "text": "@AlejandroGarciaO es Popular Investor de nivel Elite en eToro."
     },
     {
      "id": "b2",
-     "start": 82.38,
-     "end": 87.381,
+     "start": 108.532,
+     "end": 113.533,
      "text": "Invierte a largo plazo, sin apalancamiento, sobre todo en grandes empresas de tecnología."
     },
     {
      "id": "b3",
-     "start": 87.761,
-     "end": 96.26,
+     "start": 113.913,
+     "end": 122.413,
      "text": "Desde abril de 2022 acumula un 53% de rentabilidad, casi un 10% anual, con riesgo 3 sobre 10."
     },
     {
      "id": "b4",
-     "start": 96.64,
-     "end": 103.561,
+     "start": 122.793,
+     "end": 129.714,
      "text": "También ha tenido caídas: la peor, de casi un 25%. Por eso se mira el largo plazo."
     }
    ]
@@ -152,49 +178,49 @@ window.TL = {
   {
    "id": "sy",
    "title": "Resultados año a año",
-   "start": 104.461,
-   "end": 135.411,
+   "start": 130.614,
+   "end": 161.563,
    "beats": [
     {
      "id": "b0",
-     "start": 105.161,
-     "end": 110.184,
+     "start": 131.314,
+     "end": 136.336,
      "text": "Sus resultados reales, año por año, tal como aparecen en su perfil de eToro."
     },
     {
      "id": "b1",
-     "start": 110.564,
-     "end": 115.116,
+     "start": 136.716,
+     "end": 141.269,
      "text": "2022 fue un año negativo: −16,8%."
     },
     {
      "id": "b2",
-     "start": 115.496,
-     "end": 118.471,
+     "start": 141.649,
+     "end": 144.623,
      "text": "En 2023, +26,1%."
     },
     {
      "id": "b3",
-     "start": 118.851,
-     "end": 121.334,
+     "start": 145.003,
+     "end": 147.486,
      "text": "2024: +10,9%."
     },
     {
      "id": "b4",
-     "start": 121.714,
-     "end": 124.517,
+     "start": 147.866,
+     "end": 150.67,
      "text": "2025: +23,0%."
     },
     {
      "id": "b5",
-     "start": 124.897,
-     "end": 127.957,
+     "start": 151.05,
+     "end": 154.109,
      "text": "Y en lo que va de 2026, +7,1%."
     },
     {
      "id": "b6",
-     "start": 128.337,
-     "end": 134.511,
+     "start": 154.489,
+     "end": 160.663,
      "text": "En total, +53%. Y quien lo copia obtiene prácticamente esos mismos porcentajes."
     }
    ]
@@ -202,61 +228,61 @@ window.TL = {
   {
    "id": "s6",
    "title": "Paso a paso",
-   "start": 135.411,
-   "end": 164.464,
+   "start": 161.563,
+   "end": 190.616,
    "beats": [
     {
      "id": "b0",
-     "start": 136.111,
-     "end": 138.088,
+     "start": 162.263,
+     "end": 164.24,
      "text": "Copiarlo toma pocos minutos."
     },
     {
      "id": "b1",
-     "start": 138.468,
-     "end": 141.592,
+     "start": 164.62,
+     "end": 167.744,
      "text": "1. Crea tu cuenta en eToro y verifica tu identidad."
     },
     {
      "id": "b2",
-     "start": 141.972,
-     "end": 143.456,
+     "start": 168.124,
+     "end": 169.608,
      "text": "2. Deposita fondos."
     },
     {
      "id": "b3",
-     "start": 143.836,
-     "end": 146.683,
+     "start": 169.988,
+     "end": 172.835,
      "text": "3. Escribe AlejandroGarciaO en el buscador."
     },
     {
      "id": "b4",
-     "start": 147.063,
-     "end": 150.122,
+     "start": 173.215,
+     "end": 176.274,
      "text": "4. Revisa sus estadísticas y su nivel de riesgo."
     },
     {
      "id": "b5",
-     "start": 150.502,
-     "end": 152.328,
+     "start": 176.654,
+     "end": 178.48,
      "text": "5. Pulsa el botón Copiar."
     },
     {
      "id": "b6",
-     "start": 152.708,
-     "end": 156.002,
+     "start": 178.86,
+     "end": 182.154,
      "text": "6. Escribe el importe. El mínimo son $200."
     },
     {
      "id": "b7",
-     "start": 156.382,
-     "end": 160.423,
+     "start": 182.534,
+     "end": 186.575,
      "text": "7. Ajusta el Stop Loss de la copia: tu límite máximo de pérdida."
     },
     {
      "id": "b8",
-     "start": 160.803,
-     "end": 163.564,
+     "start": 186.955,
+     "end": 189.716,
      "text": "8. Confirma. Listo, ya lo estás copiando."
     }
    ]
@@ -264,19 +290,19 @@ window.TL = {
   {
    "id": "s7",
    "title": "Tú tienes el control",
-   "start": 164.464,
-   "end": 178.963,
+   "start": 190.616,
+   "end": 205.116,
    "beats": [
     {
      "id": "b1",
-     "start": 165.164,
-     "end": 172.32,
+     "start": 191.316,
+     "end": 198.472,
      "text": "Puedes añadir o retirar fondos, pausar la copia o dejar de copiar cuando quieras."
     },
     {
      "id": "b2",
-     "start": 172.7,
-     "end": 178.063,
+     "start": 198.852,
+     "end": 204.216,
      "text": "Y si prefieres practicar primero, eToro te da una cuenta virtual con $100.000 de prueba."
     }
    ]
@@ -284,43 +310,43 @@ window.TL = {
   {
    "id": "sd",
    "title": "Aportes mensuales",
-   "start": 178.963,
-   "end": 234.912,
+   "start": 205.116,
+   "end": 261.064,
    "beats": [
     {
      "id": "b1",
-     "start": 179.663,
-     "end": 187.182,
+     "start": 205.816,
+     "end": 213.334,
      "text": "No se trata de invertir una sola vez y olvidarte: se trata de aportar un monto fijo, todos los meses."
     },
     {
      "id": "b2",
-     "start": 187.562,
-     "end": 193.629,
+     "start": 213.714,
+     "end": 219.781,
      "text": "Un caso con sus resultados reales: $300 cada mes, desde abril de 2022."
     },
     {
      "id": "b3",
-     "start": 194.009,
-     "end": 204.877,
+     "start": 220.161,
+     "end": 231.029,
      "text": "El primer año el portafolio cayó casi un 17%. Pero seguiste aportando y cada aporte compró más barato: al cierre apenas perdías un 5%."
     },
     {
      "id": "b4",
-     "start": 205.257,
-     "end": 214.61,
+     "start": 231.409,
+     "end": 240.762,
      "text": "Cuando llegó la recuperación, lo que compraste barato subió con él. La bola de nieve crece: aportes más ganancias que generan nuevas ganancias."
     },
     {
      "id": "b5",
-     "start": 214.99,
-     "end": 220.674,
+     "start": 241.142,
+     "end": 246.826,
      "text": "Hoy habrías aportado $16.800 y tendrías unos $23.200."
     },
     {
      "id": "b6",
-     "start": 221.054,
-     "end": 234.012,
+     "start": 247.206,
+     "end": 260.164,
      "text": "Mismos porcentajes cada mes. Pero al comprar más en las caídas, tu dinero rindió cerca de un 14% anual, frente a casi un 10% de una sola inversión inicial."
     }
    ]
@@ -328,43 +354,43 @@ window.TL = {
   {
    "id": "s8",
    "title": "El largo plazo",
-   "start": 234.912,
-   "end": 265.154,
+   "start": 261.064,
+   "end": 291.306,
    "beats": [
     {
      "id": "b1",
-     "start": 235.612,
-     "end": 238.65,
+     "start": 261.764,
+     "end": 264.802,
      "text": "¿Y la libertad financiera? No llega de un día para otro."
     },
     {
      "id": "b2",
-     "start": 239.03,
-     "end": 242.708,
+     "start": 265.182,
+     "end": 268.861,
      "text": "Llega con tres cosas: constancia, tiempo e interés compuesto."
     },
     {
      "id": "b3",
-     "start": 243.088,
-     "end": 249.156,
+     "start": 269.241,
+     "end": 275.308,
      "text": "Un ejemplo hipotético a largo plazo: aportas $300 cada mes, con un 8% anual."
     },
     {
      "id": "b4",
-     "start": 249.536,
-     "end": 253.001,
+     "start": 275.688,
+     "end": 279.153,
      "text": "En 10 años tendrías unos $55.000."
     },
     {
      "id": "b5",
-     "start": 253.381,
-     "end": 255.929,
+     "start": 279.533,
+     "end": 282.081,
      "text": "En 20 años, $177.000."
     },
     {
      "id": "b6",
-     "start": 256.309,
-     "end": 264.254,
+     "start": 282.461,
+     "end": 290.406,
      "text": "Y en 30 años, cerca de $447.000, habiendo aportado solo $108.000. El resto lo pone el interés compuesto."
     }
    ]
@@ -372,31 +398,31 @@ window.TL = {
   {
    "id": "sf",
    "title": "Tu número FIRE",
-   "start": 265.154,
-   "end": 294.638,
+   "start": 291.306,
+   "end": 320.79,
    "beats": [
     {
      "id": "b1",
-     "start": 265.854,
-     "end": 271.281,
+     "start": 292.006,
+     "end": 297.434,
      "text": "¿Cuánto necesitas? Tu número FIRE: tus gastos de un año, multiplicados por 25."
     },
     {
      "id": "b2",
-     "start": 271.661,
-     "end": 277.217,
+     "start": 297.814,
+     "end": 303.369,
      "text": "Si vives con $1.500 al mes, tu número es $450.000."
     },
     {
      "id": "b3",
-     "start": 277.597,
-     "end": 288.485,
+     "start": 303.749,
+     "end": 314.637,
      "text": "Al mismo 8% hipotético: con $300 al mes llegarías en unos 30 años; con $600, en 22 años y medio; con $1.000, en unos 17."
     },
     {
      "id": "b4",
-     "start": 288.865,
-     "end": 293.738,
+     "start": 315.017,
+     "end": 319.89,
      "text": "La clave: un monto fijo, todos los meses, hasta llegar a tu número."
     }
    ]
@@ -404,43 +430,43 @@ window.TL = {
   {
    "id": "s9",
    "title": "Reglas de oro",
-   "start": 294.638,
-   "end": 314.031,
+   "start": 320.79,
+   "end": 340.183,
    "beats": [
     {
      "id": "b0",
-     "start": 295.338,
-     "end": 296.738,
+     "start": 321.49,
+     "end": 322.89,
      "text": "Cinco reglas de oro."
     },
     {
      "id": "b1",
-     "start": 297.118,
-     "end": 300.433,
+     "start": 323.27,
+     "end": 326.585,
      "text": "Invierte solo dinero que no vayas a necesitar pronto."
     },
     {
      "id": "b2",
-     "start": 300.813,
-     "end": 302.663,
+     "start": 326.965,
+     "end": 328.815,
      "text": "Piensa en años, no en semanas."
     },
     {
      "id": "b3",
-     "start": 303.043,
-     "end": 306.977,
+     "start": 329.195,
+     "end": 333.13,
      "text": "Aporta un monto fijo todos los meses, también cuando el mercado cae."
     },
     {
      "id": "b4",
-     "start": 307.357,
-     "end": 310.161,
+     "start": 333.51,
+     "end": 336.313,
      "text": "Diversifica: puedes copiar a varios inversores."
     },
     {
      "id": "b5",
-     "start": 310.541,
-     "end": 313.131,
+     "start": 336.693,
+     "end": 339.283,
      "text": "Y no vendas por pánico cuando el mercado cae."
     }
    ]
@@ -448,19 +474,19 @@ window.TL = {
   {
    "id": "s10",
    "title": "Empieza hoy",
-   "start": 314.031,
-   "end": 325.821,
+   "start": 340.183,
+   "end": 351.973,
    "beats": [
     {
      "id": "b1",
-     "start": 314.731,
-     "end": 318.708,
+     "start": 340.883,
+     "end": 344.86,
      "text": "Empieza hoy: busca @AlejandroGarciaO en eToro y da el primer paso."
     },
     {
      "id": "b2",
-     "start": 319.088,
-     "end": 324.921,
+     "start": 345.24,
+     "end": 351.073,
      "text": "Las rentabilidades pasadas no garantizan resultados futuros. Tu capital está en riesgo."
     }
    ]
