@@ -1,6 +1,7 @@
 """Genera build/<nombre>.wav y timeline-*.js a partir de <nombre>.json (voces locales).
 Uso: python3 build_audio.py <nombre> --kokoro <kokoro.onnx> <voices.bin> --piper <modelo.onnx>
   nombre: narration | narration-ep09-es | narration-ep11-de ...   (el JSON indica el motor)
+  --engine piper [--speed 1.05]: fuerza la voz local de Piper (p. ej. es_MX)
   --hf <audio.mp3> [--tempo 1.06]: usa una locución completa ya grabada y la corta por pausas"""
 import json, sys, numpy as np, soundfile as sf
 
@@ -9,7 +10,7 @@ opt = lambda k, n: a[a.index(k) + 1:a.index(k) + 1 + n] if k in a else None
 spec = json.load(open(NAME + ".json", encoding="utf-8"))
 LEAD, GAP, TAIL = 0.7, 0.38, 0.9
 
-ENGINE = "split" if "--hf" in a else spec.get("engine", "kokoro")
+ENGINE = "split" if "--hf" in a else (opt("--engine", 1) or [spec.get("engine", "kokoro")])[0]
 if ENGINE == "split":
     # Una sola locución (p. ej. de Higgsfield/ElevenLabs) con todo el guion: se corta por pausas.
     import subprocess
@@ -45,7 +46,7 @@ elif ENGINE == "piper":
     from piper import PiperVoice
     from piper.config import SynthesisConfig
     voice = PiperVoice.load(opt("--piper", 1)[0]); sr = voice.config.sample_rate
-    cfg = SynthesisConfig(length_scale=1.0 / spec.get("speed", 1.0))
+    cfg = SynthesisConfig(length_scale=1.0 / float((opt("--speed", 1) or [1.0])[0]))
     def tts(text): return np.concatenate([c.audio_float_array for c in voice.synthesize(text, syn_config=cfg)]).astype(np.float32)
 else:
     from kokoro_onnx import Kokoro

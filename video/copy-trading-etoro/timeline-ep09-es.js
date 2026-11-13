@@ -1,16 +1,16 @@
 window.TL = {
- "total": 106.954,
+ "total": 111.877,
  "scenes": [
   {
    "id": "ah",
    "title": "Inicio",
    "start": 0.0,
-   "end": 7.068,
+   "end": 6.399,
    "beats": [
     {
      "id": "p1",
      "start": 0.7,
-     "end": 6.168,
+     "end": 5.499,
      "text": ""
     }
    ]
@@ -18,19 +18,19 @@ window.TL = {
   {
    "id": "a1",
    "title": "Qué es",
-   "start": 7.068,
-   "end": 18.346,
+   "start": 6.399,
+   "end": 19.179,
    "beats": [
     {
      "id": "p1",
-     "start": 7.768,
-     "end": 14.06,
+     "start": 7.099,
+     "end": 14.184,
      "text": "Tú eliges a un inversor y tu cuenta copia cada operación, de forma automática y proporcional."
     },
     {
      "id": "p2",
-     "start": 14.44,
-     "end": 17.447,
+     "start": 14.564,
+     "end": 18.279,
      "text": "Cuando él compra, tú compras. Cuando vende, tú vendes."
     }
    ]
@@ -38,19 +38,19 @@ window.TL = {
   {
    "id": "a2",
    "title": "Proporcional",
-   "start": 18.346,
-   "end": 40.559,
+   "start": 19.179,
+   "end": 43.173,
    "beats": [
     {
      "id": "p1",
-     "start": 19.047,
-     "end": 30.062,
+     "start": 19.879,
+     "end": 31.285,
      "text": "Mi portafolio público: 12,5% en Meta, 9,6% en Microsoft, otras posiciones y cerca del 58% en efectivo."
     },
     {
      "id": "p2",
-     "start": 30.442,
-     "end": 39.659,
+     "start": 31.665,
+     "end": 42.273,
      "text": "Si me copias con $1.000, tu dinero se reparte igual: $125 en Meta, $96 en Microsoft, y así con cada posición."
     }
    ]
@@ -58,25 +58,25 @@ window.TL = {
   {
    "id": "a3",
    "title": "Compra y vende",
-   "start": 40.559,
-   "end": 63.106,
+   "start": 43.173,
+   "end": 67.339,
    "beats": [
     {
      "id": "p1",
-     "start": 41.259,
-     "end": 51.792,
+     "start": 43.872,
+     "end": 55.641,
      "text": "Si uso el 5% de mi portafolio para comprar, por ejemplo, Nvidia, tu copia usa el 5% de tu dinero ($50) para comprar la misma."
     },
     {
      "id": "p2",
-     "start": 52.172,
-     "end": 57.735,
+     "start": 56.021,
+     "end": 62.085,
      "text": "Si cierro mi posición en Tesla, tu copia también la cierra y ese dinero vuelve a tu efectivo."
     },
     {
      "id": "p3",
-     "start": 58.115,
-     "end": 62.206,
+     "start": 62.465,
+     "end": 66.439,
      "text": "Todo se reacomoda solo, tras bambalinas, sin que hagas nada."
     }
    ]
@@ -84,19 +84,19 @@ window.TL = {
   {
    "id": "a4",
    "title": "Uno a uno",
-   "start": 63.106,
-   "end": 84.235,
+   "start": 67.339,
+   "end": 88.205,
    "beats": [
     {
      "id": "p1",
-     "start": 63.806,
-     "end": 73.358,
+     "start": 68.039,
+     "end": 77.425,
      "text": "Si una posición sube un 10%, sube un 10% para los dos. Mismo porcentaje, distinto tamaño."
     },
     {
      "id": "p2",
-     "start": 73.738,
-     "end": 83.335,
+     "start": 77.805,
+     "end": 87.305,
      "text": "Tu resultado puede variar un poco: precios de entrada, mínimo de $1 por posición y costes."
     }
    ]
@@ -104,19 +104,19 @@ window.TL = {
   {
    "id": "a5",
    "title": "Control",
-   "start": 84.235,
-   "end": 97.866,
+   "start": 88.205,
+   "end": 101.978,
    "beats": [
     {
      "id": "p1",
-     "start": 84.935,
-     "end": 91.534,
+     "start": 88.905,
+     "end": 95.43,
      "text": "Puedes añadir o retirar fondos, pausar la copia o dejar de copiar cuando quieras."
     },
     {
      "id": "p2",
-     "start": 91.914,
-     "end": 96.966,
+     "start": 95.81,
+     "end": 101.078,
      "text": "Si prefieres practicar primero, eToro te da una cuenta virtual con $100.000."
     }
    ]
@@ -124,13 +124,13 @@ window.TL = {
   {
    "id": "ae",
    "title": "Cierre",
-   "start": 97.866,
-   "end": 106.954,
+   "start": 101.978,
+   "end": 111.877,
    "beats": [
     {
      "id": "p1",
-     "start": 98.566,
-     "end": 106.054,
+     "start": 102.678,
+     "end": 110.977,
      "text": ""
     }
    ]
