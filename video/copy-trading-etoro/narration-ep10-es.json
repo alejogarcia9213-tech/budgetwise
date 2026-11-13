@@ -1,5 +1,7 @@
 {
+ "engine": "kokoro",
  "voice": "em_alex",
+ "lang": "es",
  "speed": 1.06,
  "scenes": [
   {
@@ -128,7 +130,7 @@
    "beats": [
     {
      "id": "p1",
-     "say": "Si quieres conocer mi estrategia, busca Alejandro García O en etoro.",
+     "say": "En el siguiente te muestro cómo copiarme en ocho pasos.",
      "show": ""
     }
    ]

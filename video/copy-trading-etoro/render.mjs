@@ -1,6 +1,6 @@
 // Renderiza la animación a fotogramas (Playwright) y los une con la narración (ffmpeg).
-// Uso: node render.mjs [--ep 09|10] [segundos...]
-//   sin --ep  -> video.html (16:9)      con --ep -> reel.html (9:16, reel-epXX.mp4)
+// Uso: node render.mjs [--ep 09|10|11 --lang es|en|de] [segundos...]
+//   sin --ep  -> video.html (16:9)      con --ep -> reel.html (9:16, reels/epXX-lang.mp4)
 //   con segundos -> solo capturas de revisión en build/stills
 import { createRequire } from 'node:module';
 const { chromium } = createRequire(import.meta.url)('playwright');
@@ -10,8 +10,9 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import path from 'node:path';
 
 const dir = path.dirname(fileURLToPath(import.meta.url));
-const args = process.argv.slice(2), ei = args.indexOf('--ep'), ep = ei >= 0 ? args.splice(ei, 2)[1] : null;
-const cfg = ep ? { html: 'reel.html', q: '?ep=' + ep, tl: `timeline-ep${ep}.js`, w: 1080, h: 1920, wav: `narration-ep${ep}.wav`, out: `reel-ep${ep}.mp4`, tag: 'ep' + ep }
+const args = process.argv.slice(2), take = k => { const i = args.indexOf(k); return i >= 0 ? args.splice(i, 2)[1] : null; };
+const ep = take('--ep'), lang = take('--lang') || 'es';
+const cfg = ep ? { html: 'reel.html', q: `?ep=${ep}&lang=${lang}`, tl: `timeline-ep${ep}-${lang}.js`, w: 1080, h: 1920, wav: `narration-ep${ep}-${lang}.wav`, out: `reels/ep${ep}-${lang}.mp4`, tag: `ep${ep}-${lang}` }
   : { html: 'video.html', q: '', tl: 'timeline.js', w: 1920, h: 1080, wav: 'narration.wav', out: 'copy-trading-etoro.mp4', tag: 'main' };
 const FPS = 30, WORKERS = 4;
 const TL = JSON.parse(readFileSync(path.join(dir, cfg.tl), 'utf8').replace(/^window\.TL = /, '').replace(/;\s*$/, ''));
@@ -31,6 +32,7 @@ if (stills.length) {
   for (const t of stills) { await p.evaluate(t => window.setT(t), t); await p.screenshot({ path: path.join(dir, `build/stills/${cfg.tag}-${String(Math.round(t * 10)).padStart(5, '0')}.jpg`), quality: 80 }); }
   await browser.close(); process.exit(0);
 }
+mkdirSync(path.join(dir, 'reels'), { recursive: true });
 const fr = path.join(dir, 'build/frames-' + cfg.tag); rmSync(fr, { recursive: true, force: true }); mkdirSync(fr, { recursive: true });
 const N = Math.ceil(TL.total * FPS); let next = 0;
 await Promise.all(Array.from({ length: WORKERS }, async () => {

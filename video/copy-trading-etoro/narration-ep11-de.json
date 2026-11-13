@@ -1,0 +1,90 @@
+{
+ "engine": "piper",
+ "speed": 1.0,
+ "scenes": [
+  {
+   "id": "ch",
+   "title": "Intro",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Wenn du mich auf eToro kopieren möchtest, findest du mich so: Suche Alechandro Garssia O, in einem Wort, und prüfe, ob es dieses Foto ist.",
+     "show": ""
+    }
+   ]
+  },
+  {
+   "id": "c1",
+   "title": "8 Schritte",
+   "beats": [
+    {
+     "id": "p0",
+     "say": "Es sind acht Schritte.",
+     "show": "Es sind acht Schritte."
+    },
+    {
+     "id": "p1",
+     "say": "Eins. Erstelle dein eToro-Konto und verifiziere deine Identität.",
+     "show": "1. Erstelle dein eToro-Konto und verifiziere deine Identität."
+    },
+    {
+     "id": "p2",
+     "say": "Zwei. Zahle Geld ein, oder übe zuerst im virtuellen Konto.",
+     "show": "2. Zahle Geld ein, oder übe zuerst im virtuellen Konto."
+    },
+    {
+     "id": "p3",
+     "say": "Drei. Suche Alechandro Garssia O, und prüfe Benutzernamen und Foto.",
+     "show": "3. Suche AlejandroGarciaO und prüfe Benutzernamen und Foto."
+    },
+    {
+     "id": "p4",
+     "say": "Vier. Sieh dir mein Portfolio, meine Historie und mein Risiko an.",
+     "show": "4. Sieh dir mein Portfolio, meine Historie und mein Risiko an."
+    },
+    {
+     "id": "p5",
+     "say": "Fünf. Tippe auf Kopieren, wenn die Funktion für dich verfügbar ist.",
+     "show": "5. Tippe auf Kopieren, wenn die Funktion für dich verfügbar ist."
+    },
+    {
+     "id": "p6",
+     "say": "Sechs. Gib den Betrag ein. Das Plattform-Minimum liegt bei zweihundert Dollar.",
+     "show": "6. Gib den Betrag ein. Das Plattform-Minimum liegt bei 200 $."
+    },
+    {
+     "id": "p7",
+     "say": "Sieben. Stelle den Kopier-Stopp-Loss ein. Standard sind vierzig Prozent des Betrags, du wählst zwischen fünf und fünfundneunzig.",
+     "show": "7. Stelle den Copy Stop-Loss ein. Standard: 40 % des Betrags; du wählst 5–95 %."
+    },
+    {
+     "id": "p8",
+     "say": "Acht. Prüfe die Zusammenfassung, und bestätige erst, wenn du verstehst, wie die Positionen eröffnet werden und wie viel du verlieren kannst.",
+     "show": "8. Prüfe die Zusammenfassung und bestätige erst, wenn du verstehst, wie Positionen eröffnet werden und wie viel du verlieren kannst."
+    }
+   ]
+  },
+  {
+   "id": "c2",
+   "title": "Vor dem Bestätigen",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Bevor du bestätigst, halte kurz inne. Prüfe Portfolio, Historie und Risiko. Verstehe, wie die Positionen eröffnet werden. Und akzeptiere, wie viel du verlieren kannst: Dein Kapital ist einem Risiko ausgesetzt.",
+     "show": ""
+    }
+   ]
+  },
+  {
+   "id": "ce",
+   "title": "Outro",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Wenn du meine Strategie kennenlernen möchtest, sieh dir mein Profil auf eToro an.",
+     "show": ""
+    }
+   ]
+  }
+ ]
+}

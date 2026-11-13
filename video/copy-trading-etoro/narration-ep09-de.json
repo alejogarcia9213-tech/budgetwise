@@ -1,0 +1,113 @@
+{
+ "engine": "piper",
+ "speed": 1.0,
+ "scenes": [
+  {
+   "id": "ah",
+   "title": "Intro",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Was passiert in deinem Konto, wenn du einen Investor auf eToro kopierst? Ich zeige es dir von innen.",
+     "show": ""
+    }
+   ]
+  },
+  {
+   "id": "a1",
+   "title": "Was es ist",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Du wählst einen Investor, und dein Konto kopiert jede seiner Transaktionen, automatisch und proportional.",
+     "show": "Du wählst einen Investor und dein Konto kopiert jede Transaktion, automatisch und proportional."
+    },
+    {
+     "id": "p2",
+     "say": "Wenn er kauft, kaufst du. Wenn er verkauft, verkaufst du.",
+     "show": "Wenn er kauft, kaufst du. Wenn er verkauft, verkaufst du."
+    }
+   ]
+  },
+  {
+   "id": "a2",
+   "title": "Proportional",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Das ist mein öffentliches Portfolio: zwölf Komma fünf Prozent in Meta, neun Komma sechs in Meikrosoft, weitere Positionen, und rund achtundfünfzig Prozent Bargeld.",
+     "show": "Mein öffentliches Portfolio: 12,5 % Meta, 9,6 % Microsoft, weitere Positionen und rund 58 % Cash."
+    },
+    {
+     "id": "p2",
+     "say": "Wenn du mich mit tausend Dollar kopierst, wird dein Geld genau gleich aufgeteilt: hundertfünfundzwanzig in Meta, sechsundneunzig in Meikrosoft, und so weiter bei jeder Position.",
+     "show": "Kopierst du mich mit 1.000 $, wird dein Geld genauso aufgeteilt: 125 $ Meta, 96 $ Microsoft, und so weiter."
+    }
+   ]
+  },
+  {
+   "id": "a3",
+   "title": "Kauf und Verkauf",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Wenn ich fünf Prozent meines Portfolios nutze, um eine neue Aktie zu kaufen, zum Beispiel Enwidia, nutzt deine Kopie fünf Prozent deines Geldes, also fünfzig Dollar, um dieselbe Aktie zu kaufen.",
+     "show": "Nutze ich 5 % meines Portfolios für eine neue Aktie, z. B. Nvidia, nutzt deine Kopie 5 % deines Geldes (50 $) für dieselbe."
+    },
+    {
+     "id": "p2",
+     "say": "Und wenn ich meine Tesla-Position schließe, schließt deine Kopie sie auch, und das Geld fließt zurück in dein Bargeld.",
+     "show": "Schließe ich meine Tesla-Position, schließt deine Kopie sie auch und das Geld fließt zurück in dein Cash."
+    },
+    {
+     "id": "p3",
+     "say": "Alles passt sich von selbst an, hinter den Kulissen, ohne dass du etwas tun musst.",
+     "show": "Alles passt sich von selbst an, hinter den Kulissen, ohne dass du etwas tun musst."
+    }
+   ]
+  },
+  {
+   "id": "a4",
+   "title": "Eins zu eins",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Auch der Wert bewegt sich eins zu eins. Steigt eine Position um zehn Prozent, steigt sie für uns beide um zehn Prozent. Gleicher Prozentsatz, andere Größe.",
+     "show": "Steigt eine Position um 10 %, steigt sie für uns beide um 10 %. Gleicher Prozentsatz, andere Größe."
+    },
+    {
+     "id": "p2",
+     "say": "Aber: Dein Ergebnis kann etwas abweichen. Du steigst zu anderen Kursen ein, Positionen unter einem Dollar werden nicht eröffnet, und jede Transaktion hat Kosten.",
+     "show": "Dein Ergebnis kann etwas abweichen: Einstiegskurse, 1 $ Minimum pro Position und Kosten."
+    }
+   ]
+  },
+  {
+   "id": "a5",
+   "title": "Kontrolle",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Du behältst die Kontrolle: Du kannst Geld hinzufügen oder abheben, die Kopie pausieren, oder das Kopieren jederzeit beenden.",
+     "show": "Du kannst Geld hinzufügen oder abheben, die Kopie pausieren oder jederzeit beenden."
+    },
+    {
+     "id": "p2",
+     "say": "Und wenn du lieber erst üben möchtest, gibt dir eToro ein virtuelles Konto mit hunderttausend Dollar.",
+     "show": "Wenn du lieber erst üben möchtest, gibt dir eToro ein virtuelles Konto mit 100.000 $."
+    }
+   ]
+  },
+  {
+   "id": "ae",
+   "title": "Outro",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Speichere dieses Video, wenn du gerade lernst, wie Kopi-Trejding funktioniert. Im nächsten zeige ich dir, wie eine Kopie wächst, wenn du jeden Monat einzahlst.",
+     "show": ""
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,137 @@
+{
+ "engine": "piper",
+ "speed": 1.0,
+ "scenes": [
+  {
+   "id": "bh",
+   "title": "Intro",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Einmal investieren und vergessen reicht selten. Jeden Monat einen festen Betrag einzuzahlen, verändert alles. Schau.",
+     "show": ""
+    }
+   ]
+  },
+  {
+   "id": "b1",
+   "title": "Wer ich bin",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Ich bin Alechandro Garssia O, Popjular Investor Tschämpion bei eToro. Ich investiere langfristig, ohne hohen Hebel, mit Risikostufe drei.",
+     "show": "Ich bin @AlejandroGarciaO, Popular Investor Champion bei eToro. Langfristig, kein hoher Hebel, Risiko 3."
+    },
+    {
+     "id": "p2",
+     "say": "Seit April zweitausendzweiundzwanzig hat mein Portfolio dreiundfünfzig Prozent zugelegt.",
+     "show": "Seit April 2022 hat mein Portfolio 53 % zugelegt."
+    }
+   ]
+  },
+  {
+   "id": "b2",
+   "title": "Jahr für Jahr",
+   "beats": [
+    {
+     "id": "p0",
+     "say": "Das sind meine echten Ergebnisse, Jahr für Jahr.",
+     "show": "Das sind meine echten Ergebnisse, Jahr für Jahr."
+    },
+    {
+     "id": "p1",
+     "say": "Zweitausendzweiundzwanzig war negativ: minus sechzehn Komma acht Prozent.",
+     "show": "2022, negativ: −16,8 %."
+    },
+    {
+     "id": "p2",
+     "say": "Zweitausenddreiundzwanzig: plus sechsundzwanzig.",
+     "show": "2023: +26,1 %."
+    },
+    {
+     "id": "p3",
+     "say": "Zweitausendvierundzwanzig: plus zehn Komma neun.",
+     "show": "2024: +10,9 %."
+    },
+    {
+     "id": "p4",
+     "say": "Zweitausendfünfundzwanzig: plus dreiundzwanzig.",
+     "show": "2025: +23,0 %."
+    },
+    {
+     "id": "p5",
+     "say": "Und bisher in zweitausendsechsundzwanzig: plus sieben Komma eins. Wer mich kopiert, erzielt praktisch dieselben Prozentsätze.",
+     "show": "2026 bisher: +7,1 %. Wer mich kopiert, erzielt praktisch dieselben Prozentsätze."
+    }
+   ]
+  },
+  {
+   "id": "b3",
+   "title": "Schneeball",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Stell dir vor, du kopierst mich und zahlst seit April zweitausendzweiundzwanzig jeden Monat dreihundert Dollar ein.",
+     "show": "Stell dir vor, du kopierst mich und zahlst seit April 2022 jeden Monat 300 $ ein."
+    },
+    {
+     "id": "p2",
+     "say": "Im ersten Jahr fiel mein Portfolio um fast siebzehn Prozent. Aber du hast weiter eingezahlt, und jede Einzahlung hat günstiger gekauft. Am Jahresende lagst du nur rund fünf Prozent im Minus.",
+     "show": "Im ersten Jahr fiel ich um fast 17 %. Du hast weiter eingezahlt und günstiger gekauft: Am Jahresende lagst du nur rund 5 % im Minus."
+    },
+    {
+     "id": "p3",
+     "say": "Als die Erholung kam, stieg alles, was du günstig gekauft hattest, mit mir. Der Schneeball wächst: Einzahlungen plus Gewinne, die neue Gewinne erzeugen.",
+     "show": "Mit der Erholung stieg mit mir, was du günstig gekauft hattest. Der Schneeball wächst: Einzahlungen plus Gewinne auf Gewinne."
+    },
+    {
+     "id": "p4",
+     "say": "Heute hättest du sechzehntausendachthundert Dollar eingezahlt, und hättest rund dreiundzwanzigtausendzweihundert.",
+     "show": "Heute hättest du 16.800 $ eingezahlt und rund 23.200 $."
+    },
+    {
+     "id": "p5",
+     "say": "Die monatlichen Prozentsätze sind dieselben wie meine. Aber weil du in den Rücksetzern mehr gekauft hast, hat dein Geld rund vierzehn Prozent pro Jahr erzielt, gegenüber knapp zehn bei einer einmaligen Anlage am Anfang.",
+     "show": "Gleiche Prozentsätze wie ich. Aber durch Käufe in den Rücksetzern erzielte dein Geld rund 14 % pro Jahr, statt knapp 10 % bei einer Einmalanlage."
+    }
+   ]
+  },
+  {
+   "id": "b4",
+   "title": "FIRE-Zahl",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Bis wann? Bis zu deiner Feier-Zahl: deine Ausgaben eines Jahres, mal fünfundzwanzig.",
+     "show": "Bis wann? Bis zu deiner FIRE-Zahl: deine Jahresausgaben × 25."
+    },
+    {
+     "id": "p2",
+     "say": "Wenn du mit eintausendfünfhundert Dollar im Monat lebst, liegt deine Zahl bei vierhundertfünfzigtausend.",
+     "show": "Lebst du mit 1.500 $ im Monat, liegt deine Zahl bei 450.000 $."
+    },
+    {
+     "id": "p3",
+     "say": "Bei hypothetischen acht Prozent pro Jahr: Mit dreihundert im Monat wärst du in etwa dreißig Jahren dort. Mit sechshundert in zweiundzwanzigeinhalb. Mit tausend in etwa siebzehn.",
+     "show": "Bei hypothetischen 8 % pro Jahr: 300 $ im Monat, etwa 30 Jahre; 600 $, 22,5; 1.000 $, etwa 17."
+    },
+    {
+     "id": "p4",
+     "say": "Der Schlüssel: ein fester Betrag, jeden Monat, auch wenn der Markt fällt.",
+     "show": "Der Schlüssel: ein fester Betrag, jeden Monat, auch wenn der Markt fällt."
+    }
+   ]
+  },
+  {
+   "id": "be",
+   "title": "Outro",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Im nächsten zeige ich dir, wie du mich in acht Schritten kopierst.",
+     "show": ""
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,139 @@
+{
+ "engine": "kokoro",
+ "voice": "am_michael",
+ "lang": "en-us",
+ "speed": 1.0,
+ "scenes": [
+  {
+   "id": "bh",
+   "title": "Intro",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Investing once and forgetting about it is rarely enough. Adding a fixed amount every month changes the story. Watch.",
+     "show": ""
+    }
+   ]
+  },
+  {
+   "id": "b1",
+   "title": "Who I am",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "I'm Alejandro Garcia O, a Popular Investor Champion on eToro. I invest long term, with no high leverage, at risk level three.",
+     "show": "I'm @AlejandroGarciaO, a Popular Investor Champion on eToro. Long term, no high leverage, risk 3."
+    },
+    {
+     "id": "p2",
+     "say": "Since April twenty twenty-two, my portfolio has gained fifty-three percent.",
+     "show": "Since April 2022, my portfolio has gained 53%."
+    }
+   ]
+  },
+  {
+   "id": "b2",
+   "title": "Year by year",
+   "beats": [
+    {
+     "id": "p0",
+     "say": "These are my real results, year by year.",
+     "show": "These are my real results, year by year."
+    },
+    {
+     "id": "p1",
+     "say": "Twenty twenty-two was negative: minus sixteen point eight percent.",
+     "show": "2022, negative: −16.8%."
+    },
+    {
+     "id": "p2",
+     "say": "Twenty twenty-three, plus twenty-six.",
+     "show": "2023: +26.1%."
+    },
+    {
+     "id": "p3",
+     "say": "Twenty twenty-four, plus ten point nine.",
+     "show": "2024: +10.9%."
+    },
+    {
+     "id": "p4",
+     "say": "Twenty twenty-five, plus twenty-three.",
+     "show": "2025: +23.0%."
+    },
+    {
+     "id": "p5",
+     "say": "And so far in twenty twenty-six, plus seven point one. Whoever copies me gets practically the same percentages.",
+     "show": "2026 so far: +7.1%. Whoever copies me gets practically the same percentages."
+    }
+   ]
+  },
+  {
+   "id": "b3",
+   "title": "Snowball",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Now imagine you copy me adding three hundred dollars every month, since April twenty twenty-two.",
+     "show": "Imagine you copy me adding $300 every month, since April 2022."
+    },
+    {
+     "id": "p2",
+     "say": "The first year, my portfolio fell almost seventeen percent. But you kept adding, and every contribution bought cheaper. By the end of that year, you were down only about five percent.",
+     "show": "The first year I fell almost 17%. But you kept adding and each contribution bought cheaper: by year end you were down only about 5%."
+    },
+    {
+     "id": "p3",
+     "say": "When the recovery came, everything you bought cheap went up with me. The snowball grows: contributions, plus gains that generate new gains.",
+     "show": "With the recovery, what you bought cheap went up with me. The snowball grows: contributions plus gains on gains."
+    },
+    {
+     "id": "p4",
+     "say": "Today you would have put in sixteen thousand eight hundred dollars, and you would have about twenty-three thousand two hundred.",
+     "show": "Today you would have put in $16,800 and you would have about $23,200."
+    },
+    {
+     "id": "p5",
+     "say": "The monthly percentages are the same as mine. But because you bought more during the dips, your money earned about fourteen percent a year, versus almost ten for a single investment at the start.",
+     "show": "Same percentages as mine. But by buying more in the dips, your money earned about 14% a year, versus almost 10% for a single upfront investment."
+    }
+   ]
+  },
+  {
+   "id": "b4",
+   "title": "FIRE number",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Until when? Until your fire number: one year of expenses, multiplied by twenty-five.",
+     "show": "Until when? Until your FIRE number: one year of expenses × 25."
+    },
+    {
+     "id": "p2",
+     "say": "If you live on fifteen hundred dollars a month, your number is four hundred fifty thousand.",
+     "show": "If you live on $1,500 a month, your number is $450,000."
+    },
+    {
+     "id": "p3",
+     "say": "At a hypothetical eight percent a year, adding three hundred a month you would get there in about thirty years. With six hundred, in twenty-two and a half. With one thousand, in about seventeen.",
+     "show": "At a hypothetical 8% a year: $300 a month, about 30 years; $600, 22 and a half; $1,000, about 17."
+    },
+    {
+     "id": "p4",
+     "say": "The key: a fixed amount, every month, even when the market falls.",
+     "show": "The key: a fixed amount, every month, even when the market falls."
+    }
+   ]
+  },
+  {
+   "id": "be",
+   "title": "Outro",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Next, I show you how to copy me in eight steps.",
+     "show": ""
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,92 @@
+{
+ "engine": "kokoro",
+ "voice": "am_michael",
+ "lang": "en-us",
+ "speed": 1.0,
+ "scenes": [
+  {
+   "id": "ch",
+   "title": "Intro",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "If you want to copy me on eToro, this is how you find me: search Alejandro Garcia O, as one word, and check that it is this photo.",
+     "show": ""
+    }
+   ]
+  },
+  {
+   "id": "c1",
+   "title": "8 steps",
+   "beats": [
+    {
+     "id": "p0",
+     "say": "It takes eight steps.",
+     "show": "It takes eight steps."
+    },
+    {
+     "id": "p1",
+     "say": "One. Create your eToro account and verify your identity.",
+     "show": "1. Create your eToro account and verify your identity."
+    },
+    {
+     "id": "p2",
+     "say": "Two. Deposit funds, or practise first in the virtual account.",
+     "show": "2. Deposit funds, or practise first in the virtual account."
+    },
+    {
+     "id": "p3",
+     "say": "Three. Search Alejandro Garcia O, and check the username and the photo.",
+     "show": "3. Search AlejandroGarciaO and check the username and the photo."
+    },
+    {
+     "id": "p4",
+     "say": "Four. Review my portfolio, my history and my risk level.",
+     "show": "4. Review my portfolio, my history and my risk level."
+    },
+    {
+     "id": "p5",
+     "say": "Five. Tap Copy, if the feature is available to you.",
+     "show": "5. Tap Copy, if the feature is available to you."
+    },
+    {
+     "id": "p6",
+     "say": "Six. Enter the amount. The platform minimum is two hundred dollars.",
+     "show": "6. Enter the amount. The platform minimum is $200."
+    },
+    {
+     "id": "p7",
+     "say": "Seven. Adjust the Copy Stop-Loss. By default it is forty percent of the amount, and you choose between five and ninety-five.",
+     "show": "7. Adjust the Copy Stop-Loss. By default it is 40% of the amount; you choose between 5–95%."
+    },
+    {
+     "id": "p8",
+     "say": "Eight. Review the summary, and confirm only when you understand how the positions will open and how much you can lose.",
+     "show": "8. Review the summary and confirm only when you understand how the positions will open and how much you can lose."
+    }
+   ]
+  },
+  {
+   "id": "c2",
+   "title": "Before you confirm",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Before you confirm, pause for a second. Review the portfolio, the history and the risk. Understand how the positions will open. And accept how much you can lose: your capital is at risk.",
+     "show": ""
+    }
+   ]
+  },
+  {
+   "id": "ce",
+   "title": "Outro",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "If you want to know my strategy, review my profile on eToro.",
+     "show": ""
+    }
+   ]
+  }
+ ]
+}

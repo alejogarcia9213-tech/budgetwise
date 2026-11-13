@@ -1,11 +1,13 @@
 <!doctype html>
-<html lang="es">
+<html>
 <head>
 <meta charset="utf-8">
 <title>Reel · Copy Trading en eToro</title>
+<script src="i18n.js"></script>
 <script>
-  const EP = new URLSearchParams(location.search).get('ep') || '09';
-  document.write('<script src="timeline-ep' + EP + '.js"><\/script>');
+  const QS = new URLSearchParams(location.search), EP = QS.get('ep') || '09', LANG = QS.get('lang') || 'es';
+  document.documentElement.lang = LANG;
+  document.write('<script src="timeline-ep' + EP + '-' + LANG + '.js"><\/script>');
 </script>
 <style>
 :root{--g:#2fe36e;--g2:#3df07f;--tx:#f3fff7;--mut:#9fb8a9;--line:rgba(47,227,110,.26);--card:rgba(9,38,24,.62);--gold:#cdb766;--red:#ff6b6b}
@@ -19,7 +21,7 @@ h2{font-size:60px;line-height:1.07;font-weight:700;letter-spacing:-.035em}
 .g{color:var(--g2)} .m{color:var(--mut)} .r{color:var(--red)}
 .card{position:absolute;background:var(--card);border:1.5px solid var(--line);border-radius:24px}
 .abs{position:absolute}
-#pill{position:absolute;left:72px;top:290px;display:inline-flex;align-items:center;gap:12px;padding:9px 20px 9px 16px;border-radius:999px;border:1.5px solid rgba(47,227,110,.55);font-size:22px;font-weight:600;background:rgba(3,20,12,.5)}
+#pill{position:absolute;left:72px;top:290px;display:inline-flex;align-items:center;gap:12px;padding:9px 20px 9px 16px;border-radius:999px;border:1.5px solid rgba(47,227,110,.55);font-size:22px;font-weight:600;background:rgba(3,20,12,.5);white-space:nowrap}
 #pill i{width:10px;height:10px;border-radius:50%;background:var(--g);box-shadow:0 0 10px var(--g)}
 #cap{position:absolute;left:72px;top:1312px;width:936px;height:160px;display:flex;align-items:center;justify-content:center}
 #capt{font-size:37px;line-height:1.24;font-weight:600;text-align:center;letter-spacing:-.015em}
@@ -34,7 +36,6 @@ h2{font-size:60px;line-height:1.07;font-weight:700;letter-spacing:-.035em}
 .chip{display:inline-flex;align-items:center;padding:9px 20px;border-radius:999px;border:1.5px solid rgba(255,255,255,.3);font-size:27px;font-weight:600;white-space:nowrap}
 .badge{display:inline-flex;align-items:center;gap:10px;padding:9px 22px;border-radius:999px;background:var(--g);color:#032012;font-size:28px;font-weight:800}
 .photo{position:absolute;border-radius:26px;border:2.5px solid var(--g);object-fit:cover;box-shadow:0 0 50px rgba(47,227,110,.18)}
-/* donuts */
 .pc{left:0;width:936px;padding:20px 28px}
 .pc h3{font-size:29px;font-weight:700;letter-spacing:-.02em;display:flex;align-items:center;gap:12px}
 .pc .cs{font-size:20px;color:var(--g2);font-weight:600;margin:2px 0 6px}
@@ -43,14 +44,30 @@ h2{font-size:60px;line-height:1.07;font-weight:700;letter-spacing:-.035em}
 .lr img,.lr .dt{width:27px;height:27px;border-radius:50%;flex:none}
 .dt{display:flex;align-items:center;justify-content:center;font-weight:800;color:#06140c;font-size:17px}
 .lr .nm{font-size:23px;font-weight:700;flex:1}.lr .vl{font-size:25px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--g2)}
-.evt{position:absolute;left:0;top:890px;width:936px;text-align:center;font-size:28px;font-weight:800;padding:13px;border-radius:18px;border:1.5px solid}
-.pillb{padding:10px 20px;border-radius:14px;font-size:24px;font-weight:800;text-align:center;border:1.5px solid}
+.evt{position:absolute;left:0;top:890px;width:936px;text-align:center;font-size:27px;font-weight:800;padding:13px;border-radius:18px;border:1.5px solid;white-space:nowrap}
+.pillb{padding:10px 8px;border-radius:14px;font-size:23px;font-weight:800;text-align:center;border:1.5px solid}
 .li{position:absolute;left:0;width:936px;display:flex;align-items:center;gap:20px;padding:20px 24px;font-size:30px;font-weight:600;line-height:1.2}
 .li .no{width:46px;height:46px;border-radius:50%;border:2px solid var(--g);color:var(--g);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;flex:none}
 .tile{width:460px;height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;font-size:31px;font-weight:700}
 .tile .ic{width:74px;height:74px;border-radius:50%;border:3px solid var(--g);color:var(--g);display:flex;align-items:center;justify-content:center;font-size:40px;font-weight:700}
 .kp{padding:16px 22px}.kp .n{font-size:43px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}.kp .t{font-size:20px;color:var(--mut);font-weight:600}
-.fr{display:flex;align-items:center;gap:20px;height:70px}.fr .lb{width:225px;font-size:29px;font-weight:800;white-space:nowrap}.fr .trk{flex:1;height:26px;border-radius:13px;background:rgba(255,255,255,.07);overflow:hidden}.fr .brr{height:100%;border-radius:13px;width:0;background:var(--g)}.fr .yr{width:235px;font-size:28px;font-weight:800;white-space:nowrap;color:var(--g2)}
+.fr{display:flex;align-items:center;gap:18px;height:70px}.fr .lb{width:240px;font-size:28px;font-weight:800;white-space:nowrap}.fr .trk{flex:1;height:26px;border-radius:13px;background:rgba(255,255,255,.07);overflow:hidden}.fr .brr{height:100%;border-radius:13px;width:0;background:var(--g)}.fr .yr{width:270px;font-size:27px;font-weight:800;white-space:nowrap;color:var(--g2)}
+/* eToro-like identity (real thumbnail) */
+.idc{display:flex;align-items:center;gap:26px}
+.idc img{border-radius:50%;object-fit:cover;flex:none}
+.idc .n1{font-weight:700;letter-spacing:-.03em;display:flex;align-items:center;gap:12px;white-space:nowrap}
+.idc .st{color:#e5343a}
+/* phone (ep 11) */
+.phone{position:absolute;left:0;top:104px;width:356px;height:724px;border-radius:50px;background:#02100a;border:3px solid rgba(47,227,110,.6);box-shadow:0 0 60px rgba(47,227,110,.16);padding:12px}
+.scr{position:absolute;inset:12px;border-radius:38px;background:#f4f7f5;color:#0e1a14;overflow:hidden;padding:54px 22px 22px}
+.scr:before{content:"";position:absolute;left:50%;top:14px;width:96px;height:24px;margin-left:-48px;border-radius:12px;background:#02100a}
+.scr h4{font-size:25px;font-weight:800;margin-bottom:16px;letter-spacing:-.02em}
+.fld{border:2px solid #d3ddd7;border-radius:14px;padding:13px 14px;font-size:18px;color:#5d6e65;margin-bottom:11px;background:#fff}
+.btn{background:#13c636;color:#fff;border-radius:999px;padding:16px;text-align:center;font-weight:800;font-size:22px;position:absolute;left:22px;right:22px;bottom:26px}
+.sm{font-size:16px;color:#5d6e65;line-height:1.3}
+.stp{position:absolute;left:378px;width:558px;height:82px;display:flex;align-items:center;gap:16px;padding:0 18px;border-radius:18px;border:1.5px solid transparent}
+.stp .no{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:21px;font-weight:800;border:2px solid rgba(255,255,255,.3);color:var(--mut);flex:none}
+.stp .tx{font-size:24px;font-weight:600;line-height:1.15;color:var(--mut)}
 svg text{font-family:'Inter Display',Inter,sans-serif}
 </style>
 </head>
@@ -60,173 +77,211 @@ svg text{font-family:'Inter Display',Inter,sans-serif}
 <!-- ============ EP 09 ============ -->
 <section class="scene" id="ah">
   <img class="photo" src="assets/brand/foto-quirofano.jpg" style="left:208px;top:0;width:520px;height:700px" data-at="ah" data-d=".1" data-fx="scale">
-  <h2 class="abs" style="top:736px;width:936px" data-at="ah" data-d=".5">¿Qué pasa en tu cuenta cuando copias a un inversor en eToro?</h2>
-  <div class="abs" style="top:944px;width:70px;height:4px;border-radius:2px;background:var(--g)" data-at="ah" data-d="1.2"></div>
-  <div class="abs g" style="top:966px;font-size:38px;font-weight:700;letter-spacing:-.02em" data-at="ah" data-d="3.6">Te lo muestro por dentro.</div>
+  <h2 class="abs" style="top:736px;width:936px" data-at="ah" data-d=".5" data-t="ah_h"></h2>
+  <div class="abs g" style="top:966px;font-size:38px;font-weight:700;letter-spacing:-.02em" data-at="ah" data-d="3.6" data-t="ah_s"></div>
 </section>
 
 <section class="scene" id="a1">
-  <h2>Eliges a un inversor. Tu cuenta copia sus operaciones.</h2>
-  <div class="card" style="left:0;top:190px;width:936px;height:200px;padding:0 34px;display:flex;align-items:center;gap:28px" data-at="a1" data-d=".4">
+  <h2 data-t="a1_h"></h2>
+  <div class="card" style="left:0;top:190px;width:936px;height:200px;padding:0 30px;display:flex;align-items:center;gap:26px" data-at="a1" data-d=".4">
     <img class="av" src="assets/brand/avatar.jpg" style="width:124px;height:124px">
-    <div style="flex:1"><div style="font-size:42px;font-weight:700;letter-spacing:-.02em">El inversor</div><div class="g" style="font-size:26px;font-weight:600">Decide qué comprar y vender</div></div>
-    <div style="display:flex;flex-direction:column;gap:10px;width:200px"><div class="pillb" id="a1b1">COMPRA</div><div class="pillb" id="a1s1">VENDE</div></div>
+    <div style="flex:1"><div style="font-size:42px;font-weight:700;letter-spacing:-.02em" data-t="inv"></div><div class="g" style="font-size:25px;font-weight:600" data-t="inv_s"></div></div>
+    <div style="display:flex;flex-direction:column;gap:10px;width:190px"><div class="pillb" id="a1b1" data-t="buy"></div><div class="pillb" id="a1s1" data-t="sell"></div></div>
   </div>
-  <svg class="abs" style="left:0;top:390px" width="936" height="150"><line x1="96" y1="8" x2="96" y2="130" stroke="#2fe36e" stroke-width="3" stroke-dasharray="6 9"/><path d="M84 122 L96 142 L108 122" fill="none" stroke="#2fe36e" stroke-width="3"/><circle id="a1dot" cx="96" cy="8" r="11" fill="#eafff1"/><rect x="140" y="50" width="330" height="50" rx="25" fill="none" stroke="#2fe36e" stroke-width="1.5"/><text x="305" y="83" text-anchor="middle" fill="#3df07f" font-size="23" font-weight="700" letter-spacing="3">COPIA AUTOMÁTICA</text></svg>
-  <div class="card" style="left:0;top:540px;width:936px;height:200px;padding:0 34px;display:flex;align-items:center;gap:28px" data-at="a1" data-d=".9">
+  <svg class="abs" style="left:0;top:390px" width="936" height="150"><line x1="96" y1="8" x2="96" y2="130" stroke="#2fe36e" stroke-width="3" stroke-dasharray="6 9"/><path d="M84 122 L96 142 L108 122" fill="none" stroke="#2fe36e" stroke-width="3"/><circle id="a1dot" cx="96" cy="8" r="11" fill="#eafff1"/><rect x="140" y="50" width="390" height="50" rx="25" fill="none" stroke="#2fe36e" stroke-width="1.5"/><text x="335" y="83" text-anchor="middle" fill="#3df07f" font-size="23" font-weight="700" letter-spacing="3" data-t="auto"></text></svg>
+  <div class="card" style="left:0;top:540px;width:936px;height:200px;padding:0 30px;display:flex;align-items:center;gap:26px" data-at="a1" data-d=".9">
     <div class="you" style="width:124px;height:124px"><svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.600 8 7"/></svg></div>
-    <div style="flex:1"><div style="font-size:42px;font-weight:700;letter-spacing:-.02em">Tú · tu cuenta</div><div class="g" style="font-size:26px;font-weight:600">Hace lo mismo, a tu escala</div></div>
-    <div style="display:flex;flex-direction:column;gap:10px;width:200px"><div class="pillb" id="a1b2">COMPRA</div><div class="pillb" id="a1s2">VENDE</div></div>
+    <div style="flex:1"><div style="font-size:42px;font-weight:700;letter-spacing:-.02em" data-t="you"></div><div class="g" style="font-size:25px;font-weight:600" data-t="you_s"></div></div>
+    <div style="display:flex;flex-direction:column;gap:10px;width:190px"><div class="pillb" id="a1b2" data-t="buy"></div><div class="pillb" id="a1s2" data-t="sell"></div></div>
   </div>
 </section>
 
 <section class="scene" id="a2">
-  <h2>La copia es <span class="g">proporcional</span>.</h2>
-  <div class="card pc" style="top:100px" data-at="a2" data-d=".3"><h3><img class="av" src="assets/brand/avatar.jpg" style="width:40px;height:40px">Portafolio de @AlejandroGarciaO</h3><div class="cs">% de mi portafolio en cada posición</div><div class="pp" id="a2L"></div></div>
-  <div class="card pc" style="top:498px" data-at="a2.p2" data-d="-.2"><h3>Tu copia de $1.000</h3><div class="cs">Los mismos porcentajes, en tu dinero</div><div class="pp" id="a2R"></div></div>
+  <h2 data-t="a2_h"></h2>
+  <div class="card pc" style="top:100px" data-at="a2" data-d=".3"><h3><img class="av" src="assets/brand/avatar.jpg" style="width:40px;height:40px"><span data-t="pf_of"></span></h3><div class="cs" data-t="pf_s"></div><div class="pp" id="a2L"></div></div>
+  <div class="card pc" style="top:498px" data-at="a2.p2" data-d="-.2"><h3 data-t="yc"></h3><div class="cs" data-t="yc_s"></div><div class="pp" id="a2R"></div></div>
 </section>
 
 <section class="scene" id="a3">
-  <h2>Tu copia se <span class="g">reacomoda sola</span>.</h2>
-  <div class="card pc" style="top:100px" data-at="a3" data-d=".2"><h3><img class="av" src="assets/brand/avatar.jpg" style="width:40px;height:40px">Portafolio de @AlejandroGarciaO</h3><div class="cs">Yo decido qué comprar y qué vender</div><div class="pp" id="a3L"></div></div>
-  <div class="card pc" style="top:498px" data-at="a3" data-d=".4"><h3>Tu copia de $1.000</h3><div class="cs">Se ajusta al instante, automáticamente</div><div class="pp" id="a3R"></div></div>
+  <h2 data-t="a3_h"></h2>
+  <div class="card pc" style="top:100px" data-at="a3" data-d=".2"><h3><img class="av" src="assets/brand/avatar.jpg" style="width:40px;height:40px"><span data-t="pf_of"></span></h3><div class="cs" data-t="a3_s1"></div><div class="pp" id="a3L"></div></div>
+  <div class="card pc" style="top:498px" data-at="a3" data-d=".4"><h3 data-t="yc"></h3><div class="cs" data-t="a3_s2"></div><div class="pp" id="a3R"></div></div>
   <div class="evt" id="a3e"></div>
 </section>
 
 <section class="scene" id="a4">
-  <h2>Se mueve <span class="g">1 a 1</span> conmigo.</h2>
+  <h2 data-t="a4_h"></h2>
   <div class="card" style="left:0;top:100px;width:936px;height:176px;padding:0 30px;display:flex;align-items:center;gap:22px" data-at="a4" data-d=".3">
-    <img class="av" src="assets/brand/avatar.jpg" style="width:92px;height:92px"><div style="flex:1"><div style="font-size:33px;font-weight:700">Alejandro</div><div class="g" style="font-size:24px;font-weight:600">Posición: 5% de mi portafolio</div></div>
-    <div id="a4p1" style="font-size:76px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums">0,0%</div>
+    <img class="av" src="assets/brand/avatar.jpg" style="width:92px;height:92px"><div style="flex:1"><div style="font-size:33px;font-weight:700">Alejandro</div><div class="g" style="font-size:24px;font-weight:600" data-t="a4_pos"></div></div>
+    <div id="a4p1" style="font-size:72px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;white-space:nowrap"></div>
   </div>
   <div class="card" style="left:0;top:292px;width:936px;height:176px;padding:0 30px;display:flex;align-items:center;gap:22px" data-at="a4" data-d=".6">
-    <div class="you" style="width:92px;height:92px"><svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.600 8 7"/></svg></div><div style="flex:1"><div style="font-size:33px;font-weight:700">Tu copia de $1.000</div><div class="g" style="font-size:24px;font-weight:600">5% de tu copia · <span id="a4v">$50,00</span></div></div>
-    <div style="text-align:right"><div id="a4p2" style="font-size:76px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1">0,0%</div><div id="a4d" style="font-size:27px;font-weight:700;font-variant-numeric:tabular-nums">$0,00</div></div>
+    <div class="you" style="width:92px;height:92px"><svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.600 8 7"/></svg></div><div style="flex:1"><div style="font-size:33px;font-weight:700" data-t="yc"></div><div class="g" style="font-size:24px;font-weight:600"><span data-t="a4_you"></span><span id="a4v"></span></div></div>
+    <div style="text-align:right"><div id="a4p2" style="font-size:72px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1;white-space:nowrap"></div><div id="a4d" style="font-size:27px;font-weight:700;font-variant-numeric:tabular-nums"></div></div>
   </div>
-  <div class="abs" style="top:500px;width:936px;font-size:36px;font-weight:700;letter-spacing:-.02em" data-at="a4.p2" data-d="-.1">El resultado <span class="g">puede variar</span>:</div>
-  <div class="card li" style="top:562px" data-at="a4.p2" data-d="2.4"><div class="no">1</div>Al empezar, entras a precios distintos de los que yo pagué.</div>
-  <div class="card li" style="top:680px" data-at="a4.p2" data-d="4.6"><div class="no">2</div>El mínimo por posición es $1: si no se alcanza, no se abre.</div>
-  <div class="card li" style="top:798px" data-at="a4.p2" data-d="7.4"><div class="no">3</div>El mercado y los costes de cada operación cambian el resultado.</div>
+  <div class="abs" style="top:500px;width:936px;font-size:36px;font-weight:700;letter-spacing:-.02em" data-at="a4.p2" data-d="-.1" data-t="a4_var"></div>
+  <div class="card li" style="top:562px" data-frac="a4.p2:.22"><div class="no">1</div><span data-t="a4_1"></span></div>
+  <div class="card li" style="top:680px" data-frac="a4.p2:.45"><div class="no">2</div><span data-t="a4_2"></span></div>
+  <div class="card li" style="top:798px" data-frac="a4.p2:.74"><div class="no">3</div><span data-t="a4_3"></span></div>
 </section>
 
 <section class="scene" id="a5">
-  <h2>Tú mantienes el <span class="g">control</span>.</h2>
-  <div class="card tile" style="left:0;top:100px" data-at="a5.p1" data-d="2.2"><div class="ic">+</div>Añadir fondos</div>
-  <div class="card tile" style="left:476px;top:100px" data-at="a5.p1" data-d="2.9"><div class="ic">−</div>Retirar fondos</div>
-  <div class="card tile" style="left:0;top:306px" data-at="a5.p1" data-d="3.9"><div class="ic" style="font-size:26px;letter-spacing:3px">❙❙</div>Pausar la copia</div>
-  <div class="card tile" style="left:476px;top:306px" data-at="a5.p1" data-d="4.9"><div class="ic" style="font-size:30px">■</div>Dejar de copiar</div>
-  <div class="card" style="left:0;top:528px;width:936px;padding:30px 34px;border-color:rgba(47,227,110,.6)" data-at="a5.p2"><div class="g" style="font-size:84px;font-weight:800;letter-spacing:-.035em;line-height:1">$100.000</div><div style="font-size:34px;font-weight:700;margin-top:8px">Cuenta virtual para practicar</div><div class="m" style="font-size:25px;font-weight:500;margin-top:4px">Prueba a copiar con dinero de prueba antes de usar el tuyo.</div></div>
+  <h2 data-t="a5_h"></h2>
+  <div class="card tile" style="left:0;top:100px" data-frac="a5.p1:.28"><div class="ic">+</div><span data-t="t1"></span></div>
+  <div class="card tile" style="left:476px;top:100px" data-frac="a5.p1:.40"><div class="ic">−</div><span data-t="t2"></span></div>
+  <div class="card tile" style="left:0;top:306px" data-frac="a5.p1:.56"><div class="ic" style="font-size:26px;letter-spacing:3px">❙❙</div><span data-t="t3"></span></div>
+  <div class="card tile" style="left:476px;top:306px" data-frac="a5.p1:.74"><div class="ic" style="font-size:30px">■</div><span data-t="t4"></span></div>
+  <div class="card" style="left:0;top:528px;width:936px;padding:30px 34px;border-color:rgba(47,227,110,.6)" data-at="a5.p2"><div class="g" style="font-size:84px;font-weight:800;letter-spacing:-.035em;line-height:1" data-m="100000"></div><div style="font-size:34px;font-weight:700;margin-top:8px" data-t="virt"></div><div class="m" style="font-size:25px;font-weight:500;margin-top:4px" data-t="virt_s"></div></div>
 </section>
 
 <!-- ============ EP 10 ============ -->
 <section class="scene" id="bh">
   <img class="photo" src="assets/brand/foto-cafe.jpg" style="left:208px;top:0;width:520px;height:700px" data-at="bh" data-d=".1" data-fx="scale">
-  <h2 class="abs" style="top:736px;width:936px" data-at="bh" data-d=".5">No inviertas una sola vez. <span class="g">Aporta cada mes.</span></h2>
-  <div class="abs" style="top:884px;width:70px;height:4px;border-radius:2px;background:var(--g)" data-at="bh" data-d="1.2"></div>
-  <div class="abs" style="top:906px;width:936px;font-size:36px;font-weight:600;letter-spacing:-.02em;color:var(--mut)" data-at="bh" data-d="3.4">Así crece una copia con un monto fijo mensual, con mis resultados reales.</div>
+  <h2 class="abs" style="top:736px;width:936px" data-at="bh" data-d=".5" data-t="bh_h"></h2>
+  <div class="abs" style="top:906px;width:936px;font-size:35px;font-weight:600;letter-spacing:-.02em;color:var(--mut)" data-at="bh" data-d="3.4" data-t="bh_s"></div>
 </section>
 
 <section class="scene" id="b1">
-  <div class="abs" style="left:0;top:0;display:flex;align-items:center;gap:30px" data-at="b1" data-d=".2">
-    <img src="assets/brand/avatar.jpg" style="width:156px;height:156px;border-radius:50%;object-fit:cover">
-    <div><div style="font-size:50px;font-weight:700;letter-spacing:-.03em;display:flex;align-items:center;gap:14px">Jaime Garcia Otalora <span style="color:#e5343a;font-size:42px">★</span></div><div style="font-size:35px;color:#b9c7bf;font-weight:500">@AlejandroGarciaO</div></div>
-  </div>
+  <div class="abs idc" style="left:0;top:0" data-at="b1" data-d=".2"><img src="assets/brand/avatar.jpg" style="width:156px;height:156px"><div><div class="n1" style="font-size:50px">Jaime Garcia Otalora <span class="st" style="font-size:42px">★</span></div><div style="font-size:35px;color:#b9c7bf;font-weight:500">@AlejandroGarciaO</div></div></div>
   <div class="abs" style="top:186px" data-at="b1" data-d=".9" data-fx="scale"><span class="badge">★ Popular Investor · Champion</span></div>
-  <div class="abs" style="top:262px;width:936px;display:flex;flex-wrap:wrap;gap:12px" data-at="b1.p1" data-d="3.6">
-    <span class="chip">Largo plazo</span><span class="chip">Sin apalancamiento alto</span><span class="chip">100% largo</span><span class="chip">Riesgo 3</span><span class="chip">28 copiadores</span><span class="chip">$119,2K en copia</span>
+  <div class="abs" style="top:262px;width:936px;display:flex;flex-wrap:wrap;gap:12px" data-frac="b1.p1:.45">
+    <span class="chip" data-t="c_long"></span><span class="chip" data-t="c_lev"></span><span class="chip" data-t="c_100"></span><span class="chip" data-t="c_risk"></span><span class="chip" data-t="c_cop"></span><span class="chip" data-t="c_aum"></span>
   </div>
   <div class="card" style="left:0;top:412px;width:936px;height:500px;padding:26px 30px" data-at="b1.p2" data-d="-.3">
-    <div style="display:flex;align-items:baseline;gap:22px"><div class="g" id="b1n" style="font-size:112px;font-weight:800;letter-spacing:-.04em;line-height:1">+0%</div><div style="font-size:30px;font-weight:600">desde 16/04/2022</div></div>
+    <div style="display:flex;align-items:baseline;gap:22px"><div class="g" id="b1n" style="font-size:108px;font-weight:800;letter-spacing:-.04em;line-height:1;white-space:nowrap"></div><div style="font-size:30px;font-weight:600" data-t="since"></div></div>
     <svg id="b1svg" width="876" height="320" style="margin-top:14px"></svg>
   </div>
 </section>
 
 <section class="scene" id="b2">
-  <h2>Mis resultados, <span class="g">año por año</span>.</h2>
+  <h2 data-t="b2_h"></h2>
   <div class="abs" id="b2shot" style="left:0;top:112px;width:404px;height:449px;border-radius:26px;overflow:hidden;border:2.5px solid var(--g);background:#fff" data-at="b2" data-d=".3"></div>
-  <div class="abs m" style="left:0;top:574px;width:404px;text-align:center;font-size:20px" data-at="b2" data-d=".5">Captura de mi perfil en eToro</div>
+  <div class="abs m" style="left:0;top:574px;width:404px;text-align:center;font-size:20px" data-at="b2" data-d=".5" data-t="b2_cap"></div>
   <svg id="b2svg" class="abs" style="left:424px;top:100px" width="512" height="560"></svg>
-  <div class="abs" style="top:700px;width:936px;text-align:center" data-at="b2.p5" data-d="2.6" data-fx="scale"><span class="badge" style="font-size:34px;padding:14px 30px">Total: +53,2% desde abril de 2022</span></div>
-  <div class="abs" style="top:800px;width:936px;text-align:center;font-size:30px;font-weight:600;color:var(--mut)" data-at="b2.p5" data-d="3.4">Lo bueno y lo malo, sin filtros.</div>
+  <div class="abs" style="top:700px;width:936px;text-align:center" data-frac="b2.p5:.42" data-fx="scale"><span class="badge" style="font-size:34px;padding:14px 30px" data-t="b2_tot"></span></div>
+  <div class="abs" style="top:800px;width:936px;text-align:center;font-size:30px;font-weight:600;color:var(--mut)" data-frac="b2.p5:.55" data-t="b2_s"></div>
 </section>
 
 <section class="scene" id="b3">
-  <h2>Un monto fijo, <span class="g">todos los meses</span>.</h2>
+  <h2 data-t="b3_h"></h2>
   <div class="card" style="left:0;top:100px;width:936px;height:440px;padding:18px 22px" data-at="b3" data-d=".3">
-    <div style="display:flex;justify-content:space-between;font-size:22px;font-weight:600;color:var(--mut)"><span>$300 al mes copiándome · <b id="b3date" style="color:var(--tx)">abr 2022</b></span><span><span class="g">■</span> Valor &nbsp;<span style="color:#7d9186">■</span> Aportado</span></div>
+    <div style="display:flex;justify-content:space-between;font-size:22px;font-weight:600;color:var(--mut)"><span><span data-t="b3_lab"></span> · <b id="b3date" style="color:var(--tx)"></b></span><span><span class="g">■</span> <span data-t="val"></span> &nbsp;<span style="color:#7d9186">■</span> <span data-t="con"></span></span></div>
     <svg id="b3svg" width="892" height="372" style="margin-top:4px"></svg>
   </div>
-  <div class="card kp" style="left:0;top:556px;width:300px"><div class="n" style="color:#c3d2c9" id="b3c">$0</div><div class="t">aportado</div></div>
-  <div class="card kp" style="left:318px;top:556px;width:300px;border-color:rgba(47,227,110,.6)"><div class="n g" id="b3v">$0</div><div class="t">valor de tu copia</div></div>
-  <div class="card kp" style="left:636px;top:556px;width:300px"><div class="n" id="b3g">$0</div><div class="t">ganancia</div></div>
-  <div class="card" style="left:0;top:696px;width:459px;height:176px;padding:20px 24px;border-color:rgba(47,227,110,.65);background:rgba(47,227,110,.1)" data-at="b3.p5" data-d="4.4"><div class="g" style="font-size:64px;font-weight:800;letter-spacing:-.035em;line-height:1">≈13,8%</div><div style="font-size:23px;font-weight:600;margin-top:8px;line-height:1.25">anual sobre tu dinero,<br><span class="m">aportando $300 cada mes</span></div></div>
-  <div class="card" style="left:477px;top:696px;width:459px;height:176px;padding:20px 24px" data-at="b3.p5" data-d="8.6"><div style="font-size:64px;font-weight:800;letter-spacing:-.035em;line-height:1;color:#c3d2c9">≈9,7%</div><div style="font-size:23px;font-weight:600;margin-top:8px;line-height:1.25">anual,<br><span class="m">invirtiendo una sola vez al inicio</span></div></div>
+  <div class="card kp" style="left:0;top:556px;width:300px"><div class="n" style="color:#c3d2c9" id="b3c"></div><div class="t" data-t="k_con"></div></div>
+  <div class="card kp" style="left:318px;top:556px;width:300px;border-color:rgba(47,227,110,.6)"><div class="n g" id="b3v"></div><div class="t" data-t="k_val"></div></div>
+  <div class="card kp" style="left:636px;top:556px;width:300px"><div class="n" id="b3g"></div><div class="t" data-t="k_gain"></div></div>
+  <div class="card" style="left:0;top:696px;width:459px;height:176px;padding:20px 24px;border-color:rgba(47,227,110,.65);background:rgba(47,227,110,.1)" data-frac="b3.p5:.42"><div class="g" style="font-size:62px;font-weight:800;letter-spacing:-.035em;line-height:1" data-p="≈13.8"></div><div style="font-size:23px;font-weight:600;margin-top:8px;line-height:1.25" data-t="cmp1"></div></div>
+  <div class="card" style="left:477px;top:696px;width:459px;height:176px;padding:20px 24px" data-frac="b3.p5:.76"><div style="font-size:62px;font-weight:800;letter-spacing:-.035em;line-height:1;color:#c3d2c9" data-p="≈9.7"></div><div style="font-size:23px;font-weight:600;margin-top:8px;line-height:1.25" data-t="cmp2"></div></div>
 </section>
 
 <section class="scene" id="b4">
-  <h2>Tu número <span class="g">FIRE</span>.</h2>
-  <div class="card" style="left:0;top:100px;width:936px;padding:26px 30px;font-size:50px;font-weight:700;letter-spacing:-.03em;display:flex;gap:20px;align-items:center" data-at="b4.p1" data-d="1.6"><span>Gastos de un año</span><span class="m">×</span><span class="g">25</span></div>
-  <div class="abs" style="top:252px;width:936px;font-size:33px;font-weight:600;display:flex;align-items:center;gap:14px" data-at="b4.p2" data-d=".2"><span class="chip" style="font-size:29px">$1.500 al mes</span><span class="m">→</span><span>$18.000 al año</span><span class="m">× 25</span></div>
-  <div class="abs g" style="top:312px;font-size:104px;font-weight:800;letter-spacing:-.04em;line-height:1" data-at="b4.p2" data-d="2.2">= $450.000</div>
-  <div class="card" style="left:0;top:446px;width:936px;padding:20px 28px 14px" data-at="b4.p3" data-d="-.2"><div class="m" style="font-size:22px;font-weight:600;margin-bottom:4px">Tiempo hasta $450.000 según tu aporte · 8% anual hipotético</div><div id="b4rows"></div></div>
-  <div class="abs" style="top:770px;width:936px;text-align:center" data-at="b4.p4" data-fx="scale"><span class="badge" style="font-size:31px;padding:13px 28px">Monto fijo · cada mes · hasta tu número</span></div>
+  <h2 data-t="b4_h"></h2>
+  <div class="card" style="left:0;top:100px;width:936px;padding:26px 30px;font-size:50px;font-weight:700;letter-spacing:-.03em;display:flex;gap:20px;align-items:center" data-frac="b4.p1:.3"><span data-t="b4_f"></span><span class="m">×</span><span class="g">25</span></div>
+  <div class="abs" style="top:252px;width:936px;font-size:32px;font-weight:600;display:flex;align-items:center;gap:14px;white-space:nowrap" data-at="b4.p2" data-d=".2"><span class="chip" style="font-size:28px" data-t="b4_m"></span><span class="m">→</span><span data-t="b4_y"></span><span class="m">× 25</span></div>
+  <div class="abs g" style="top:312px;font-size:100px;font-weight:800;letter-spacing:-.04em;line-height:1;white-space:nowrap" data-frac="b4.p2:.5">= <span data-m="450000"></span></div>
+  <div class="card" style="left:0;top:446px;width:936px;padding:20px 26px 14px" data-at="b4.p3" data-d="-.2"><div class="m" style="font-size:21px;font-weight:600;margin-bottom:4px" data-t="b4_t"></div><div id="b4rows"></div></div>
+  <div class="abs" style="top:770px;width:936px;text-align:center" data-at="b4.p4" data-fx="scale"><span class="badge" style="font-size:30px;padding:13px 26px" data-t="b4_key"></span></div>
 </section>
 
-<!-- ============ cierre (ambos) ============ -->
+<!-- ============ EP 11 ============ -->
+<section class="scene" id="ch">
+  <h2 data-at="ch" data-d=".2" data-t="ch_h"></h2>
+  <div class="abs" style="left:0;top:200px;width:936px;height:104px;border-radius:52px;background:#fff;color:#0e1a14;display:flex;align-items:center;gap:20px;padding:0 36px;font-size:44px;font-weight:600;box-shadow:0 0 60px rgba(47,227,110,.25)" data-at="ch" data-d=".7"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="#7a8a81" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M16.500 16.500 21 21"/></svg><span id="chtype"></span><span style="color:#13c636;font-weight:400">|</span></div>
+  <div class="abs" id="chres" style="left:0;top:334px;width:936px;border-radius:34px;background:#fff;color:#0e1a14;padding:40px 44px;box-shadow:0 0 70px rgba(47,227,110,.3)">
+    <div class="idc" style="gap:36px"><img src="assets/brand/avatar.jpg" style="width:230px;height:230px"><div><div class="n1" style="font-size:56px">Jaime Garcia Otalora <span class="st" style="font-size:48px">★</span></div><div style="font-size:44px;color:#6c7a72;font-weight:500;margin-top:6px">@AlejandroGarciaO</div><div style="margin-top:20px"><span class="badge" style="font-size:25px;padding:8px 18px">★ Popular Investor · Champion</span></div></div></div>
+  </div>
+  <div class="abs g" style="top:680px;width:936px;font-size:40px;font-weight:700;letter-spacing:-.02em;line-height:1.2" data-frac="ch.p1:.42" data-t="ch_s"></div>
+</section>
+
+<section class="scene" id="c1">
+  <h2 data-t="c1_h"></h2>
+  <div class="phone" data-at="c1" data-d=".2">
+    <div class="scr" data-ph="1"><h4 data-t="p_create"></h4><div class="fld" data-t="p_email"></div><div class="fld">••••••••••</div><div style="font-size:19px;font-weight:700;color:#0a8f2c;margin-top:14px" id="c1ver" data-t="p_verified"></div><div class="btn" data-t="p_btn_create"></div></div>
+    <div class="scr" data-ph="2"><h4 data-t="p_dep"></h4><div class="fld" style="font-size:40px;font-weight:800;color:#0e1a14;text-align:center;padding:24px" data-m="500"></div><div class="sm" style="text-align:center" data-t="p_virtual"></div><div class="btn" data-t="p_btn_dep"></div></div>
+    <div class="scr" data-ph="3"><h4 data-t="search"></h4><div class="fld" style="border-color:#13c636;color:#0e1a14;font-weight:600;font-size:19px"><span id="c1type"></span><span style="color:#13c636">|</span></div>
+      <div id="c1res" style="padding:14px;border-radius:16px;background:#fff;border:2px solid #13c636"><div class="idc" style="gap:12px"><img src="assets/brand/avatar.jpg" style="width:62px;height:62px"><div><div class="n1" style="font-size:18px;gap:5px">Jaime Garcia Otalora <span class="st">★</span></div><div style="font-size:16px;color:#6c7a72">@AlejandroGarciaO</div></div></div></div></div>
+    <div class="scr" data-ph="4"><div class="idc" style="gap:12px;margin-bottom:14px"><img src="assets/brand/avatar.jpg" style="width:62px;height:62px"><div><div class="n1" style="font-size:18px;gap:5px">Jaime Garcia Otalora <span class="st">★</span></div><div style="font-size:16px;color:#6c7a72">@AlejandroGarciaO</div></div></div>
+      <div class="sm" style="font-weight:700" data-t="p_stats"></div><svg width="288" height="150" style="margin:6px 0"><path id="c1mini" fill="none" stroke="#13c636" stroke-width="4" stroke-linejoin="round"/></svg>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="fld" style="margin:0"><b style="color:#0a8f2c;font-size:23px" data-p="+53.2"></b><br><span style="font-size:14px" data-t="p_since"></span></div><div class="fld" style="margin:0;border-color:#13c636"><b style="color:#0e1a14;font-size:23px" data-t="p_risk"></b><br><span style="font-size:14px" data-t="p_of10"></span></div></div></div>
+    <div class="scr" data-ph="5"><div style="display:flex;flex-direction:column;align-items:center;gap:8px;margin-top:26px;text-align:center"><img src="assets/brand/avatar.jpg" style="width:150px;height:150px;border-radius:50%;object-fit:cover"><div style="font-weight:700;font-size:23px;letter-spacing:-.02em">Jaime Garcia Otalora <span style="color:#e5343a">★</span></div><div style="font-size:19px;color:#6c7a72">@AlejandroGarciaO</div><div style="margin-top:6px;background:#13c636;color:#fff;border-radius:999px;padding:5px 14px;font-size:15px;font-weight:800">★ Popular Investor · Champion</div></div>
+      <div class="btn" style="font-size:26px;padding:19px"><span data-t="p_copy"></span><div id="c1tap" style="position:absolute;left:50%;top:50%;width:90px;height:90px;margin:-45px;border-radius:50%;border:5px solid #0e1a14;opacity:0"></div></div></div>
+    <div class="scr" data-ph="6"><h4 data-t="p_amount"></h4><div class="fld" style="font-size:44px;font-weight:800;color:#0e1a14;text-align:center;padding:28px 6px;border-color:#13c636" id="c1amt"></div><div class="sm" style="text-align:center" data-t="p_min"></div><div class="btn" data-t="p_cont"></div></div>
+    <div class="scr" data-ph="7"><h4 data-t="p_csl"></h4><div style="height:12px;border-radius:6px;background:#d9e2dc;position:relative;margin:44px 10px 40px"><div id="c1slf" style="position:absolute;left:0;top:0;height:100%;border-radius:6px;background:#13c636;width:0"></div><div id="c1slk" style="position:absolute;top:-13px;width:38px;height:38px;margin-left:-19px;border-radius:50%;background:#fff;border:4px solid #13c636;left:0"></div></div>
+      <div class="fld" style="text-align:center;color:#0e1a14;font-size:44px;font-weight:800;padding:18px" id="c1slv"></div><div class="sm" style="text-align:center" data-t="p_csl_s"></div><div class="btn" data-t="p_cont"></div></div>
+    <div class="scr" data-ph="8"><h4 data-t="p_sum"></h4><div class="fld"><div class="idc" style="gap:10px"><img src="assets/brand/avatar.jpg" style="width:46px;height:46px"><div style="font-size:17px;font-weight:700;color:#0e1a14">@AlejandroGarciaO</div></div></div>
+      <div class="fld" style="display:flex;justify-content:space-between;color:#0e1a14;font-weight:700"><span data-t="p_sum_a"></span><span data-m="1000"></span></div><div class="fld" style="display:flex;justify-content:space-between;color:#0e1a14;font-weight:700"><span>Copy Stop-Loss</span><span data-p="40|0"></span></div>
+      <div class="sm" style="display:flex;gap:10px;align-items:flex-start;margin-top:14px;font-weight:600;color:#0e1a14"><span id="c1chk" style="width:24px;height:24px;border-radius:6px;background:#13c636;color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none">✓</span><span data-t="p_sum_ok"></span></div><div class="btn" data-t="p_confirm"></div></div>
+  </div>
+  <div id="c1steps"></div>
+</section>
+
+<section class="scene" id="c2">
+  <h2 data-t="c2_h"></h2>
+  <div class="card li" style="top:190px" data-frac="c2.p1:.20"><div class="no">1</div><span data-t="c2_1"></span></div>
+  <div class="card li" style="top:308px" data-frac="c2.p1:.46"><div class="no">2</div><span data-t="c2_2"></span></div>
+  <div class="card li" style="top:426px" data-frac="c2.p1:.68"><div class="no">3</div><span data-t="c2_3"></span></div>
+  <div class="abs" style="left:0;top:600px;width:936px;border-radius:30px;background:#fff;color:#0e1a14;padding:30px 36px" data-frac="c2.p1:.86"><div class="idc" style="gap:28px"><img src="assets/brand/avatar.jpg" style="width:150px;height:150px"><div><div class="n1" style="font-size:46px">Jaime Garcia Otalora <span class="st" style="font-size:40px">★</span></div><div style="font-size:36px;color:#6c7a72;font-weight:500">@AlejandroGarciaO</div></div></div></div>
+</section>
+
+<!-- ============ cierre ============ -->
 <section class="scene" id="end" style="top:290px">
-  <div class="abs g" style="top:0;width:936px;text-align:center;font-size:34px;font-weight:700;letter-spacing:-.02em" data-end=".1">Del quirófano a la bolsa</div>
-  <div class="abs" style="top:52px;left:288px;width:360px;height:2px;background:var(--g);opacity:.8" data-end=".2"></div>
+  <div class="abs g" style="top:0;width:936px;text-align:center;font-size:34px;font-weight:700;letter-spacing:-.02em" data-end=".1" data-t="tag"></div>
+  <div class="abs" style="top:52px;left:238px;width:460px;height:2px;background:var(--g);opacity:.8" data-end=".2"></div>
   <img class="photo" src="assets/brand/foto-summit.jpg" style="left:0;top:86px;width:470px;height:527px" data-end=".3">
-  <div class="abs m" style="left:0;top:626px;width:470px;text-align:center;font-size:21px;line-height:1.3" data-end=".5">Pro Investor Summit ·<br>Chipre, noviembre 2026</div>
+  <div class="abs m" style="left:0;top:626px;width:470px;text-align:center;font-size:21px;line-height:1.3" data-end=".5" data-t="summit"></div>
   <div class="abs" style="left:510px;top:96px;width:426px" data-end=".6">
     <div style="font-size:54px;font-weight:700;letter-spacing:-.035em;line-height:1.05">Alejandro García</div>
     <div style="width:60px;height:3px;background:var(--g);margin:22px 0"></div>
-    <div class="m" style="font-size:29px;line-height:1.3;font-weight:500">Enfermero de quirófano · Popular Investor Champion de eToro</div>
+    <div class="m" style="font-size:29px;line-height:1.3;font-weight:500" data-t="role"></div>
     <div class="g" style="font-size:31px;font-weight:700;margin-top:20px">@AlejandroGarciaO</div>
   </div>
-  <div class="abs g" id="endcta" style="top:716px;width:936px;text-align:center;font-size:41px;font-weight:700;letter-spacing:-.025em;line-height:1.18" data-end="1.1"></div>
-  <img class="abs" src="assets/brand/logo-proinvestor.png" style="left:248px;top:880px;width:440px;mix-blend-mode:lighten;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)" data-end="1.6">
-  <div class="abs m" style="top:1010px;left:90px;width:756px;text-align:center;font-size:22px;line-height:1.35" data-end="1.9">Copiar a un inversor no garantiza resultados. Tu capital está en riesgo. Rentabilidades pasadas no indican resultados futuros. Contenido educativo, no asesoramiento financiero.</div>
+  <div class="abs g" id="endcta" style="top:716px;width:936px;text-align:center;font-size:40px;font-weight:700;letter-spacing:-.025em;line-height:1.18" data-end="1.1"></div>
+  <img class="abs" src="assets/brand/logo-proinvestor.png" style="left:248px;top:900px;width:440px;mix-blend-mode:lighten;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)" data-end="1.6">
+  <div class="abs m" style="top:1026px;left:70px;width:796px;text-align:center;font-size:22px;line-height:1.35" data-end="1.9" data-t="disc"></div>
 </section>
 
-<div id="pill"><i></i><span>Del quirófano a la bolsa</span><span class="m">·</span><span class="g" id="pillep"></span></div>
+<div id="pill"><i></i><span data-t="tag"></span><span class="m">·</span><span class="g" id="pillep"></span></div>
 <div id="cap"><div id="capt"></div></div>
 <div id="foot"></div>
 <div id="bar"><div id="barf"></div><div id="bard"></div></div>
 </div>
 
 <script>
-const TL = window.TL, $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const TL = window.TL, L = window.I18N[LANG], $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const SC = {}, BT = {};
 TL.scenes.forEach(s => { SC[s.id] = s; s.beats.forEach(b => BT[s.id + '.' + b.id] = b); });
 const ENDID = TL.scenes[TL.scenes.length - 1].id; SC.end = SC[ENDID];
 const at = id => id.includes('.') ? BT[id].start : SC[id].start;
+const frac = (id, f) => BT[id].start + (BT[id].end - BT[id].start) * f;
 const cl = x => Math.max(0, Math.min(1, x));
 const eo = x => 1 - Math.pow(1 - cl(x), 3);
 const eio = x => { x = cl(x); return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2; };
 const P = (t, s, d = .55) => eo((t - s) / d);
-const es = (n, d = 0) => n.toLocaleString('de-DE', { minimumFractionDigits: d, maximumFractionDigits: d });
 const anims = [], has = id => !!SC[id];
-$('#pillep').textContent = 'Episodio ' + (+EP);
-$('#endcta').innerHTML = EP === '09' ? 'Guárdalo si estás aprendiendo cómo funciona el copy trading. En el siguiente: cómo crece una copia aportando cada mes.' : 'Si quieres conocer mi estrategia, revisa mi perfil en eToro: @AlejandroGarciaO';
-const FOOT = {
-  a2: 'Asignación pública en eToro al 10 nov 2026 (cambia con el tiempo). Transparencia del proceso, no una lista de compra. Posiciones por debajo de $1 no se abren.',
-  a3: 'Ejemplo ilustrativo sobre mi portafolio público del 10 nov 2026. No es una recomendación de compra ni de venta.',
-  a4: 'Ejemplo ilustrativo. Las cifras reales dependen del precio de ejecución y de los costes de cada operación.',
-  b1: 'Estadísticas públicas de eToro al 13 nov 2026. Rentabilidades pasadas no indican resultados futuros.',
-  b2: 'Perfil público en eToro. 2022 desde el 16 de abril; 2026 hasta el 13 de noviembre. Rentabilidades pasadas no indican resultados futuros.',
-  b3: 'Simulación con mis rentabilidades mensuales públicas (abr 2022 – 13 nov 2026), sin costes. No garantiza resultados futuros; aportar en las caídas no siempre mejora el resultado.',
-  b4: 'Ejemplo hipotético con rentabilidad constante; no es una previsión. La regla del 25 es una referencia orientativa.'
-};
+
+/* ---------- formato por idioma ---------- */
+const LOC = LANG === 'en' ? 'en-US' : 'de-DE';
+const num = (n, d = 0) => n.toLocaleString(LOC, { minimumFractionDigits: d, maximumFractionDigits: d });
+const M = (n, d = 0, suf = '') => LANG === 'de' ? num(n, d) + suf + ' $' : '$' + num(n, d) + suf;
+const Pc = (n, d = 1) => num(n, d) + (LANG === 'de' ? ' %' : '%');
+const sg = v => v >= 0 ? '+' : '−';
+const T = k => String(L[k]).replace(/\{\$([\d.]+)(K?)\}/g, (_, n, k2) => M(parseFloat(n), k2 ? 1 : 0, k2));
+const Tt = s => String(s).replace(/\{\$([\d.]+)(K?)\}/g, (_, n, k2) => M(parseFloat(n), k2 ? 1 : 0, k2));
+$$('[data-t]').forEach(e => { if (e.tagName === 'text') e.textContent = T(e.dataset.t); else e.innerHTML = T(e.dataset.t); });
+$$('[data-m]').forEach(e => e.textContent = M(+e.dataset.m));
+$$('[data-p]').forEach(e => { const [v, d] = e.dataset.p.split('|'), m = v.match(/^([^\d]*)([\d.]+)$/); e.textContent = m[1] + Pc(+m[2], d === undefined ? 1 : +d); });
+$('#pillep').textContent = L.ep + ' ' + (+EP);
+$('#endcta').innerHTML = T('cta' + EP);
 
 const GAINS = [-.0322, -.0354, -.1077, .0124, .0155, -.0166, -.0238, .0472, -.0335, .1168, -.0444, .0648, -.0022, -.0196, .0432, .0347, -.046, -.0407, -.038, .1171, .0684, -.0291, .0873, .0259, -.0678, .0339, .0253, .0267, .0051, .0058, -.0034, .0256, -.0233, .0127, -.0016, -.0308, .0199, .0676, .0599, -.0021, .0355, .0571, .0338, -.0424, .0057, .0267, -.0592, -.0447, .1467, .2004, -.0392, -.1381, .1277, .0444, -.1311, -.0048];
 const CUM = [0]; GAINS.forEach(g => CUM.push((1 + CUM[CUM.length - 1]) * (1 + g) - 1));
 
 /* ---------- donuts con logos ---------- */
-const IT = [['META', 'meta', '#2fe36e'], ['MSFT', 'msft', '#7df0a6'], ['ISRG', 'isrg', '#19b257'], ['SPOT', 'spot', '#b6f7cd'], ['TSLA', 'tsla', '#0f8f45'], ['NVDA', 'nvda', '#d8ff7a'], ['Otros', null, '#7d9186'], ['Efectivo', null, '#cdb766']];
+const IT = [['META', 'meta', '#2fe36e'], ['MSFT', 'msft', '#7df0a6'], ['ISRG', 'isrg', '#19b257'], ['SPOT', 'spot', '#b6f7cd'], ['TSLA', 'tsla', '#0f8f45'], ['NVDA', 'nvda', '#d8ff7a'], [L.others, null, '#7d9186'], [L.cash, null, '#cdb766']];
 const W0 = [12.48, 9.63, 7.02, 6.43, 6.02, 0, 0.11, 58.31];
 function panel(el, c1, c2) {
-  el.innerHTML = `<svg width="264" height="264" viewBox="0 0 264 264">${IT.map(it => `<path fill="${it[2]}"/>`).join('')}${IT.map(it => it[1] ? `<image href="assets/logos/${it[1]}.svg" width="40" height="40"/>` : '<g></g>').join('')}<text x="132" y="124" text-anchor="middle" font-size="19" fill="#9fb8a9" font-weight="600">${c1}</text><text x="132" y="160" text-anchor="middle" font-size="35" font-weight="800" fill="#fff">${c2}</text></svg><div class="lg">${IT.map(it => `<div class="lr">${it[1] ? `<img src="assets/logos/${it[1]}.svg">` : `<span class="dt" style="background:${it[2]}">${it[0] === 'Efectivo' ? '$' : '…'}</span>`}<span class="nm"${it[0] === 'Efectivo' ? ' style="color:#cdb766"' : ''}>${it[0]}</span><span class="vl"${it[0] === 'Efectivo' ? ' style="color:#cdb766"' : ''}></span></div>`).join('')}</div>`;
+  el.innerHTML = `<svg width="264" height="264" viewBox="0 0 264 264">${IT.map(it => `<path fill="${it[2]}"/>`).join('')}${IT.map(it => it[1] ? `<image href="assets/logos/${it[1]}.svg" width="40" height="40"/>` : '<g></g>').join('')}<text x="132" y="124" text-anchor="middle" font-size="19" fill="#9fb8a9" font-weight="600">${c1}</text><text x="132" y="160" text-anchor="middle" font-size="35" font-weight="800" fill="#fff">${c2}</text></svg><div class="lg">${IT.map((it, i) => `<div class="lr">${it[1] ? `<img src="assets/logos/${it[1]}.svg">` : `<span class="dt" style="background:${it[2]}">${i === 7 ? '$' : '…'}</span>`}<span class="nm"${i === 7 ? ' style="color:#cdb766"' : ''}>${it[0]}</span><span class="vl"${i === 7 ? ' style="color:#cdb766"' : ''}></span></div>`).join('')}</div>`;
   const kids = [...el.querySelector('svg').children], paths = kids.slice(0, IT.length), imgs = kids.slice(IT.length, 2 * IT.length), rows = $$('.lr', el);
   const R = 128, r = 80, cx = 132, cy = 132, pt = (rad, a) => (cx + rad * Math.cos(a)).toFixed(2) + ' ' + (cy + rad * Math.sin(a)).toFixed(2);
   return (w, sweep, rowP, fmt) => {
@@ -241,22 +296,21 @@ function panel(el, c1, c2) {
   };
 }
 if (has('a2')) {
-  const L = panel($('#a2L'), 'Portafolio', '100%'), R = panel($('#a2R'), 'Tu copia', '$1.000');
+  const Lp = panel($('#a2L'), L.pf, Pc(100, 0)), Rp = panel($('#a2R'), L.yc0, M(1000));
   anims.push(t => {
-    L(W0, eio((t - at('a2.p1') + .2) / 1.6), i => P(t, at('a2.p1') + .4 + i * .45, .5), x => es(x, 1) + '%');
-    R(W0, eio((t - at('a2.p2') - .3) / 1.6), i => P(t, at('a2.p2') + 1.2 + i * .25, .5), (x, p) => '$' + es(Math.round(x * 10 * p)));
+    Lp(W0, eio((t - at('a2.p1') + .2) / 1.6), i => P(t, at('a2.p1') + .4 + i * .45, .5), x => Pc(x, 1));
+    Rp(W0, eio((t - at('a2.p2') - .3) / 1.6), i => P(t, at('a2.p2') + 1.2 + i * .25, .5), (x, p) => M(Math.round(x * 10 * p)));
   });
 }
 if (has('a3')) {
-  const L = panel($('#a3L'), 'Portafolio', '100%'), R = panel($('#a3R'), 'Tu copia', '$1.000');
-  const b1 = BT['a3.p1'], b2 = BT['a3.p2'], d1 = b1.end - b1.start, d2 = b2.end - b2.start;
-  const tb = [b1.start + d1 * .30, b1.start + d1 * .68], ts = [b2.start + d2 * .22, b2.start + d2 * .55];
+  const Lp = panel($('#a3L'), L.pf, Pc(100, 0)), Rp = panel($('#a3R'), L.yc0, M(1000));
+  const tb = [frac('a3.p1', .30), frac('a3.p1', .68)], ts = [frac('a3.p2', .22), frac('a3.p2', .55)];
   const W = (ub, us) => [12.48, 9.63, 7.02, 6.43, 6.02 * (1 - us), 5 * ub, 0.11, 58.31 - 5 * ub + 6.02 * us];
-  const e = $('#a3e'), ST = [[tb[0], 'COMPRO · NVDA · 5% de mi portafolio', 1], [tb[1], 'TU COPIA COMPRA · NVDA · $50', 1], [ts[0], 'VENDO · TSLA', 0], [ts[1], 'TU COPIA VENDE · TSLA → +$60 a efectivo', 0], [at('a3.p3'), '⚙ Tras bambalinas · automático', 1]];
+  const e = $('#a3e'), ST = [[tb[0], T('ev1'), 1], [tb[1], T('ev2'), 1], [ts[0], T('ev3'), 0], [ts[1], T('ev4'), 0], [at('a3.p3'), T('ev5'), 1]];
   anims.push(t => {
     const u = s => eio((t - s) / 1.4);
-    L(W(u(tb[0]), u(ts[0])), 1, () => 1, x => es(x, 1) + '%');
-    R(W(u(tb[1]), u(ts[1])), 1, () => 1, x => '$' + es(Math.round(x * 10)));
+    Lp(W(u(tb[0]), u(ts[0])), 1, () => 1, x => Pc(x, 1));
+    Rp(W(u(tb[1]), u(ts[1])), 1, () => 1, x => M(Math.round(x * 10)));
     let k = -1; ST.forEach((s, i) => { if (t >= s[0] - .25) k = i; });
     if (k < 0) { e.style.opacity = 0; return; }
     const c = ST[k][2] ? '#2fe36e' : '#ff6b6b', o = Math.min(P(t, ST[k][0] - .25, .35), k < ST.length - 1 ? 1 - P(t, ST[k + 1][0] - .6, .3) : 1);
@@ -264,58 +318,57 @@ if (has('a3')) {
   });
 }
 
-/* ---------- a1: compra / vende ---------- */
+/* ---------- a1 ---------- */
 if (has('a1')) {
-  const b = BT['a1.p2'], d = b.end - b.start, tB = b.start + .1, tS = b.start + d * .55;
+  const tB = at('a1.p2') + .1, tS = frac('a1.p2', .55);
   const set = (id, t0, t, c) => { const e = $(id), p = P(t, t0, .4); e.style.opacity = .12 + .88 * p; e.style.color = c; e.style.borderColor = c; e.style.background = p > .5 ? (c === '#2fe36e' ? 'rgba(47,227,110,.14)' : 'rgba(255,107,107,.14)') : 'transparent'; e.style.transform = `scale(${.94 + .06 * p})`; };
   anims.push(t => {
     set('#a1b1', tB, t, '#2fe36e'); set('#a1b2', tB + .8, t, '#2fe36e'); set('#a1s1', tS, t, '#ff6b6b'); set('#a1s2', tS + .8, t, '#ff6b6b');
-    let x = -1; for (const s of [at('a1.p1') + 2.5, tB + .1, tS + .1]) { const u = (t - s) / .7; if (u > 0 && u < 1) x = u; }
+    let x = -1; for (const s of [frac('a1.p1', .4), tB + .1, tS + .1]) { const u = (t - s) / .7; if (u > 0 && u < 1) x = u; }
     const dot = $('#a1dot'); dot.setAttribute('opacity', x < 0 ? 0 : 1); dot.setAttribute('cy', 8 + 122 * eio(Math.max(0, x)));
   });
 }
 
-/* ---------- a4: 1 a 1 ---------- */
+/* ---------- a4 ---------- */
 if (has('a4')) anims.push(t => {
-  const b = BT['a4.p1'], u = cl((t - b.start - (b.end - b.start) * .28) / 3), v = 10 * eio(u) + Math.sin(u * 14) * .6 * Math.sin(u * Math.PI);
-  const txt = '+' + es(Math.max(0, v), 1) + '%', col = u ? '#3df07f' : '#9fb8a9';
-  for (const id of ['#a4p1', '#a4p2']) { $(id).textContent = txt; $(id).style.color = col; }
-  $('#a4v').textContent = '$' + es(50 * (1 + v / 100), 2); $('#a4d').textContent = '+$' + es(Math.max(0, 50 * v / 100), 2); $('#a4d').style.color = col;
+  const u = cl((t - frac('a4.p1', .28)) / 3), v = Math.max(0, 10 * eio(u) + Math.sin(u * 14) * .6 * Math.sin(u * Math.PI)), col = u ? '#3df07f' : '#9fb8a9';
+  for (const id of ['#a4p1', '#a4p2']) { $(id).textContent = '+' + Pc(v, 1); $(id).style.color = col; }
+  $('#a4v').textContent = M(50 * (1 + v / 100), 2); $('#a4d').textContent = '+' + M(50 * v / 100, 2); $('#a4d').style.color = col;
 });
 
-/* ---------- b1: perfil ---------- */
+/* ---------- b1 ---------- */
 if (has('b1')) {
-  const W = 876, H = 320, pl = 62, pr = 14, ptp = 14, pb = 36, mn = -.25, mx = .9;
+  const W = 876, H = 320, pl = 68, pr = 14, ptp = 14, pb = 36, mn = -.25, mx = .9;
   const X = i => pl + (W - pl - pr) * i / (CUM.length - 1), Y = v => ptp + (H - ptp - pb) * (1 - (v - mn) / (mx - mn));
   let s = '';
-  for (const v of [-.2, 0, .2, .4, .6, .8]) s += `<line x1="${pl}" x2="${W - pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="rgba(255,255,255,${v === 0 ? .3 : .08})" stroke-width="1.5"/><text x="${pl - 10}" y="${Y(v) + 6}" fill="#9fb8a9" font-size="18" text-anchor="end">${v > 0 ? '+' : ''}${Math.round(v * 100)}%</text>`;
+  for (const v of [-.2, 0, .2, .4, .6, .8]) s += `<line x1="${pl}" x2="${W - pr}" y1="${Y(v)}" y2="${Y(v)}" stroke="rgba(255,255,255,${v === 0 ? .3 : .08})" stroke-width="1.5"/><text x="${pl - 10}" y="${Y(v) + 6}" fill="#9fb8a9" font-size="18" text-anchor="end">${v > 0 ? '+' : ''}${Pc(v * 100, 0)}</text>`;
   [['2022', 0], ['2023', 9], ['2024', 21], ['2025', 33], ['2026', 45]].forEach(([y, i]) => s += `<text x="${X(i)}" y="${H - 6}" fill="#9fb8a9" font-size="19" text-anchor="middle">${y}</text>`);
   const d = CUM.map((v, i) => (i ? 'L' : 'M') + X(i).toFixed(1) + ',' + Y(v).toFixed(1)).join('');
-  s += `<defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2fe36e" stop-opacity=".4"/><stop offset="1" stop-color="#2fe36e" stop-opacity="0"/></linearGradient><clipPath id="c1"><rect id="c1r" x="0" y="0" width="0" height="${H}"/></clipPath></defs><g clip-path="url(#c1)"><path d="${d}L${X(CUM.length - 1)},${Y(0)}L${X(0)},${Y(0)}Z" fill="url(#g1)"/><path d="${d}" fill="none" stroke="#2fe36e" stroke-width="4.5" stroke-linejoin="round"/></g><circle id="c1d" r="9" fill="#eafff1" stroke="#2fe36e" stroke-width="4"/>`;
+  s += `<defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2fe36e" stop-opacity=".4"/><stop offset="1" stop-color="#2fe36e" stop-opacity="0"/></linearGradient><clipPath id="c1c"><rect id="c1r" x="0" y="0" width="0" height="${H}"/></clipPath></defs><g clip-path="url(#c1c)"><path d="${d}L${X(CUM.length - 1)},${Y(0)}L${X(0)},${Y(0)}Z" fill="url(#g1)"/><path d="${d}" fill="none" stroke="#2fe36e" stroke-width="4.5" stroke-linejoin="round"/></g><circle id="c1d" r="9" fill="#eafff1" stroke="#2fe36e" stroke-width="4"/>`;
   $('#b1svg').innerHTML = s;
   anims.push(t => {
     const u = eio((t - at('b1.p2') - .2) / 3.6), fi = u * (CUM.length - 1), i0 = Math.floor(fi), i1 = Math.min(CUM.length - 1, i0 + 1), fr = fi - i0, v = CUM[i0] + (CUM[i1] - CUM[i0]) * fr, x = X(i0) + (X(i1) - X(i0)) * fr;
     $('#c1r').setAttribute('width', x); $('#c1d').setAttribute('cx', x); $('#c1d').setAttribute('cy', Y(v));
-    $('#b1n').textContent = u >= 1 ? '+53,2%' : (v >= 0 ? '+' : '−') + es(Math.abs(v * 100), 1) + '%';
+    $('#b1n').textContent = u >= 1 ? '+' + Pc(53.2, 1) : sg(v) + Pc(Math.abs(v * 100), 1);
   });
 }
 
-/* ---------- b2: año a año ---------- */
+/* ---------- b2 ---------- */
 if (has('b2')) {
   $('#b2shot').innerHTML = ['max', '2022', '2023', '2024', '2025', '2026'].map(k => `<img src="assets/perfil-${k}.jpg" style="position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover">`).join('');
   const YR = [['2022', -16.79], ['2023', 26.08], ['2024', 10.88], ['2025', 22.98], ['2026', 7.11]], bw = 76, gap = 30, pl = 6, y0 = 330, k = 8.4;
   let s = `<line x1="0" x2="512" y1="${y0}" y2="${y0}" stroke="rgba(255,255,255,.32)" stroke-width="2"/>`;
-  YR.forEach(([y, v], i) => { const x = pl + i * (bw + gap); s += `<rect class="yb" x="${x}" width="${bw}" rx="12" fill="${v >= 0 ? '#2fe36e' : '#ff6b6b'}"/><text class="yv" x="${x + bw / 2}" text-anchor="middle" font-size="27" font-weight="800" fill="${v >= 0 ? '#3df07f' : '#ff8a8a'}">${v >= 0 ? '+' : '−'}${es(Math.abs(v), 1)}%</text><text x="${x + bw / 2}" y="${v >= 0 ? y0 + 36 : y0 - 16}" text-anchor="middle" font-size="25" font-weight="700" fill="#d5e4db">${y}</text>`; });
+  YR.forEach(([y, v], i) => { const x = pl + i * (bw + gap); s += `<rect class="yb" x="${x}" width="${bw}" rx="12" fill="${v >= 0 ? '#2fe36e' : '#ff6b6b'}"/><text class="yv" x="${x + bw / 2}" text-anchor="middle" font-size="${LANG === 'de' ? 24 : 27}" font-weight="800" fill="${v >= 0 ? '#3df07f' : '#ff8a8a'}">${sg(v)}${Pc(Math.abs(v), 1)}</text><text x="${x + bw / 2}" y="${v >= 0 ? y0 + 36 : y0 - 16}" text-anchor="middle" font-size="25" font-weight="700" fill="#d5e4db">${y}</text>`; });
   $('#b2svg').innerHTML = s;
   const bars = $$('.yb'), vals = $$('.yv'), imgs = $$('#b2shot img');
   anims.push(t => {
     YR.forEach(([y, v], i) => { const p = P(t, at('b2.p' + (i + 1)) + .2, .8), h = Math.abs(v) * k * p; bars[i].setAttribute('height', h); bars[i].setAttribute('y', v >= 0 ? y0 - h : y0); vals[i].setAttribute('y', v >= 0 ? y0 - h - 14 : y0 + h + 36); vals[i].style.opacity = p; });
-    let cur = 0; for (let i = 1; i <= 5; i++) if (t >= at('b2.p' + i)) cur = i; if (t >= at('b2.p5') + 2.4) cur = 0;
+    let cur = 0; for (let i = 1; i <= 5; i++) if (t >= at('b2.p' + i)) cur = i; if (t >= frac('b2.p5', .4)) cur = 0;
     imgs.forEach((im, i) => im.style.opacity = i === cur ? 1 : 0);
   });
 }
 
-/* ---------- b3: aportes mensuales ---------- */
+/* ---------- b3 ---------- */
 if (has('b3')) {
   const C = 300, N = GAINS.length, val = [0], con = [0]; let v = 0;
   GAINS.forEach((g, i) => { v = (v + C) * (1 + g); val.push(v); con.push(C * (i + 1)); });
@@ -324,34 +377,65 @@ if (has('b3')) {
   let s = `<line x1="${pl}" x2="${W - pr}" y1="${Y(0)}" y2="${Y(0)}" stroke="rgba(255,255,255,.28)" stroke-width="1.5"/><rect id="b3red" x="${X(0)}" y="${ptp}" width="${X(9) - X(0)}" height="${Y(0) - ptp}" fill="rgba(255,107,107,.1)"/>`;
   [['2022', 0, 9], ['2023', 9, 21], ['2024', 21, 33], ['2025', 33, 45], ['2026', 45, 56]].forEach(([y, a, b], i) => { s += `<text x="${(X(a) + X(b)) / 2}" y="${H - 8}" fill="#9fb8a9" font-size="20" text-anchor="middle">${y}</text>`; if (i) s += `<line x1="${X(a)}" x2="${X(a)}" y1="${ptp}" y2="${Y(0)}" stroke="rgba(255,255,255,.08)" stroke-width="1.5"/>`; });
   s += `<defs><linearGradient id="g3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2fe36e" stop-opacity=".45"/><stop offset="1" stop-color="#2fe36e" stop-opacity=".03"/></linearGradient><clipPath id="c3"><rect id="c3r" x="0" y="0" width="0" height="${H}"/></clipPath></defs><g clip-path="url(#c3)"><path d="${path(val)}L${X(N)},${Y(0)}L${X(0)},${Y(0)}Z" fill="url(#g3)"/><path d="${path(con)}L${X(N)},${Y(0)}L${X(0)},${Y(0)}Z" fill="rgba(125,145,134,.34)"/><path d="${path(con)}" fill="none" stroke="#7d9186" stroke-width="3"/><path d="${path(val)}" fill="none" stroke="#2fe36e" stroke-width="5" stroke-linejoin="round"/></g><circle id="b3dot" r="9" fill="#eafff1" stroke="#2fe36e" stroke-width="4"/>`;
-  s += `<g id="b3call"><rect x="${X(0) + 12}" y="${ptp + 10}" width="318" height="126" rx="16" fill="#06180f" stroke="rgba(255,107,107,.6)" stroke-width="1.5"/><text x="${X(0) + 30}" y="${ptp + 44}" fill="#9fb8a9" font-size="20" font-weight="700">CIERRE DE 2022</text><text x="${X(0) + 30}" y="${ptp + 80}" fill="#ff8a8a" font-size="25" font-weight="800">Mi portafolio: −16,8%</text><text x="${X(0) + 30}" y="${ptp + 116}" fill="#fff" font-size="25" font-weight="800">Tus aportes: −5,5%</text></g>`;
+  s += `<g id="b3call"><rect x="${X(0) + 12}" y="${ptp + 10}" width="${LANG === 'es' ? 318 : 384}" height="126" rx="16" fill="#06180f" stroke="rgba(255,107,107,.6)" stroke-width="1.5"/><text x="${X(0) + 30}" y="${ptp + 44}" fill="#9fb8a9" font-size="20" font-weight="700">${L.call_t}</text><text x="${X(0) + 30}" y="${ptp + 80}" fill="#ff8a8a" font-size="25" font-weight="800">${L.call_1}</text><text x="${X(0) + 30}" y="${ptp + 116}" fill="#fff" font-size="25" font-weight="800">${L.call_2}</text></g>`;
   $('#b3svg').innerHTML = s;
-  const MES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
   anims.push(t => {
-    const kf = [[at('b3.p2'), 0], [at('b3.p2') + 6, 9], [at('b3.p3') + .6, 9], [BT['b3.p3'].end, 45], [at('b3.p4') + .2, 45], [at('b3.p4') + 2.8, N]];
+    const kf = [[at('b3.p2'), 0], [frac('b3.p2', .5), 9], [at('b3.p3') + .6, 9], [BT['b3.p3'].end, 45], [at('b3.p4') + .2, 45], [at('b3.p4') + 2.8, N]];
     let m = 0; for (let i = 1; i < kf.length; i++) { if (t >= kf[i][0]) m = kf[i][1]; else if (t > kf[i - 1][0]) m = kf[i - 1][1] + (kf[i][1] - kf[i - 1][1]) * eio((t - kf[i - 1][0]) / (kf[i][0] - kf[i - 1][0])); }
     const i0 = Math.floor(m), i1 = Math.min(N, i0 + 1), vv = val[i0] + (val[i1] - val[i0]) * (m - i0), cc = con[Math.min(N, Math.round(m))];
     $('#c3r').setAttribute('width', X(m) + 2); $('#b3dot').setAttribute('cx', X(m)); $('#b3dot').setAttribute('cy', Y(vv)); $('#b3dot').style.opacity = m > 0 ? 1 : 0;
-    $('#b3c').textContent = '$' + es(cc); $('#b3v').textContent = '$' + es(Math.round(vv));
-    const g = vv - cc, e = $('#b3g'); e.textContent = (g >= 0 ? '+$' : '−$') + es(Math.abs(Math.round(g))); e.style.color = m === 0 ? '#9fb8a9' : g >= 0 ? '#3df07f' : '#ff6b6b';
-    const mi = Math.min(N - 1, Math.max(0, Math.ceil(m) - 1)), mo = 3 + mi; $('#b3date').textContent = MES[mo % 12] + ' ' + (2022 + Math.floor(mo / 12));
-    $('#b3red').style.opacity = P(t, at('b3.p2') + .2, .6); $('#b3call').style.opacity = P(t, at('b3.p2') + 6.6, .5);
+    $('#b3c').textContent = M(cc); $('#b3v').textContent = M(Math.round(vv));
+    const g = vv - cc, e = $('#b3g'); e.textContent = sg(g) + M(Math.abs(Math.round(g))); e.style.color = m === 0 ? '#9fb8a9' : g >= 0 ? '#3df07f' : '#ff6b6b';
+    const mi = Math.min(N - 1, Math.max(0, Math.ceil(m) - 1)), mo = 3 + mi; $('#b3date').textContent = L.months[mo % 12] + ' ' + (2022 + Math.floor(mo / 12));
+    $('#b3red').style.opacity = P(t, at('b3.p2') + .2, .6); $('#b3call').style.opacity = P(t, frac('b3.p2', .6), .5);
   });
 }
 
-/* ---------- b4: FIRE ---------- */
+/* ---------- b4 ---------- */
 if (has('b4')) {
-  const b = BT['b4.p3'], d = b.end - b.start, R = [['$300 al mes', 30.1, 'unos 30 años', .30], ['$600 al mes', 22.5, '22 años y medio', .62], ['$1.000 al mes', 17.4, 'unos 17 años', .82]];
-  $('#b4rows').innerHTML = R.map(r => `<div class="fr"><div class="lb">${r[0]}</div><div class="trk"><div class="brr"></div></div><div class="yr">${r[2]}</div></div>`).join('');
+  const R = [[30.1, .32], [22.5, .64], [17.4, .84]];
+  $('#b4rows').innerHTML = R.map((r, i) => `<div class="fr"><div class="lb">${Tt(L.b4_r[i])}</div><div class="trk"><div class="brr"></div></div><div class="yr">${L.b4_yr[i]}</div></div>`).join('');
   const rows = $$('.fr');
-  anims.push(t => R.forEach((r, i) => { const p = P(t, b.start + d * r[3], .9); rows[i].style.opacity = p; $('.brr', rows[i]).style.width = (r[1] / 30.1 * 100 * p) + '%'; }));
+  anims.push(t => R.forEach((r, i) => { const p = P(t, frac('b4.p3', r[1]), .9); rows[i].style.opacity = p; $('.brr', rows[i]).style.width = (r[0] / 30.1 * 100 * p) + '%'; }));
+}
+
+/* ---------- ch: búsqueda con la miniatura real ---------- */
+if (has('ch')) anims.push(t => {
+  const name = 'AlejandroGarciaO', u = cl((t - at('ch') - 1.1) / 1.6), r = $('#chres'), p = P(t, at('ch') + 2.9, .6);
+  $('#chtype').textContent = name.slice(0, Math.round(u * name.length)); r.style.opacity = p; r.style.transform = `translateY(${(1 - p) * 30}px)`;
+});
+
+/* ---------- c1: 8 pasos ---------- */
+if (has('c1')) {
+  $('#c1steps').innerHTML = L.st.map((x, i) => `<div class="stp" style="top:${104 + i * 91}px"><div class="no">${i + 1}</div><div class="tx">${Tt(x)}</div></div>`).join('');
+  $('#c1mini').setAttribute('d', CUM.map((v, i) => (i ? 'L' : 'M') + (4 + 280 * i / (CUM.length - 1)).toFixed(1) + ',' + (122 - v * 135).toFixed(1)).join(''));
+  const st = $$('.stp'), ph = $$('[data-ph]'), name = 'AlejandroGarciaO', S = n => at('c1.p' + n);
+  anims.push(t => {
+    let cur = 0; for (let i = 1; i <= 8; i++) if (t >= S(i) - .15) cur = i;
+    st.forEach((e, i) => {
+      const n = i + 1, on = n === cur, done = n < cur, a = on ? P(t, S(n) - .15, .4) : 0, no = $('.no', e);
+      e.style.background = on ? `rgba(47,227,110,${.14 * a})` : 'transparent'; e.style.borderColor = on ? `rgba(47,227,110,${.75 * a})` : 'transparent';
+      $('.tx', e).style.color = on ? '#fff' : done ? '#cfe0d6' : '#7e958a'; $('.tx', e).style.fontWeight = on ? 800 : 600;
+      no.textContent = done ? '✓' : n; no.style.background = on || done ? '#2fe36e' : 'transparent'; no.style.borderColor = on || done ? '#2fe36e' : 'rgba(255,255,255,.3)'; no.style.color = on || done ? '#032012' : '#9fb8a9';
+      e.style.opacity = P(t, at('c1') + .4 + i * .08, .5);
+    });
+    ph.forEach(e => { const n = +e.dataset.ph, show = n === Math.max(1, cur); e.style.opacity = show ? (cur ? P(t, S(n) - .15, .35) : 1) : 0; e.style.zIndex = show ? 2 : 1; });
+    $('#c1ver').style.opacity = P(t, frac('c1.p1', .6), .4);
+    const u3 = cl((t - S(3) - .5) / 1.4); $('#c1type').textContent = name.slice(0, Math.round(u3 * name.length)); $('#c1res').style.opacity = P(t, S(3) + 2, .4);
+    const u5 = (t - frac('c1.p5', .35)) / .7, tp = $('#c1tap'); tp.style.opacity = u5 > 0 && u5 < 1 ? 1 - u5 : 0; tp.style.transform = `scale(${.4 + cl(u5) * 1.3})`;
+    $('#c1amt').textContent = M(Math.round(1000 * eio((t - S(6) - .5) / 1.2)));
+    const u7 = eio((t - S(7) - .8) / 1.6) * .4; $('#c1slf').style.width = $('#c1slk').style.left = (u7 * 100) + '%'; $('#c1slv').textContent = Pc(Math.round(u7 * 100), 0);
+    const u8 = P(t, frac('c1.p8', .3), .4); $('#c1chk').style.opacity = u8; $('#c1chk').style.transform = `scale(${.5 + .5 * u8})`;
+  });
 }
 
 /* ---------- motor ---------- */
 const scenes = $$('.scene').filter(e => has(e.id));
 const fx = $$('[data-at]').filter(e => has(e.dataset.at.split('.')[0])).map(e => ({ e, s: at(e.dataset.at) + (+e.dataset.d || 0), f: e.dataset.fx || 'up' }))
+  .concat($$('[data-frac]').filter(e => has(e.dataset.frac.split('.')[0])).map(e => { const [id, f] = e.dataset.frac.split(':'); return { e, s: frac(id, +f), f: e.dataset.fx || 'up' }; }))
   .concat($$('[data-end]').map(e => ({ e, s: SC.end.start + (+e.dataset.end), f: 'up' })));
 const bar = $('#bar'); TL.scenes.slice(1).forEach(s => bar.insertAdjacentHTML('beforeend', `<div class="tick" style="left:${s.start / TL.total * 936}px"></div>`));
+const FOOT = {}; Object.keys(L.foot).forEach(k => FOOT[k] = Tt(L.foot[k]));
 function setT(t) {
   let sc = TL.scenes[0]; for (const s of TL.scenes) if (t >= s.start) sc = s;
   for (const el of scenes) {
@@ -361,18 +445,18 @@ function setT(t) {
   }
   for (const { e, s, f } of fx) { const p = P(t, s); e.style.opacity = p; e.style.transform = f === 'scale' ? `scale(${.9 + .1 * p})` : `translateY(${(1 - p) * 26}px)`; }
   for (const a of anims) a(t);
-  const isEnd = sc.id === ENDID, eo2 = isEnd ? 1 - cl((t - sc.start) / .3) : 1;
+  const isEnd = sc.id === ENDID;
   let cap = '', co = 0; for (const b of sc.beats) if (b.text && t >= b.start - .12 && t < b.end + .3) { cap = b.text; co = Math.min(cl((t - b.start + .12) / .2), cl((b.end + .3 - t) / .2)); }
   $('#capt').textContent = cap; $('#capt').style.opacity = co;
   const ft = FOOT[sc.id] || ''; $('#foot').textContent = ft; $('#foot').style.opacity = ft ? Math.min(cl((t - sc.start - .3) / .4), cl((sc.end - t) / .3)) : 0;
-  $('#pill').style.opacity = eo2;
+  $('#pill').style.opacity = isEnd ? 1 - cl((t - sc.start) / .3) : 1;
   $('#barf').style.width = (t / TL.total * 936) + 'px'; $('#bard').style.left = (t / TL.total * 936) + 'px';
 }
 window.setT = setT; setT(0);
 if (!window.__RENDER__) {
   const fit = () => { const k = Math.min(innerWidth / 1080, innerHeight / 1920); $('#stage').style.transform = `scale(${k})`; };
   fit(); addEventListener('resize', fit);
-  const au = new Audio('reel-ep' + EP + '.mp4'); let t0 = null;
+  const au = new Audio(`reels/ep${EP}-${LANG}.mp4`); let t0 = null;
   addEventListener('click', () => { if (t0 === null) { au.play().catch(() => {}); t0 = performance.now(); (function loop() { setT(Math.min(au.currentTime || (performance.now() - t0) / 1000, TL.total)); requestAnimationFrame(loop); })(); } });
 }
 </script>
