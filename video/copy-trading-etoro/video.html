@@ -81,6 +81,16 @@ h2{font-size:66px;line-height:1.08;font-weight:800;letter-spacing:-.028em;margin
 .rule .no{width:72px;height:72px;border-radius:22px;background:rgba(43,214,123,.14);border:1.5px solid rgba(43,214,123,.45);color:var(--grn);font-size:36px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
 .rule .tx{font-size:46px;font-weight:700;letter-spacing:-.015em}
 svg text{font-family:Inter,sans-serif}
+
+/* sy */
+.shot{position:absolute;left:120px;top:262px;width:470px;height:522px;border-radius:34px;overflow:hidden;border:3px solid #2a3550;box-shadow:0 40px 90px rgba(0,0,0,.55);background:#fff}
+.shot img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover}
+.shotl{position:absolute;left:120px;top:800px;width:470px;text-align:center;font-size:21px;color:#74839c}
+/* sd */
+.kp{padding:20px 26px}.kp .n{font-size:50px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums}.kp .t{font-size:21px;color:var(--mut);font-weight:600}
+.cmp{flex:1;padding:20px 28px;display:flex;align-items:center;gap:24px}.cmp .n{font-size:60px;font-weight:800;letter-spacing:-.03em}.cmp .t{font-size:24px;font-weight:600;line-height:1.25}
+/* sf */
+.fr{display:flex;align-items:center;gap:26px;height:74px}.fr .lb{width:290px;white-space:nowrap;font-size:34px;font-weight:800}.fr .trk{flex:1;height:34px;border-radius:17px;background:rgba(255,255,255,.06);overflow:hidden}.fr .bar{height:100%;border-radius:17px;width:0}.fr .yr{width:340px;white-space:nowrap;font-size:34px;font-weight:800}
 </style>
 </head>
 <body>
@@ -170,22 +180,36 @@ svg text{font-family:Inter,sans-serif}
     <span class="chip" style="background:rgba(255,255,255,.06);border-color:var(--line);color:var(--tx);font-size:26px">28 copiadores</span>
   </div>
   <div class="card" style="position:absolute;left:120px;top:366px;width:1100px;height:490px;padding:26px 30px" data-at="s5.b3" data-d="-.4">
-    <div style="font-size:24px;color:var(--mut);font-weight:600">Rentabilidad acumulada · abr 2022 – nov 2026</div>
+    <div style="font-size:24px;color:var(--mut);font-weight:600">Rentabilidad acumulada · abr 2022 – nov 2026 (cierres mensuales)</div>
     <svg id="s5svg" width="1040" height="410" style="margin-top:8px"></svg>
   </div>
   <div style="position:absolute;left:1250px;top:366px;width:550px;display:grid;grid-template-columns:1fr 1fr;gap:18px">
     <div class="card tile" data-at="s5.b3" data-d=".2"><div class="n g" id="s5n1">+0%</div><div class="t">desde abril 2022</div></div>
-    <div class="card tile" data-at="s5.b3" data-d="3.6"><div class="n g">9,8%</div><div class="t">anualizado</div></div>
+    <div class="card tile" data-at="s5.b3" data-d="3.6"><div class="n g">9,7%</div><div class="t">anualizado</div></div>
     <div class="card tile" data-at="s5.b3" data-d="6.4"><div class="n" style="color:var(--blu)">3<span style="font-size:32px" class="m">/10</span></div><div class="t">nivel de riesgo actual</div></div>
-    <div class="card tile" data-at="s5.b3" data-d="6.8"><div class="n">+30,1%</div><div class="t">últimos 2 años</div></div>
-    <div class="card tile" style="grid-column:1/3;border-color:rgba(255,181,71,.4)" data-at="s5.b4" data-d=".6"><div class="n a">−24,6%</div><div class="t">peor caída registrada · 60% de meses en positivo (2 años)</div></div>
+    <div class="card tile" data-at="s5.b3" data-d="6.8"><div class="n">$119K</div><div class="t">copiando su portafolio</div></div>
+    <div class="card tile" style="grid-column:1/3;border-color:rgba(255,181,71,.4)" data-at="s5.b4" data-d=".6"><div class="n a">−24,6%</div><div class="t">peor caída registrada (pico a valle)</div></div>
   </div>
-  <div class="note">Fuente: estadísticas públicas de eToro al 10 nov 2026. Rentabilidades pasadas no garantizan resultados futuros.</div>
+  <div class="note">Fuente: estadísticas públicas de eToro al 13 nov 2026. Rentabilidades pasadas no garantizan resultados futuros.</div>
+</section>
+
+
+<!-- SY -->
+<section class="scene" id="sy">
+  <div class="kicker">05 · Resultados reales</div>
+  <h2>Año por año, <span class="g">lo bueno y lo malo</span>.</h2>
+  <div class="shot" data-at="sy" data-d=".3"><img data-yr="max" src="assets/perfil-max.jpg"><img data-yr="2022" src="assets/perfil-2022.jpg"><img data-yr="2023" src="assets/perfil-2023.jpg"><img data-yr="2024" src="assets/perfil-2024.jpg"><img data-yr="2025" src="assets/perfil-2025.jpg"><img data-yr="2026" src="assets/perfil-2026.jpg"></div>
+  <div class="shotl" data-at="sy" data-d=".6">Captura del perfil en eToro · 13 nov 2026</div>
+  <div class="card" style="position:absolute;left:640px;top:262px;width:1160px;height:590px;padding:26px 30px" data-at="sy.b0" data-d=".2">
+    <div style="display:flex;justify-content:space-between;align-items:center"><div style="font-size:24px;color:var(--mut);font-weight:600">Rentabilidad de cada año</div><div class="chip" style="font-size:26px;padding:10px 22px" data-at="sy.b6" data-fx="scale">Total: +53,2% desde abril 2022</div></div>
+    <svg id="sysvg" width="1100" height="490" style="margin-top:8px"></svg>
+  </div>
+  <div class="note">Fuente: perfil público en eToro. 2022 desde abril; 2026 hasta el 13 nov. Rentabilidades pasadas no garantizan resultados futuros.</div>
 </section>
 
 <!-- S6 -->
 <section class="scene" id="s6">
-  <div style="position:absolute;left:660px;top:96px"><div class="kicker">05 · Paso a paso</div><h2>Cómo copiarlo en <span class="g">8 pasos</span></h2></div>
+  <div style="position:absolute;left:660px;top:96px"><div class="kicker">06 · Paso a paso</div><h2>Cómo copiarlo en <span class="g">8 pasos</span></h2></div>
   <div class="phone" data-at="s6" data-d=".2">
     <div class="scr" data-ph="1"><h4>Crea tu cuenta</h4><div class="fld">tu@email.com</div><div class="fld">••••••••••</div><div class="btn">Crear cuenta</div><div class="ok" data-at="s6.b1" data-d="2.2">✓ Identidad verificada</div></div>
     <div class="scr" data-ph="2"><h4>Depositar fondos</h4><div class="fld" style="font-size:40px;font-weight:800;color:#0e1524;text-align:center;padding:26px">$500</div><div class="fld">💳 Tarjeta</div><div class="fld">🏦 Transferencia bancaria</div><div class="btn">Depositar</div></div>
@@ -194,7 +218,7 @@ svg text{font-family:Inter,sans-serif}
     <div class="scr" data-ph="4"><div style="display:flex;gap:12px;align-items:center;margin-bottom:16px"><div class="av" style="width:58px;height:58px;font-size:21px">AG</div><div><div style="font-weight:800;font-size:20px">@AlejandroGarciaO</div><div style="font-size:15px;color:#5c6880">★ Elite</div></div></div>
       <div style="font-size:16px;color:#5c6880;font-weight:600">Estadísticas</div>
       <svg width="316" height="150" style="margin:6px 0"><path id="s6mini" fill="none" stroke="#13c636" stroke-width="4" stroke-linejoin="round"/></svg>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="fld" style="margin:0"><b style="color:#0a8f2c;font-size:24px">+54,6%</b><br><span style="font-size:14px">desde 2022</span></div><div class="fld" style="margin:0;border-color:#13c636"><b style="color:#0e1524;font-size:24px">Riesgo 3</b><br><span style="font-size:14px">de 10</span></div></div></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px"><div class="fld" style="margin:0"><b style="color:#0a8f2c;font-size:24px">+53,2%</b><br><span style="font-size:14px">desde 2022</span></div><div class="fld" style="margin:0;border-color:#13c636"><b style="color:#0e1524;font-size:24px">Riesgo 3</b><br><span style="font-size:14px">de 10</span></div></div></div>
     <div class="scr" data-ph="5"><div style="display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:30px"><div class="av" style="width:120px;height:120px;font-size:44px">AG</div><div style="font-weight:800;font-size:24px">@AlejandroGarciaO</div><div style="font-size:17px;color:#5c6880">Popular Investor · Elite</div></div>
       <div class="btn" style="margin-top:44px;font-size:28px;padding:22px">Copiar<div id="s6tap" style="position:absolute;left:50%;top:50%;width:90px;height:90px;margin:-45px;border-radius:50%;border:5px solid #0e1524;opacity:0"></div></div></div>
     <div class="scr" data-ph="6"><h4>Importe a invertir</h4><div class="fld" style="font-size:46px;font-weight:800;color:#0e1524;text-align:center;padding:30px;border-color:#13c636">$<span id="s6amt">0</span></div><div style="font-size:18px;color:#5c6880;text-align:center">Mínimo para copiar: <b>$200</b></div><div class="btn" style="margin-top:40px;opacity:.45">Copiar</div></div>
@@ -208,7 +232,7 @@ svg text{font-family:Inter,sans-serif}
 
 <!-- S7 -->
 <section class="scene" id="s7">
-  <div class="kicker">06 · Después de copiar</div>
+  <div class="kicker">07 · Después de copiar</div>
   <h2>Tú tienes el <span class="g">control</span>.</h2>
   <div style="position:absolute;left:120px;top:300px;display:flex;gap:40px">
     <div class="card ctl" data-at="s7.b1" data-d="2.1"><div class="ic" style="background:rgba(43,214,123,.15);color:var(--grn)">+</div><div class="tt">Añadir fondos</div></div>
@@ -222,9 +246,30 @@ svg text{font-family:Inter,sans-serif}
   </div>
 </section>
 
+
+<!-- SD -->
+<section class="scene" id="sd">
+  <div class="kicker">08 · La bola de nieve</div>
+  <h2>Un monto fijo, <span class="g">todos los meses</span>.</h2>
+  <div class="card" style="position:absolute;left:120px;top:262px;width:1250px;height:440px;padding:22px 28px" data-at="sd.b2" data-d="-.2">
+    <div style="display:flex;justify-content:space-between;font-size:23px;font-weight:600;color:var(--mut)"><span>$300 al mes copiando a @AlejandroGarciaO · rentabilidades mensuales reales</span><span><span class="g">■</span> Valor &nbsp; <span style="color:#6b7a94">■</span> Aportado</span></div>
+    <svg id="sdsvg" width="1194" height="372" style="margin-top:4px"></svg>
+  </div>
+  <div style="position:absolute;left:1400px;top:262px;width:400px;display:flex;flex-direction:column;gap:14px" data-at="sd.b2" data-d=".2">
+    <div class="card kp"><div class="t" id="sddate">abr 2022</div><div class="n" style="color:#aab6ca" id="sdc">$0</div><div class="t">aportado</div></div>
+    <div class="card kp" style="border-color:rgba(43,214,123,.4)"><div class="n g" id="sdv">$0</div><div class="t">valor de tu copia</div></div>
+    <div class="card kp"><div class="n" id="sdg">$0</div><div class="t">ganancia</div></div>
+  </div>
+  <div style="position:absolute;left:120px;top:722px;width:1680px;display:flex;gap:24px" data-at="sd.b6" data-d="4.5">
+    <div class="card cmp" style="border-color:rgba(43,214,123,.45);background:rgba(43,214,123,.08)"><div class="n g">≈13,8%</div><div class="t">anual sobre tu dinero<br><span class="m">aportando $300 cada mes</span></div></div>
+    <div class="card cmp"><div class="n" style="color:#aab6ca">≈9,7%</div><div class="t">anual<br><span class="m">invirtiendo una sola vez al inicio</span></div></div>
+  </div>
+  <div class="note">Simulación con rentabilidades mensuales reales (abr 2022 – 13 nov 2026), sin costes. No garantiza resultados futuros; aportar en caídas no siempre mejora el resultado.</div>
+</section>
+
 <!-- S8 -->
 <section class="scene" id="s8">
-  <div class="kicker">07 · El camino</div>
+  <div class="kicker">09 · El largo plazo</div>
   <h2>Libertad financiera: <span class="g">constancia + tiempo</span>.</h2>
   <div style="position:absolute;left:120px;top:290px;width:470px;display:flex;flex-direction:column;gap:20px">
     <div class="card" style="padding:26px 30px" data-at="s8.b2" data-d=".9"><div style="font-size:36px;font-weight:800">① Constancia</div><div class="sub" style="font-size:25px">Aportar todos los meses</div></div>
@@ -238,14 +283,33 @@ svg text{font-family:Inter,sans-serif}
   <div class="note">Ejemplo hipotético con rentabilidad constante; no es una previsión ni una promesa. La rentabilidad real varía cada año y puede ser negativa.</div>
 </section>
 
+
+<!-- SF -->
+<section class="scene" id="sf">
+  <div class="kicker">10 · La meta</div>
+  <h2>Tu número <span class="g">FIRE</span></h2>
+  <div class="card" style="position:absolute;left:120px;top:262px;width:1680px;padding:30px 44px;display:flex;align-items:center;gap:34px;font-size:54px;font-weight:800;letter-spacing:-.02em" data-at="sf.b1" data-d="1.4">
+    <span>Gastos de un año</span><span class="m">×</span><span class="g">25</span><span class="m">=</span><span>tu número FIRE</span>
+  </div>
+  <div style="position:absolute;left:120px;top:420px;width:1680px;display:flex;align-items:center;gap:26px;font-size:40px;font-weight:700" data-at="sf.b2" data-d=".4">
+    <span class="chip" style="font-size:34px;background:rgba(255,255,255,.06);border-color:var(--line);color:var(--tx)">$1.500 al mes</span><span class="m">→</span><span>$18.000 al año</span><span class="m">× 25 =</span><span class="g" style="font-size:66px;font-weight:800;letter-spacing:-.03em">$450.000</span>
+  </div>
+  <div class="card" style="position:absolute;left:120px;top:540px;width:1680px;padding:22px 40px" data-at="sf.b3" data-d="-.2">
+    <div style="font-size:23px;color:var(--mut);font-weight:600;margin-bottom:4px">Tiempo hasta $450.000 según tu aporte mensual · 8% anual hipotético</div>
+    <div id="sfrows"></div>
+  </div>
+  <div style="position:absolute;left:0;width:1920px;top:846px;text-align:center" data-at="sf.b4"><span class="chip">Monto fijo · cada mes · hasta tu número</span></div>
+  <div class="note" style="bottom:-22px">Ejemplo hipotético con rentabilidad constante; no es una previsión. La regla del 25 es una referencia orientativa, no una garantía.</div>
+</section>
+
 <!-- S9 -->
 <section class="scene" id="s9">
-  <div class="kicker">08 · Antes de empezar</div>
+  <div class="kicker">11 · Antes de empezar</div>
   <h2>Cinco <span class="g">reglas de oro</span></h2>
   <div style="position:absolute;left:120px;top:286px">
     <div class="rule" data-at="s9.b1" data-fx="left"><div class="no">1</div><div class="tx">Invierte solo dinero que no vayas a necesitar pronto.</div></div>
     <div class="rule" data-at="s9.b2" data-fx="left"><div class="no">2</div><div class="tx">Piensa en años, no en semanas.</div></div>
-    <div class="rule" data-at="s9.b3" data-fx="left"><div class="no">3</div><div class="tx">Aporta todos los meses.</div></div>
+    <div class="rule" data-at="s9.b3" data-fx="left"><div class="no">3</div><div class="tx">Aporta un monto fijo cada mes, también en las caídas.</div></div>
     <div class="rule" data-at="s9.b4" data-fx="left"><div class="no">4</div><div class="tx">Diversifica: puedes copiar a varios inversores.</div></div>
     <div class="rule" data-at="s9.b5" data-fx="left"><div class="no">5</div><div class="tx">No vendas por pánico cuando el mercado cae.</div></div>
   </div>
@@ -280,7 +344,7 @@ const anims = [];
 
 /* ---------- datos reales (eToro, 10 nov 2026) ---------- */
 const PORT = [['META', 12.48, '#5aa9ff'], ['MSFT', 9.63, '#2bd67b'], ['ISRG', 7.02, '#b18cff'], ['SPOT', 6.43, '#3ddbc0'], ['TSLA', 6.02, '#ff8a8a'], ['Otros', 0.11, '#93a2bb'], ['Efectivo', 58.31, '#ffb547']];
-const GAINS = [-.0322, -.0354, -.1077, .0124, .0155, -.0166, -.0238, .0472, -.0335, .1168, -.0444, .0648, -.0022, -.0196, .0432, .0347, -.046, -.0407, -.038, .1171, .0684, -.0291, .0873, .0259, -.0678, .0339, .0253, .0267, .0051, .0058, -.0034, .0256, -.0233, .0127, -.0016, -.0308, .0199, .0676, .0599, -.0021, .0355, .0571, .0338, -.0424, .0057, .0267, -.0592, -.0447, .1467, .2004, -.0392, -.1381, .1277, .0444, -.1311, .0036];
+const GAINS = [-.0322, -.0354, -.1077, .0124, .0155, -.0166, -.0238, .0472, -.0335, .1168, -.0444, .0648, -.0022, -.0196, .0432, .0347, -.046, -.0407, -.038, .1171, .0684, -.0291, .0873, .0259, -.0678, .0339, .0253, .0267, .0051, .0058, -.0034, .0256, -.0233, .0127, -.0016, -.0308, .0199, .0676, .0599, -.0021, .0355, .0571, .0338, -.0424, .0057, .0267, -.0592, -.0447, .1467, .2004, -.0392, -.1381, .1277, .0444, -.1311, -.0048];
 const CUM = [0]; GAINS.forEach(g => CUM.push((1 + CUM[CUM.length - 1]) * (1 + g) - 1));
 
 /* ---------- S1 ---------- */
@@ -344,7 +408,7 @@ anims.push(t => {
     const u = eio((t - at('s5.b3')) / 4.2), fi = u * (CUM.length - 1), i0 = Math.floor(fi), i1 = Math.min(CUM.length - 1, i0 + 1), fr = fi - i0;
     const v = CUM[i0] + (CUM[i1] - CUM[i0]) * fr, x = X(i0) + (X(i1) - X(i0)) * fr;
     $('#c5r').setAttribute('width', x); $('#c5d').setAttribute('cx', x); $('#c5d').setAttribute('cy', Y(v));
-    $('#s5n1').textContent = (v >= 0 ? '+' : '−') + es(Math.abs(v * 100), 1) + '%';
+    $('#s5n1').textContent = u >= 1 ? '+53,2%' : (v >= 0 ? '+' : '−') + es(Math.abs(v * 100), 1) + '%';
   });
   // mini gráfico del teléfono
   $('#s6mini').setAttribute('d', CUM.map((v, i) => (i ? 'L' : 'M') + (4 + 308 * i / (CUM.length - 1)).toFixed(1) + ',' + (120 - v * 135).toFixed(1)).join(''));
@@ -393,6 +457,61 @@ anims.push(t => {
     $('#c8r').setAttribute('width', X(m) + 3);
     mk.forEach((e, i) => { e.style.opacity = P(t, seg[i + 1][0] - .15, .4); });
   });
+})();
+
+
+/* ---------- SY: año a año ---------- */
+(() => {
+  const YR = [['2022', -16.79], ['2023', 26.08], ['2024', 10.88], ['2025', 22.98], ['2026', 7.11]];
+  const W = 1100, H = 490, pl = 30, bw = 150, gap = (W - 2 * pl - 5 * bw) / 4, y0 = 286, k = 8;
+  let s = `<line x1="${pl - 10}" x2="${W - pl + 10}" y1="${y0}" y2="${y0}" stroke="rgba(255,255,255,.3)" stroke-width="2"/>`;
+  YR.forEach(([y, v], i) => { const x = pl + i * (bw + gap); s += `<rect class="syb" x="${x}" width="${bw}" rx="14" fill="${v >= 0 ? '#2bd67b' : '#ff6b6b'}"/><text class="syv" x="${x + bw / 2}" text-anchor="middle" font-size="44" font-weight="800" fill="${v >= 0 ? '#2bd67b' : '#ff6b6b'}">${v >= 0 ? '+' : '−'}${es(Math.abs(v), 1)}%</text><text x="${x + bw / 2}" y="${v >= 0 ? y0 + 44 : y0 - 20}" text-anchor="middle" font-size="30" font-weight="700" fill="#c5cfdf">${y}</text>`; });
+  $('#sysvg').innerHTML = s;
+  const bars = $$('.syb'), vals = $$('.syv'), imgs = $$('.shot img');
+  anims.push(t => {
+    YR.forEach(([y, v], i) => {
+      const p = P(t, at('sy.b' + (i + 1)) + .25, .9), hgt = Math.abs(v) * k * p;
+      bars[i].setAttribute('height', Math.max(0, hgt)); bars[i].setAttribute('y', v >= 0 ? y0 - hgt : y0); bars[i].style.opacity = p ? 1 : 0;
+      vals[i].setAttribute('y', v >= 0 ? y0 - hgt - 18 : y0 + hgt + 50); vals[i].style.opacity = p;
+    });
+    let cur = 0; for (let i = 1; i <= 5; i++) if (t >= at('sy.b' + i)) cur = i; if (t >= at('sy.b6')) cur = 0;
+    imgs.forEach((im, i) => { im.style.opacity = i === cur ? 1 : 0; });
+  });
+})();
+
+/* ---------- SD: aportes mensuales con rentabilidades reales ---------- */
+(() => {
+  const C = 300, N = GAINS.length, val = [0], con = [0]; let v = 0;
+  GAINS.forEach((g, i) => { v = (v + C) * (1 + g); val.push(v); con.push(C * (i + 1)); });
+  const W = 1194, H = 372, pl = 16, pr = 20, ptp = 16, pb = 40, mx = 25000;
+  const X = m => pl + (W - pl - pr) * m / N, Y = q => ptp + (H - ptp - pb) * (1 - q / mx);
+  const path = a => a.map((q, m) => (m ? 'L' : 'M') + X(m).toFixed(1) + ',' + Y(q).toFixed(1)).join('');
+  let s = `<line x1="${pl}" x2="${W - pr}" y1="${Y(0)}" y2="${Y(0)}" stroke="rgba(255,255,255,.25)" stroke-width="1.5"/>`;
+  [['2022', 0, 9], ['2023', 9, 21], ['2024', 21, 33], ['2025', 33, 45], ['2026', 45, 56]].forEach(([y, a, b], i) => { s += `<text x="${(X(a) + X(b)) / 2}" y="${H - 8}" fill="#93a2bb" font-size="21" text-anchor="middle">${y}</text>`; if (i) s += `<line x1="${X(a)}" x2="${X(a)}" y1="${ptp}" y2="${Y(0)}" stroke="rgba(255,255,255,.07)" stroke-width="1.5"/>`; });
+  s += `<rect id="sdred" x="${X(0)}" y="${ptp}" width="${X(9) - X(0)}" height="${Y(0) - ptp}" fill="rgba(255,107,107,.09)"/>`;
+  s += `<defs><linearGradient id="gd" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2bd67b" stop-opacity=".4"/><stop offset="1" stop-color="#2bd67b" stop-opacity=".02"/></linearGradient><clipPath id="cd"><rect id="cdr" x="0" y="0" width="0" height="${H}"/></clipPath></defs>`;
+  s += `<g clip-path="url(#cd)"><path d="${path(val)}L${X(N)},${Y(0)}L${X(0)},${Y(0)}Z" fill="url(#gd)"/><path d="${path(con)}L${X(N)},${Y(0)}L${X(0)},${Y(0)}Z" fill="rgba(107,122,148,.32)"/><path d="${path(con)}" fill="none" stroke="#6b7a94" stroke-width="3"/><path d="${path(val)}" fill="none" stroke="#2bd67b" stroke-width="5" stroke-linejoin="round"/></g><circle id="sddot" r="9" fill="#2bd67b" stroke="#08101c" stroke-width="4"/>`;
+  s += `<g id="sdcall"><rect x="${X(0) + 14}" y="${ptp + 14}" width="330" height="128" rx="16" fill="#131c30" stroke="rgba(255,107,107,.5)" stroke-width="1.5"/><text x="${X(0) + 34}" y="${ptp + 48}" fill="#93a2bb" font-size="21" font-weight="700">CIERRE DE 2022</text><text x="${X(0) + 34}" y="${ptp + 84}" fill="#ff8a8a" font-size="25" font-weight="800">Portafolio: −16,8%</text><text x="${X(0) + 34}" y="${ptp + 120}" fill="#fff" font-size="25" font-weight="800">Tus aportes: −5,5%</text></g>`;
+  $('#sdsvg').innerHTML = s;
+  const MES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+  anims.push(t => {
+    const kf = [[at('sd.b3'), 0], [at('sd.b3') + 6.5, 9], [at('sd.b4') + .8, 9], [BT['sd.b4'].end, 45], [at('sd.b5') + .3, 45], [at('sd.b5') + 3.2, N]];
+    let m = 0; for (let i = 1; i < kf.length; i++) { if (t >= kf[i][0]) m = kf[i][1]; else if (t > kf[i - 1][0]) m = kf[i - 1][1] + (kf[i][1] - kf[i - 1][1]) * eio((t - kf[i - 1][0]) / (kf[i][0] - kf[i - 1][0])); }
+    const i0 = Math.floor(m), i1 = Math.min(N, i0 + 1), f = m - i0, vv = val[i0] + (val[i1] - val[i0]) * f, cc = con[Math.min(N, Math.round(m))];
+    $('#cdr').setAttribute('width', X(m) + 2); $('#sddot').setAttribute('cx', X(m)); $('#sddot').setAttribute('cy', Y(vv)); $('#sddot').style.opacity = m > 0 ? 1 : 0;
+    $('#sdc').textContent = '$' + es(cc); $('#sdv').textContent = '$' + es(Math.round(vv));
+    const g = vv - cc, e = $('#sdg'); e.textContent = (g >= 0 ? '+$' : '−$') + es(Math.abs(Math.round(g))); e.style.color = m === 0 ? '#93a2bb' : g >= 0 ? '#2bd67b' : '#ff6b6b';
+    const mi = Math.min(N - 1, Math.max(0, Math.ceil(m) - 1)), mo = 3 + mi; $('#sddate').textContent = MES[mo % 12] + ' ' + (2022 + Math.floor(mo / 12));
+    $('#sdred').style.opacity = P(t, at('sd.b3') + .2, .6); $('#sdcall').style.opacity = P(t, at('sd.b3') + 7, .5);
+  });
+})();
+
+/* ---------- SF: número FIRE ---------- */
+(() => {
+  const R = [['$300 al mes', 30.1, 'unos 30 años', '#5aa9ff', 2.6], ['$600 al mes', 22.5, '22 años y medio', '#3ddbc0', 6.4], ['$1.000 al mes', 17.4, 'unos 17 años', '#2bd67b', 9.4]];
+  $('#sfrows').innerHTML = R.map(r => `<div class="fr"><div class="lb">${r[0]}</div><div class="trk"><div class="bar" style="background:${r[3]}"></div></div><div class="yr">${r[2]}</div></div>`).join('');
+  const rows = $$('.fr');
+  anims.push(t => R.forEach((r, i) => { const p = P(t, at('sf.b3') + r[4], 1); rows[i].style.opacity = p; $('.bar', rows[i]).style.width = (r[1] / 30.1 * 100 * p) + '%'; }));
 })();
 
 /* ---------- motor ---------- */
