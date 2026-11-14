@@ -1,0 +1,113 @@
+{
+ "engine": "split",
+ "scenes": [
+  {
+   "id": "fh",
+   "title": "Intro",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "How much money do you need to stop depending on your salary? There's a simple rule to work it out, and today I'll explain it without any strange formulas.",
+     "show": ""
+    }
+   ]
+  },
+  {
+   "id": "f1",
+   "title": "Your number",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Financial freedom is the day your investments pay your bills. To find out how much you need, take what you spend in a year and multiply it by twenty-five.",
+     "show": "Financial freedom: the day your investments pay your bills."
+    },
+    {
+     "id": "p2",
+     "say": "If you live on forty thousand dollars a year, your target is one million. Why twenty-five? Because withdrawing four percent each year is the same as taking out one twenty-fifth.",
+     "show": "Withdrawing 4% a year means taking out 1/25 of your portfolio."
+    }
+   ]
+  },
+  {
+   "id": "f2",
+   "title": "Where it comes from",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "It isn't a made-up number. In nineteen ninety-four, William Bengen tested every thirty-year period of the US stock market, including the worst crises.",
+     "show": "Tested against the worst of history."
+    },
+    {
+     "id": "p2",
+     "say": "With more than half in stocks, withdrawing four percent held up in all of them. Later, the Trinity study found something similar: around ninety-five percent of cases.",
+     "show": "The money lasted at least 30 years in almost every case."
+    }
+   ]
+  },
+  {
+   "id": "f3",
+   "title": "How it works",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "So how does it work? In the first year you withdraw four percent. From one million, that's forty thousand. The other nine hundred and sixty thousand stays invested.",
+     "show": "Year 1: you take out 4%. The other 96% keeps working."
+    },
+    {
+     "id": "p2",
+     "say": "If the market rises ten percent that year, you end up with more than you started with. And from year two, you don't recalculate four percent: you simply adjust your withdrawal for inflation.",
+     "show": "Growth refills what you took out."
+    }
+   ]
+  },
+  {
+   "id": "f4",
+   "title": "Small print",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "But careful, the rule has small print. The order of the years matters. If the falls come just as you start withdrawing, your portfolio suffers far more than if they come at the end, even when the average return is the same.",
+     "show": "If the falls come first, your portfolio suffers far more."
+    }
+   ]
+  },
+  {
+   "id": "f5",
+   "title": "With margin",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "That's why I use it as a starting point, not a promise. It helps to keep part in stocks, to hold one or two years of spending in cash, and to remember that the four percent is before tax.",
+     "show": "Three habits that make it last."
+    },
+    {
+     "id": "p2",
+     "say": "And if you want more margin, use a lower rate. At three and a half percent you need almost twenty-nine times your spending; at three, thirty-three.",
+     "show": "Lower rate: more margin, but more capital."
+    }
+   ]
+  },
+  {
+   "id": "f6",
+   "title": "Your first step",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Where to begin? Write down what you spend over a year. Everything else comes from that number. And notice this: every expense you cut lowers your target and leaves you more to invest.",
+     "show": "Every expense you cut lowers your target and leaves you more to invest."
+    }
+   ]
+  },
+  {
+   "id": "fe",
+   "title": "Outro",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Save this video and work out your number. I keep contributing every month, step by step.",
+     "show": ""
+    }
+   ]
+  }
+ ]
+}

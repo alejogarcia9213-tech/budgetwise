@@ -1,0 +1,113 @@
+{
+ "engine": "split",
+ "scenes": [
+  {
+   "id": "fh",
+   "title": "Inicio",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "¿Cuánto dinero necesitas para dejar de depender de tu sueldo? Hay una regla sencilla para calcularlo, y hoy te la explico sin fórmulas raras.",
+     "show": ""
+    }
+   ]
+  },
+  {
+   "id": "f1",
+   "title": "Tu número",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "La libertad financiera llega el día en que tus inversiones pagan tus cuentas. Para saber cuánto necesitas, toma lo que gastas en un año y multiplícalo por veinticinco.",
+     "show": "Libertad financiera: el día en que tus inversiones pagan tus cuentas."
+    },
+    {
+     "id": "p2",
+     "say": "Si vives con cuarenta mil dólares al año, tu meta es un millón. ¿Por qué veinticinco? Porque retirar el cuatro por ciento cada año es lo mismo que sacar una veinticincoava parte.",
+     "show": "Retirar el 4 % cada año es sacar 1/25 de tu cartera."
+    }
+   ]
+  },
+  {
+   "id": "f2",
+   "title": "De dónde sale",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "No es un número inventado. En mil novecientos noventa y cuatro, William Bengen probó cada período de treinta años de la bolsa de Estados Unidos, incluidas las peores crisis.",
+     "show": "Probado contra lo peor de la historia."
+    },
+    {
+     "id": "p2",
+     "say": "Con más de la mitad en acciones, retirar el cuatro por ciento aguantó en todos. Después, el estudio Trinity llegó a algo parecido: cerca del noventa y cinco por ciento de los casos.",
+     "show": "El dinero duró al menos 30 años en casi todos los casos."
+    }
+   ]
+  },
+  {
+   "id": "f3",
+   "title": "Cómo funciona",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "¿Cómo funciona? El primer año retiras el cuatro por ciento. De un millón, cuarenta mil. Los otros novecientos sesenta mil siguen invertidos.",
+     "show": "Año 1: retiras el 4 %. El 96 % sigue trabajando."
+    },
+    {
+     "id": "p2",
+     "say": "Si ese año el mercado sube un diez por ciento, terminas con más de lo que empezaste. Y a partir del segundo año no vuelves a calcular el cuatro por ciento: solo ajustas tu retiro por la inflación.",
+     "show": "El crecimiento repone lo que retiraste."
+    }
+   ]
+  },
+  {
+   "id": "f4",
+   "title": "Letra pequeña",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Pero ojo, la regla tiene letra pequeña. El orden de los años importa. Si las caídas llegan justo al empezar a retirar, tu cartera sufre mucho más que si llegan al final, aunque el rendimiento promedio sea el mismo.",
+     "show": "Si las caídas llegan al principio, tu cartera sufre mucho más."
+    }
+   ]
+  },
+  {
+   "id": "f5",
+   "title": "Con margen",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Por eso yo la uso como punto de partida, no como promesa. Ayuda mantener una parte en acciones, guardar uno o dos años de gastos en efectivo, y recordar que el cuatro por ciento es antes de impuestos.",
+     "show": "Tres hábitos que la hacen durar."
+    },
+    {
+     "id": "p2",
+     "say": "Y si quieres más margen, usa una tasa más baja. Con el tres y medio necesitas casi veintinueve veces tu gasto; con el tres, treinta y tres.",
+     "show": "Tasa más baja: más margen, pero más capital."
+    }
+   ]
+  },
+  {
+   "id": "f6",
+   "title": "Tu primer paso",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "¿Por dónde empezar? Anota lo que gastas durante un año. De ese dato sale todo lo demás. Y fíjate en algo: cada gasto que recortas baja tu meta y, además, te deja más para invertir.",
+     "show": "Cada gasto que recortas baja tu meta y te deja más para invertir."
+    }
+   ]
+  },
+  {
+   "id": "fe",
+   "title": "Cierre",
+   "beats": [
+    {
+     "id": "p1",
+     "say": "Guarda este video y calcula tu número. Yo sigo aportando cada mes, paso a paso.",
+     "show": ""
+    }
+   ]
+  }
+ ]
+}
