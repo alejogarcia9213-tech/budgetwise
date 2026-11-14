@@ -5,8 +5,9 @@ La locución se corta por pausas, cada frase se coloca en su segundo y la músic
 import json, sys, subprocess, numpy as np, soundfile as sf
 cues = json.load(open(sys.argv[1], encoding='utf-8')); voice, video, out = sys.argv[2:5]
 mus = float(sys.argv[5]) if len(sys.argv) > 5 else 0.28; sr = 24000
-dur = float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', video], capture_output=True, text=True).stdout)
-has_audio = bool(subprocess.run(['ffprobe', '-v', 'error', '-select_streams', 'a', '-show_entries', 'stream=index', '-of', 'csv=p=0', video], capture_output=True, text=True).stdout.strip())
+SEQ = video == '-'   # modo escena nueva: frases seguidas con pausa fija; escribe <salida>.wav y <salida>.json
+dur = 1e9 if SEQ else float(subprocess.run(['ffprobe', '-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', video], capture_output=True, text=True).stdout)
+has_audio = (not SEQ) and bool(subprocess.run(['ffprobe', '-v', 'error', '-select_streams', 'a', '-show_entries', 'stream=index', '-of', 'csv=p=0', video], capture_output=True, text=True).stdout.strip())
 
 def split(tempo):
     raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', voice, '-af', f'atempo={tempo}', '-f', 'f32le', '-ac', '1', '-ar', str(sr), '-'], capture_output=True, check=True).stdout
@@ -38,13 +39,17 @@ def split(tempo):
 for tempo in [1.0, 1.04, 1.08, 1.12, 1.16]:   # nunca más rápido que 1.16 para que suene natural
     segs, cps = split(tempo); t = 0.0; starts = []; late = 0.0
     for (cue, _), a in zip(cues, segs):
-        st = max(cue, t + .12); starts.append(st); late = max(late, st - cue); t = st + len(a) / sr
-    if late <= 1.0 and t <= dur - .2: break
+        st = (t + .45 if t else .5) if SEQ else max(cue, t + .12); starts.append(st); late = max(late, st - cue); t = st + len(a) / sr
+    if SEQ or (late <= 1.0 and t <= dur - .2): break
+if SEQ:
+    dur = t + .9; json.dump({'total': round(dur, 2), 'beats': [[round(st, 2), round(st + len(a) / sr, 2), x] for st, a, (_, x) in zip(starts, segs, cues)]}, open(out + '.json', 'w'), ensure_ascii=False)
 track = np.zeros(int(dur * sr) + sr, dtype=np.float32)
 for st, a in zip(starts, segs):
     i = int(st * sr); track[i:i + len(a)] += a[:len(track) - i]
 track = track[:int(dur * sr)] / max(1e-6, np.abs(track).max()) * .9
 wav = out + '.voz.wav'; sf.write(wav, track, sr)
+if SEQ:
+    import os; os.replace(wav, out + '.wav'); print(out, 'total', round(dur, 2)); sys.exit()
 fc = f'[0:a]volume={mus}[m];[1:a]aresample=48000[v];[m][v]amix=inputs=2:normalize=0:duration=first[a]' if has_audio else '[1:a]aresample=48000[a]'
 subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', video, '-i', wav, '-filter_complex', fc, '-map', '0:v', '-map', '[a]', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', out], check=True)
 import os; os.remove(wav)

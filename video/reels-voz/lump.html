@@ -1,0 +1,45 @@
+<!doctype html><html lang="es"><head><meta charset="utf-8"><title>DCA vs. inversión única</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}html,body{background:#000;overflow:hidden}
+body{font-family:'Inter Display',Inter,sans-serif;color:#f3fff7;-webkit-font-smoothing:antialiased}
+#st{position:absolute;left:0;top:0;width:1080px;height:1920px;overflow:hidden;background:radial-gradient(70% 34% at 50% 44%,#0c4326 0%,#06281a 42%,rgba(3,18,11,0) 78%),linear-gradient(180deg,#020c07,#03130c 50%,#020a06)}
+#in{position:absolute;inset:0}
+.pill{position:absolute;left:72px;top:290px;display:inline-flex;align-items:center;gap:12px;padding:9px 20px 9px 16px;border-radius:999px;border:1.5px solid rgba(47,227,110,.55);font-size:22px;font-weight:600}
+.pill i{width:10px;height:10px;border-radius:50%;background:#2fe36e}.g{color:#3df07f}.m{color:#9fb8a9}.au{color:#cdb766}
+h2{position:absolute;left:72px;top:350px;width:936px;font-size:62px;font-weight:700;letter-spacing:-.035em;line-height:1.05}
+.card{position:absolute;left:72px;width:936px;height:330px;background:rgba(9,38,24,.62);border:1.5px solid rgba(47,227,110,.26);border-radius:24px;padding:22px 28px}
+.card h3{font-size:31px;font-weight:700;letter-spacing:-.02em}.card .s{font-size:21px;color:#9fb8a9;font-weight:600}
+.bars{position:absolute;left:420px;top:104px;width:488px}
+.b{display:flex;align-items:center;gap:14px;height:78px}.b .l{width:150px;font-size:25px;font-weight:700}.b .t{flex:1;height:34px}.b .f{height:100%;border-radius:10px;width:0}.b .v{width:112px;font-size:32px;font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
+#cap{position:absolute;left:72px;top:1290px;width:936px;height:170px;display:flex;align-items:center;justify-content:center;font-size:39px;line-height:1.22;font-weight:600;text-align:center;letter-spacing:-.015em}
+#ft{position:absolute;left:72px;top:1486px;width:936px;font-size:20px;color:#86a091;line-height:1.3}
+#bar{position:absolute;left:72px;top:1562px;width:936px;height:2px;background:rgba(255,255,255,.13)}#bf{position:absolute;left:0;top:0;height:2px;width:77%;background:#2fe36e}#bd{position:absolute;left:77%;top:-5px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:#eafff1;box-shadow:0 0 14px 3px #2fe36e}
+.badge{position:absolute;left:72px;top:1130px;width:936px;text-align:center}.badge span{display:inline-block;padding:14px 28px;border-radius:999px;background:#2fe36e;color:#032012;font-size:30px;font-weight:800}
+</style></head><body><div id="st"><div id="in">
+<div class="pill"><i></i><span>Del quirófano a la bolsa</span><span class="m">·</span><span class="g">Episodio 2</span></div>
+<h2 id="h">DCA <span class="m">vs.</span> <span class="au">inversión única</span></h2>
+<div class="card" id="c1" style="top:430px"><h3>Cae y se recupera</h3><div class="s">US$10 → US$5 → US$10</div><svg id="s1" style="position:absolute;left:28px;top:110px" width="360" height="190"></svg>
+ <div class="bars"><div class="b"><div class="l g">DCA</div><div class="t"><div class="f" style="background:#2fe36e"></div></div><div class="v g"></div></div><div class="b"><div class="l au">Única</div><div class="t"><div class="f" style="background:#cdb766"></div></div><div class="v au"></div></div><div class="s" style="margin-top:6px">US$600 invertidos en ambos casos</div></div></div>
+<div class="card" id="c2" style="top:778px"><h3>Sube sin parar</h3><div class="s">US$10 → US$15</div><svg id="s2" style="position:absolute;left:28px;top:110px" width="360" height="190"></svg>
+ <div class="bars"><div class="b"><div class="l g">DCA</div><div class="t"><div class="f" style="background:#2fe36e"></div></div><div class="v g"></div></div><div class="b"><div class="l au">Única</div><div class="t"><div class="f" style="background:#cdb766"></div></div><div class="v au"></div></div><div class="s" style="margin-top:6px">Valor final de cada estrategia</div></div></div>
+<div class="badge" id="bg"><span>Históricamente, la inversión única ganó ≈ 2 de cada 3 veces</span></div>
+<div id="cap"></div>
+<div id="ft">Activo ficticio y cifras ilustrativas. Dato histórico: estudios de Vanguard sobre mercados de EE. UU. Rentabilidades pasadas no garantizan resultados futuros.</div>
+</div><div id="bar"><div id="bf"></div><div id="bd"></div></div></div>
+<script>
+const TL=window.TL,$=s=>document.querySelector(s),cl=x=>Math.max(0,Math.min(1,x)),eo=x=>1-Math.pow(1-cl(x),3),P=(t,s,d=.6)=>eo((t-s)/d);
+const B=TL.beats,CAP=["¿Y si inviertes todo de una sola vez? Eso se llama Lump Sum.","Si el precio cae y se recupera, gana el DCA: US$817 frente a US$600.","Si el mercado sube sin parar, gana la inversión única: US$900 frente a US$734.","En la historia, la inversión única ganó cerca de 2 de cada 3 veces. Si inviertes de tu sueldo, el DCA es tu camino natural."];
+function spark(id,p,col){const W=360,H=190,mn=4,mx=16,X=i=>14+i*(W-28)/5,Y=v=>H-24-(v-mn)/(mx-mn)*(H-50);$(id).innerHTML=`<path fill="none" stroke="${col}" stroke-width="5" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" d="${p.map((v,i)=>(i?'L':'M')+X(i)+','+Y(v)).join('')}"/>`+p.map((v,i)=>`<circle cx="${X(i)}" cy="${Y(v)}" r="7" fill="#eafff1" opacity="0"/>`).join('')+p.map((v,i)=>`<text x="${X(i)}" y="${H-2}" text-anchor="middle" font-size="17" fill="#9fb8a9" font-family="Inter">m${i+1}</text>`).join('');}
+spark('#s1',[10,8,5,6,8,10],'#ff8a6b');spark('#s2',[10,11,12,13,14,15],'#2fe36e');
+const D=[[817,600],[734,900]];
+window.setT=t=>{
+  $('#in').style.opacity=Math.min(cl(t/.4),cl((TL.total-t)/.35));
+  $('#h').style.opacity=P(t,.2);$('#h').style.transform=`translateY(${(1-P(t,.2))*24}px)`;
+  [['#c1','#s1',B[1][0]],['#c2','#s2',B[2][0]]].forEach(([c,s,t0],k)=>{const p=P(t,t0-.3);$(c).style.opacity=p;$(c).style.transform=`translateY(${(1-p)*26}px)`;
+    const u=cl((t-t0)/1.6);$(s+' path').style.strokeDashoffset=1-u;document.querySelectorAll(s+' circle').forEach((e,i)=>e.setAttribute('opacity',u>=i/5?1:0));
+    document.querySelectorAll(c+' .b').forEach((e,i)=>{const q=P(t,t0+1.8+i*1.3,.9),v=D[k][i];e.querySelector('.f').style.width=(v/900*100*q)+'%';e.querySelector('.v').textContent='$'+Math.round(v*q);e.style.opacity=.25+.75*q;});});
+  const pb=P(t,B[3][0]+.2);$('#bg').style.opacity=pb;$('#bg').style.transform=`scale(${.9+.1*pb})`;
+  let c='',o=0;B.forEach((b,i)=>{if(t>=b[0]-.12&&t<b[1]+.3){c=CAP[i];o=Math.min(cl((t-b[0]+.12)/.2),cl((b[1]+.3-t)/.2));}});
+  $('#cap').textContent=c;$('#cap').style.opacity=o;$('#cap').style.color=o&&c===CAP[3]?'#3df07f':'#f3fff7';
+};setT(0);
+</script></body></html>
