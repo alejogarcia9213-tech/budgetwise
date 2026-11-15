@@ -1,16 +1,16 @@
 window.TL = {
- "total": 84.276,
+ "total": 78.846,
  "scenes": [
   {
    "id": "ch",
    "title": "Intro",
    "start": 0.0,
-   "end": 10.643,
+   "end": 10.375,
    "beats": [
     {
      "id": "p1",
      "start": 0.7,
-     "end": 9.743,
+     "end": 9.475,
      "text": ""
     }
    ]
@@ -18,61 +18,61 @@ window.TL = {
   {
    "id": "c1",
    "title": "8 Schritte",
-   "start": 10.643,
-   "end": 61.919,
+   "start": 10.375,
+   "end": 58.211,
    "beats": [
     {
      "id": "p0",
-     "start": 11.343,
-     "end": 12.661,
+     "start": 11.075,
+     "end": 12.337,
      "text": "Es sind acht Schritte."
     },
     {
      "id": "p1",
-     "start": 13.041,
-     "end": 17.861,
+     "start": 12.717,
+     "end": 17.229,
      "text": "1. Erstelle dein eToro-Konto und verifiziere deine Identität."
     },
     {
      "id": "p2",
-     "start": 18.241,
-     "end": 22.561,
+     "start": 17.608,
+     "end": 21.725,
      "text": "2. Zahle Geld ein, oder übe zuerst im virtuellen Konto."
     },
     {
      "id": "p3",
-     "start": 22.941,
-     "end": 28.069,
+     "start": 22.105,
+     "end": 27.087,
      "text": "3. Suche AlejandroGarciaO und prüfe Benutzernamen und Foto."
     },
     {
      "id": "p4",
-     "start": 28.449,
-     "end": 33.14,
+     "start": 27.467,
+     "end": 31.814,
      "text": "4. Sieh dir mein Portfolio, meine Historie und mein Risiko an."
     },
     {
      "id": "p5",
-     "start": 33.52,
-     "end": 37.871,
+     "start": 32.194,
+     "end": 36.081,
      "text": "5. Tippe auf Kopieren, wenn die Funktion für dich verfügbar ist."
     },
     {
      "id": "p6",
-     "start": 38.251,
-     "end": 43.511,
+     "start": 36.461,
+     "end": 41.14,
      "text": "6. Gib den Betrag ein. Das Plattform-Minimum liegt bei 200 $."
     },
     {
      "id": "p7",
-     "start": 43.891,
-     "end": 52.13,
+     "start": 41.52,
+     "end": 49.101,
      "text": "7. Stelle den Copy Stop-Loss ein. Standard: 40 % des Betrags; du wählst 5–95 %."
     },
     {
      "id": "p8",
-     "start": 52.51,
-     "end": 61.019,
+     "start": 49.481,
+     "end": 57.311,
      "text": "8. Prüfe die Zusammenfassung und bestätige erst, wenn du verstehst, wie Positionen eröffnet werden und wie viel du verlieren kannst."
     }
    ]
@@ -80,13 +80,13 @@ window.TL = {
   {
    "id": "c2",
    "title": "Vor dem Bestätigen",
-   "start": 61.919,
-   "end": 78.023,
+   "start": 58.211,
+   "end": 73.054,
    "beats": [
     {
      "id": "p1",
-     "start": 62.619,
-     "end": 77.123,
+     "start": 58.911,
+     "end": 72.154,
      "text": ""
     }
    ]
@@ -94,13 +94,13 @@ window.TL = {
   {
    "id": "ce",
    "title": "Outro",
-   "start": 78.023,
-   "end": 84.276,
+   "start": 73.054,
+   "end": 78.846,
    "beats": [
     {
      "id": "p1",
-     "start": 78.723,
-     "end": 83.376,
+     "start": 73.754,
+     "end": 77.946,
      "text": ""
     }
    ]
