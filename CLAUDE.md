@@ -15,9 +15,16 @@ Carpeta `video/reels-voz/`. Sirve para poner narración sobre reels ya renderiza
 - `lump.html` + `seg.mjs`: escena suelta "DCA vs. inversión única", renderizada aparte e insertada en R02 con ffmpeg.
 - `salida/`: reels finales. `voz/`: locuciones de Higgsfield.
 
-Voces en Higgsfield (voz clonada `Alejo-Español`, id `ffff1547-43ad-41ee-be93-a1ba88daa60f`, tipo `element`):
-- Español: `text2speech_v2`, `variant: elevenlabs`. Suena con su acento colombiano.
-- Inglés: `elevenlabs_v4` con `dialogue` y el texto empezando por `[British accent]` (opción elegida por él entre tres muestras).
+**Voces por defecto de Alejandro (elegidas por él de oído; usar siempre estas en reels y vídeos nuevos, salvo que pida otra cosa).** Todas con su voz clonada en Higgsfield: `Alejo-Español`, id `ffff1547-43ad-41ee-be93-a1ba88daa60f`, `voice_type: element`, modelo `elevenlabs_v4` con `dialogue` (un solo turno) y el texto empezando por la etiqueta indicada:
+
+| Idioma | Etiqueta al inicio del texto | Velocidad al montar |
+|---|---|---|
+| Español | `[Colombian Spanish accent]` (sin etiqueta de tono) | `--tempo 1.05` |
+| Inglés | `[British accent]` | `--tempo 1.0` |
+| Alemán | `[native German speaker, standard High German]` | `--tempo 1.0` |
+
+Descartado para español: `text2speech_v2` con `variant: elevenlabs` (no deja fijar el acento y se desvió a argentino) y las etiquetas de tono alegre o enérgico (le parecieron demasiado rápidas y alegres). Cada guion completo con `elevenlabs_v4` cuesta unos 9 créditos.
+
 - Un guion completo por petición, frases separadas por línea en blanco; máximo unas 3 peticiones a la vez. Escribir las cifras con letras.
 
 Pendiente: versión en inglés de R02, R04, R06 y "Nota de domingo" (hay que reconstruir la animación, el texto va grabado en la imagen) y decidir qué hacer con los dos vídeos horizontales (`dca-explicado`, `fire-4-percent-rule`), cuyo contenido ya cubren R02, R04 y R06.

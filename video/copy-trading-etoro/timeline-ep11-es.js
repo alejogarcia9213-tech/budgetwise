@@ -1,16 +1,16 @@
 window.TL = {
- "total": 76.261,
+ "total": 76.362,
  "scenes": [
   {
    "id": "ch",
    "title": "Inicio",
    "start": 0.0,
-   "end": 10.686,
+   "end": 9.323,
    "beats": [
     {
      "id": "p1",
      "start": 0.7,
-     "end": 9.786,
+     "end": 8.423,
      "text": ""
     }
    ]
@@ -18,61 +18,61 @@ window.TL = {
   {
    "id": "c1",
    "title": "8 pasos",
-   "start": 10.686,
-   "end": 58.263,
+   "start": 9.323,
+   "end": 58.29,
    "beats": [
     {
      "id": "p0",
-     "start": 11.386,
-     "end": 11.959,
+     "start": 10.023,
+     "end": 11.289,
      "text": "Son ocho pasos."
     },
     {
      "id": "p1",
-     "start": 12.339,
-     "end": 15.276,
+     "start": 11.669,
+     "end": 15.193,
      "text": "1. Crea tu cuenta en eToro y verifica tu identidad."
     },
     {
      "id": "p2",
-     "start": 15.656,
-     "end": 19.705,
+     "start": 15.573,
+     "end": 19.557,
      "text": "2. Deposita fondos, o practica primero en la cuenta virtual."
     },
     {
      "id": "p3",
-     "start": 20.085,
-     "end": 24.65,
+     "start": 19.937,
+     "end": 25.112,
      "text": "3. Busca AlejandroGarciaO y comprueba el usuario y la foto."
     },
     {
      "id": "p4",
-     "start": 25.03,
-     "end": 29.325,
+     "start": 25.492,
+     "end": 29.469,
      "text": "4. Revisa mi portafolio, mi historial y mi nivel de riesgo."
     },
     {
      "id": "p5",
-     "start": 29.705,
-     "end": 33.57,
+     "start": 29.849,
+     "end": 33.636,
      "text": "5. Pulsa Copiar, si la función está disponible para ti."
     },
     {
      "id": "p6",
-     "start": 33.95,
-     "end": 38.827,
+     "start": 34.016,
+     "end": 38.838,
      "text": "6. Escribe el importe. El mínimo de la plataforma son $200."
     },
     {
      "id": "p7",
-     "start": 39.207,
-     "end": 50.219,
+     "start": 39.218,
+     "end": 50.373,
      "text": "7. Copy Stop-Loss: por defecto viene en 40 %. Para largo plazo, yo lo pongo en 5 %, para que una caída temporal no cierre la copia."
     },
     {
      "id": "p8",
-     "start": 50.599,
-     "end": 57.363,
+     "start": 50.753,
+     "end": 57.39,
      "text": "8. Revisa el resumen y confirma solo cuando entiendas cómo se abrirán las posiciones y cuánto puedes perder."
     }
    ]
@@ -80,13 +80,13 @@ window.TL = {
   {
    "id": "c2",
    "title": "Antes de confirmar",
-   "start": 58.263,
-   "end": 71.291,
+   "start": 58.29,
+   "end": 71.378,
    "beats": [
     {
      "id": "p1",
-     "start": 58.963,
-     "end": 70.391,
+     "start": 58.99,
+     "end": 70.478,
      "text": ""
     }
    ]
@@ -94,13 +94,13 @@ window.TL = {
   {
    "id": "ce",
    "title": "Cierre",
-   "start": 71.291,
-   "end": 76.261,
+   "start": 71.378,
+   "end": 76.362,
    "beats": [
     {
      "id": "p1",
-     "start": 71.991,
-     "end": 75.361,
+     "start": 72.078,
+     "end": 75.462,
      "text": ""
     }
    ]
