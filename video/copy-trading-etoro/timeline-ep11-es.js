@@ -1,5 +1,5 @@
 window.TL = {
- "total": 73.363,
+ "total": 76.261,
  "scenes": [
   {
    "id": "ch",
@@ -19,7 +19,7 @@ window.TL = {
    "id": "c1",
    "title": "8 pasos",
    "start": 10.686,
-   "end": 55.365,
+   "end": 58.263,
    "beats": [
     {
      "id": "p0",
@@ -66,13 +66,13 @@ window.TL = {
     {
      "id": "p7",
      "start": 39.207,
-     "end": 47.321,
-     "text": "7. Ajusta el Copy Stop-Loss. Por defecto es el 40% del importe; eliges entre 5 y 95%."
+     "end": 50.219,
+     "text": "7. Copy Stop-Loss: por defecto viene en 40 %. Para largo plazo, yo lo pongo en 5 %, para que una caída temporal no cierre la copia."
     },
     {
      "id": "p8",
-     "start": 47.701,
-     "end": 54.465,
+     "start": 50.599,
+     "end": 57.363,
      "text": "8. Revisa el resumen y confirma solo cuando entiendas cómo se abrirán las posiciones y cuánto puedes perder."
     }
    ]
@@ -80,13 +80,13 @@ window.TL = {
   {
    "id": "c2",
    "title": "Antes de confirmar",
-   "start": 55.365,
-   "end": 68.393,
+   "start": 58.263,
+   "end": 71.291,
    "beats": [
     {
      "id": "p1",
-     "start": 56.065,
-     "end": 67.493,
+     "start": 58.963,
+     "end": 70.391,
      "text": ""
     }
    ]
@@ -94,13 +94,13 @@ window.TL = {
   {
    "id": "ce",
    "title": "Cierre",
-   "start": 68.393,
-   "end": 73.363,
+   "start": 71.291,
+   "end": 76.261,
    "beats": [
     {
      "id": "p1",
-     "start": 69.093,
-     "end": 72.463,
+     "start": 71.991,
+     "end": 75.361,
      "text": ""
     }
    ]
