@@ -51,10 +51,7 @@ Antes de publicar algo nuevo conviene refrescar las cifras con el conector de eT
 
 ## Voces
 
-Se usa Higgsfield, modelo `text2speech_v2` con `variant: elevenlabs`:
-
-- **Xavier** (`43173c95-3ec8-446a-a162-6504332c578b`): español. Elegida por el usuario por su acento latino.
-- **Marcus** (`6f98d3dd-324f-4845-8c28-c1d1647a06cd`): inglés y alemán.
+Las voces por defecto (la voz clonada de Alejandro en español, inglés y alemán) están en `CLAUDE.md`, en la raíz del repositorio. Xavier y Marcus, usadas en las primeras versiones, ya no se usan.
 
 Cómo se genera una locución:
 
