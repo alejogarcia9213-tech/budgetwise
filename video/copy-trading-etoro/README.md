@@ -35,7 +35,7 @@ Guía para continuar este trabajo desde otra sesión. Todo lo necesario para reg
 - Narración en primera persona.
 - Cargo: "Instrumentador Quirúrgico" (es), "Scrub Nurse" (en), "Operationstechnischer Assistent" (de, pendiente de confirmar).
 - Título en eToro: **Popular Investor Champion** (no Elite).
-- Miniatura de eToro: foto + "Jaime Garcia Otalora ★" + @AlejandroGarciaO.
+- Miniatura de eToro: foto + "Jaime Alejandro Garcia Otalora ★" + @AlejandroGarciaO.
 
 ## Datos usados
 
