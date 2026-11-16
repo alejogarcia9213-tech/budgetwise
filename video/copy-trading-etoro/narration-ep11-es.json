@@ -56,8 +56,9 @@
     },
     {
      "id": "p7",
-     "say": "Siete. Ajusta el estop los de la copia. Por defecto es el cuarenta por ciento del importe, y puedes elegir entre el cinco y el noventa y cinco.",
-     "show": "7. Ajusta el Copy Stop-Loss. Por defecto es el 40% del importe; eliges entre 5 y 95%."
+     "say": "Siete. Ajusta el Copy Stop-Loss. Por defecto viene en cuarenta por ciento. Para una estrategia de largo plazo como la mía, yo lo pongo en cinco por ciento, para que una caída temporal no cierre la copia.",
+     "show": "7. Copy Stop-Loss: por defecto viene en 40 %. Para largo plazo, yo lo pongo en 5 %, para que una caída temporal no cierre la copia.",
+     "split_len": 143
     },
     {
      "id": "p8",

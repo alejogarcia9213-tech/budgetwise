@@ -56,8 +56,9 @@
     },
     {
      "id": "p7",
-     "say": "Seven. Adjust the Copy Stop-Loss. By default it is forty percent of the amount, and you choose between five and ninety-five.",
-     "show": "7. Adjust the Copy Stop-Loss. By default it is 40% of the amount; you choose between 5–95%."
+     "say": "Seven. Adjust the Copy Stop-Loss. The default is forty percent. For a long-term strategy like mine, I set it to five percent, so a temporary drop doesn't close the copy.",
+     "show": "7. Copy Stop-Loss: the default is 40%. For the long term, I set it to 5%, so a temporary drop doesn't close the copy.",
+     "split_len": 124
     },
     {
      "id": "p8",

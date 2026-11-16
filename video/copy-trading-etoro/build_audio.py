@@ -2,6 +2,7 @@
 Uso: python3 build_audio.py <nombre> --kokoro <kokoro.onnx> <voices.bin> --piper <modelo.onnx>
   nombre: narration | narration-ep09-es | narration-ep11-de ...   (el JSON indica el motor)
   --engine piper [--speed 1.05]: fuerza la voz local de Piper (p. ej. es_MX)
+  --patch <n>=<audio.mp3>: con --hf, sustituye la frase n (desde 0) por otra grabación
   --hf <audio.mp3> [--tempo 1.06]: usa una locución completa ya grabada y la corta por pausas"""
 import json, sys, numpy as np, soundfile as sf
 
@@ -27,7 +28,7 @@ if ENGINE == "split":
             if (j - i) * .02 >= .2 and i > 0 and j < len(quiet): sil.append(((i + j) / 2 * .02, (j - i) * .02))
             i = j
         else: i += 1
-    N = len(beats_all); c = np.array([len(b["say"]) for b in beats_all], float); total = len(full) / sr
+    N = len(beats_all); c = np.array([b.get("split_len", len(b["say"])) for b in beats_all], float); total = len(full) / sr
     d = c / c.sum() * total  # duración esperada de cada frase
     pos = [x[0] for x in sil]; S = len(sil); INF = 1e18; best = np.full((N, S), INF); prev = np.zeros((N, S), int)
     for s in range(S): best[0, s] = (pos[s] - d[0]) ** 2 / d[0] - .5 * min(sil[s][1], 1.0)
@@ -40,6 +41,11 @@ if ENGINE == "split":
     for k in range(N - 2, -1, -1): cuts.append(pos[s]); s = prev[k, s]
     cuts = [0.0] + cuts[::-1] + [total]
     segs = [full[int(cuts[i] * sr):int(cuts[i + 1] * sr)] for i in range(N)]
+    for pi in range(len(a)):   # --patch <n>=<audio>: sustituye la frase n (desde 0) por otra grabación
+        if a[pi] == "--patch":
+            k, pf = a[pi + 1].split("=")
+            praw = subprocess.run(["ffmpeg", "-v", "error", "-i", pf, "-af", f"atempo={tempo}", "-f", "f32le", "-ac", "1", "-ar", str(sr), "-"], capture_output=True, check=True).stdout
+            segs[int(k)] = np.frombuffer(praw, dtype=np.float32).copy()
     print("car/s por frase:", " ".join(f"{c[i] / (cuts[i + 1] - cuts[i]):.0f}" for i in range(N))); it = iter(segs)
     def tts(text): return next(it)
 elif ENGINE == "piper":

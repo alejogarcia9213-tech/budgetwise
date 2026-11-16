@@ -54,8 +54,9 @@
     },
     {
      "id": "p7",
-     "say": "Sieben. Stelle den Kopier-Stopp-Loss ein. Standard sind vierzig Prozent des Betrags, du wählst zwischen fünf und fünfundneunzig.",
-     "show": "7. Stelle den Copy Stop-Loss ein. Standard: 40 % des Betrags; du wählst 5–95 %."
+     "say": "Sieben. Stelle den Copy Stop-Loss ein. Standard sind vierzig Prozent. Für eine langfristige Strategie wie meine stelle ich fünf Prozent ein, damit ein vorübergehender Rückgang die Kopie nicht schließt.",
+     "show": "7. Copy Stop-Loss: Standard sind 40 %. Für die Langfrist stelle ich 5 % ein, damit ein vorübergehender Rückgang die Kopie nicht schließt.",
+     "split_len": 128
     },
     {
      "id": "p8",
