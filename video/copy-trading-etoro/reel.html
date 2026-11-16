@@ -470,7 +470,7 @@ if (has('c1')) {
     const u3 = cl((t - S(3) - .5) / 1.4); $('#c1type').textContent = name.slice(0, Math.round(u3 * name.length)); $('#c1res').style.opacity = P(t, S(3) + 2, .4);
     const u5 = (t - frac('c1.p5', .35)) / .7, tp = $('#c1tap'); tp.style.opacity = u5 > 0 && u5 < 1 ? 1 - u5 : 0; tp.style.transform = `scale(${.4 + cl(u5) * 1.3})`;
     $('#c1amt').textContent = M(Math.round(1000 * eio((t - S(6) - .5) / 1.2)));
-    const u7 = .4 - .35 * eio((t - frac('c1.p7', .45)) / 1.6);   // empieza en el 40 % por defecto y baja al 5 % $('#c1slf').style.width = $('#c1slk').style.left = (u7 * 100) + '%'; $('#c1slv').textContent = Pc(Math.round(u7 * 100), 0);
+    const u7 = .4 - .35 * eio((t - frac('c1.p7', .45)) / 1.6); $('#c1slf').style.width = $('#c1slk').style.left = (u7 * 100) + '%'; $('#c1slv').textContent = Pc(Math.round(u7 * 100), 0);
     const u8 = P(t, frac('c1.p8', .3), .4); $('#c1chk').style.opacity = u8; $('#c1chk').style.transform = `scale(${.5 + .5 * u8})`;
   });
 }
