@@ -11,12 +11,12 @@ import { formatMoney } from "@/lib/money";
 import type { CategoryId } from "@/lib/types";
 import { useAppStore, useProfile } from "@/lib/store";
 
-export function SuggestionInbox() {
+export function SuggestionInbox({ excludeId }: { excludeId?: string | null } = {}) {
   const lang = useAppStore((s) => s.lang);
   const currency = useAppStore((s) => s.currency);
   const enabled = useAppStore((s) => s.smartTransactionCapture);
   const profile = useProfile();
-  const pending = (profile.captureSuggestions ?? []).filter((s) => s.status === "pending");
+  const pending = (profile.captureSuggestions ?? []).filter((s) => s.status === "pending" && s.id !== excludeId);
   const [editId, setEditId] = useState<string | null>(null);
   if (!enabled || pending.length === 0) return null;
 
@@ -31,7 +31,7 @@ export function SuggestionInbox() {
             <p className="text-sm text-muted">
               {s.amountMinor != null ? formatMoney(s.amountMinor / 100, currency, lang) : "—"}
               {s.cardLastFour ? ` · •••• ${s.cardLastFour}` : ""}
-              {` · ${t(lang, "wallet.viaWallet")}`}
+              {s.walletChannel === "google_wallet" ? ` · ${t(lang, "wallet.viaWallet")}` : s.sourceAppLabel ? ` · ${s.sourceAppLabel}` : ""}
             </p>
             <div className="mt-2 flex flex-wrap gap-2">
               <Button size="sm" onClick={() => useAppStore.getState().confirmSuggestion(s.id)}>

@@ -6,6 +6,7 @@ import { CalculatorView } from "@/components/calculator/calculator-view";
 import { Panel } from "@/components/finance/panel";
 import { ReceiptScanButton } from "@/components/finance/receipt-scan";
 import { SuggestionInbox } from "@/components/capture/suggestion-inbox";
+import { QuickAdd } from "@/components/capture/quick-add";
 import { t } from "@/lib/i18n";
 import { useAppStore } from "@/lib/store";
 
@@ -18,6 +19,7 @@ export function PlannerView() {
         <IncomeCard />
       </div>
       <SuggestionInbox />
+      <QuickAdd />
       <div data-tour="tour-scan">
         <ReceiptScanButton />
       </div>

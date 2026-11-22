@@ -210,7 +210,7 @@ export function AppShell({ children }: { children: ReactNode }) {
 
       <Toaster theme={theme} position="top-center" />
       <SetupGate />
-      <AppTour />
+      {pathname.startsWith("/capture") ? null : <AppTour />}
     </div>
   );
 }

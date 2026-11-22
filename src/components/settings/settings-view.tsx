@@ -7,6 +7,7 @@ import { Switch } from "@/components/ui/switch";
 import { SpreadsheetImportButtons } from "@/components/settings/spreadsheet-import";
 import { DeviceSyncPanel } from "@/components/settings/device-sync";
 import { WalletCaptureSettings } from "@/components/settings/wallet-capture";
+import { AutoCaptureSettings } from "@/components/settings/auto-capture";
 import { Panel } from "@/components/finance/panel";
 import { t, LANGS, type Lang } from "@/lib/i18n";
 import { CURRENCIES } from "@/lib/money";
@@ -221,6 +222,7 @@ export function SettingsView() {
 
       <DeviceSyncPanel />
 
+      <AutoCaptureSettings />
       <WalletCaptureSettings />
 
       <Panel>

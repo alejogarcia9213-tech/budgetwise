@@ -618,3 +618,42 @@ test("visitor locale maps language and currency", () => {
   assert.equal(bogota.lang, "es");
   assert.equal(bogota.currency, "COP");
 });
+
+// ── Quick capture (one-line entry, NFC links, shared bank texts) ──
+import { parseLooseAmount, parseQuickText, parseSharedText, guessCategory } from "./capture/quick";
+
+test("loose amounts from phones and humans", () => {
+  assert.equal(parseLooseAmount("23,90", "EUR"), 23.9);
+  assert.equal(parseLooseAmount("€23.90", "EUR"), 23.9);
+  assert.equal(parseLooseAmount("$45.000", "COP"), 45000);
+  assert.equal(parseLooseAmount("1.234,56 €", "EUR"), 1234.56);
+  assert.equal(parseLooseAmount("1,234.56", "USD"), 1234.56);
+  assert.equal(parseLooseAmount("12", "EUR"), 12);
+  assert.equal(parseLooseAmount("AMOUNT", "EUR"), null);
+});
+
+test("one-line quick entry", () => {
+  const a = parseQuickText("12,50 café", "EUR");
+  assert.equal(a?.amount, 12.5);
+  assert.equal(a?.name, "Café");
+  const b = parseQuickText("Rewe 23.90", "EUR");
+  assert.equal(b?.amount, 23.9);
+  assert.equal(b?.name, "Rewe");
+  const c = parseQuickText("arriendo 1.200.000 #fijo", "COP");
+  assert.equal(c?.amount, 1200000);
+  assert.equal(c?.forced, "essential");
+  assert.equal(parseQuickText("solo texto", "EUR"), null);
+});
+
+test("shared bank SMS", () => {
+  const r = parseSharedText("Bancolombia: Compraste $45.000 en EXITO CALLE 80 con tu T.Deb *1234", "COP");
+  assert.equal(r.amount, 45000);
+  assert.equal(r.merchant, "EXITO CALLE 80");
+});
+
+test("category guess", () => {
+  assert.equal(guessCategory("Rewe").category, "essential");
+  assert.equal(guessCategory("Netflix").category, "flexible");
+  assert.equal(guessCategory("eToro").category, "investing");
+  assert.equal(guessCategory("Rewe", [{ merchant: "rewe", categoryId: "flexible" }]).category, "flexible");
+});

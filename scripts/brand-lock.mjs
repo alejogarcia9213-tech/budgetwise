@@ -22,6 +22,13 @@ export function renderBrandManifest() {
         { src: BRAND_ICON_192, sizes: "192x192", type: "image/png" },
         { src: BRAND_ICON_512, sizes: "512x512", type: "image/png" },
       ],
+      // Long-press the home-screen icon → straight to logging a purchase.
+      shortcuts: [
+        { name: "Registrar gasto", short_name: "Gasto", url: "/capture", icons: [{ src: BRAND_ICON_192, sizes: "192x192" }] },
+        { name: "Captura automática", short_name: "Auto", url: "/settings#auto-capture", icons: [{ src: BRAND_ICON_192, sizes: "192x192" }] },
+      ],
+      // Android: share a bank SMS / notification text → Budget Wise reads the amount.
+      share_target: { action: "/capture", method: "GET", params: { title: "title", text: "text", url: "url" } },
     },
     null,
     2,

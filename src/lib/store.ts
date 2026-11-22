@@ -5,8 +5,9 @@ import { currentMonthKey, dateInMonth, isoToday, prevMonthKey } from "./dates";
 import { createBudgetWiseStorage } from "./idb-storage";
 import { categoryToType, emptyMonth, installmentOf, isDebtActive, isLargeActive, isSpendCat, pendingAutos, rememberRecurring, findMergeableItem, findMergeableTx } from "./budget";
 import { detectVisitorLocale } from "./locale-detect";
-import { parseNotification } from "./capture/parser";
-import type { CapturedPurchaseSuggestion, NotificationCandidate, WalletMethodMap } from "./capture/types";
+import { fingerprintOf, parseNotification } from "./capture/parser";
+import { guessCategory } from "./capture/quick";
+import type { CapturedPurchaseSuggestion, DirectCapture, NotificationCandidate, WalletMethodMap } from "./capture/types";
 import { roundMoney } from "./money";
 import type { Lang } from "./i18n";
 import type { CurrencyCode } from "./money";
@@ -68,6 +69,7 @@ export interface AppState {
   setTourComplete: (v: boolean) => void;
   applyVisitorLocale: () => void;
   ingestNotification: (n: NotificationCandidate) => string | null;
+  ingestCapture: (c: DirectCapture) => string | null;
   confirmSuggestion: (id: string, patch?: { name?: string; amount?: number; category?: CategoryId; methodId?: string; alwaysCategory?: boolean }) => void;
   dismissSuggestion: (id: string) => void;
   clearSuggestions: () => void;
@@ -448,6 +450,60 @@ export const useAppStore = create<AppState>()(
             ],
           })),
         );
+        return id;
+      },
+      ingestCapture: (c) => {
+        const s = get();
+        const p = s.profiles.find((x) => x.id === s.activeProfileId) ?? s.profiles[0];
+        if (!p || !(c.amount > 0)) return null;
+        const merchant = c.merchant.trim() || "Compra";
+        const pkg = c.source === "ios_shortcut" ? "apple.wallet" : c.source;
+        const parsed = parseNotification(
+          { packageName: pkg, title: merchant, text: c.card ? `•••• ${c.card}` : "", postedAt: c.occurredAt ?? Date.now() },
+          {
+            currency: s.currency,
+            items: [...(p.months[s.activeMonth]?.items ?? []), ...p.recurring].map((it) => ({ name: it.name, category: it.category })),
+            methods: p.paymentMethods.map((m) => ({ id: m.id, name: m.name })),
+            rules: p.merchantCategoryRules ?? [],
+            maps: p.walletMethodMaps ?? [],
+          },
+        );
+        const guess = guessCategory(parsed.merchantNormalized, p.merchantCategoryRules ?? [], [
+          ...(p.months[s.activeMonth]?.items ?? []),
+          ...p.recurring,
+        ]);
+        const amountMinor = Math.round(c.amount * 100);
+        const fingerprint = fingerprintOf({
+          merchantNormalized: parsed.merchantNormalized,
+          amountMinor,
+          day: parsed.occurredAt.slice(0, 10),
+          lastFour: c.card ?? parsed.cardLastFour,
+          pkg,
+        });
+        const all = p.captureSuggestions ?? [];
+        const dupe = all.find((x) => x.fingerprint === fingerprint && Date.now() - Date.parse(x.detectedAt) < 10 * 60_000);
+        if (dupe) return dupe.id;
+        const id = uid();
+        const suggestion: CapturedPurchaseSuggestion = {
+          ...parsed,
+          id,
+          status: "pending",
+          source: c.source,
+          sourceAppPackage: pkg,
+          sourceAppLabel: c.source === "ios_shortcut" ? "Apple Pay" : c.source === "share" ? "Share" : "Wallet",
+          walletChannel: c.source === "ios_shortcut" ? "apple_pay" : parsed.walletChannel,
+          amountMinor,
+          currencyCode: c.currency || s.currency,
+          cardLastFour: c.card ?? parsed.cardLastFour,
+          categoryId: parsed.categoryId ?? guess.category,
+          categoryConfidence: parsed.categoryId ? parsed.categoryConfidence : guess.confidence,
+          fingerprint,
+          detectedAt: new Date().toISOString(),
+        };
+        set({
+          smartTransactionCapture: true,
+          ...withActive(s, (cur) => ({ ...cur, captureSuggestions: [suggestion, ...(cur.captureSuggestions ?? [])].slice(0, 200) })),
+        });
         return id;
       },
       confirmSuggestion: (id, patch) => {

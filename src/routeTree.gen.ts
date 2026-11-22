@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as BudgetRouteImport } from './routes/budget'
 import { Route as CalculatorRouteImport } from './routes/calculator'
 import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as CaptureRouteImport } from './routes/capture'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as FeedbackRouteImport } from './routes/feedback'
 import { Route as PlanningRouteImport } from './routes/planning'
@@ -38,6 +39,11 @@ const CalculatorRoute = CalculatorRouteImport.update({
 const CalendarRoute = CalendarRouteImport.update({
   id: '/calendar',
   path: '/calendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CaptureRoute = CaptureRouteImport.update({
+  id: '/capture',
+  path: '/capture',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FaqRoute = FaqRouteImport.update({
@@ -76,6 +82,7 @@ export interface FileRoutesByFullPath {
   '/budget': typeof BudgetRoute
   '/calculator': typeof CalculatorRoute
   '/calendar': typeof CalendarRoute
+  '/capture': typeof CaptureRoute
   '/faq': typeof FaqRoute
   '/feedback': typeof FeedbackRoute
   '/planning': typeof PlanningRoute
@@ -88,6 +95,7 @@ export interface FileRoutesByTo {
   '/budget': typeof BudgetRoute
   '/calculator': typeof CalculatorRoute
   '/calendar': typeof CalendarRoute
+  '/capture': typeof CaptureRoute
   '/faq': typeof FaqRoute
   '/feedback': typeof FeedbackRoute
   '/planning': typeof PlanningRoute
@@ -101,6 +109,7 @@ export interface FileRoutesById {
   '/budget': typeof BudgetRoute
   '/calculator': typeof CalculatorRoute
   '/calendar': typeof CalendarRoute
+  '/capture': typeof CaptureRoute
   '/faq': typeof FaqRoute
   '/feedback': typeof FeedbackRoute
   '/planning': typeof PlanningRoute
@@ -115,6 +124,7 @@ export interface FileRouteTypes {
     | '/budget'
     | '/calculator'
     | '/calendar'
+    | '/capture'
     | '/faq'
     | '/feedback'
     | '/planning'
@@ -127,6 +137,7 @@ export interface FileRouteTypes {
     | '/budget'
     | '/calculator'
     | '/calendar'
+    | '/capture'
     | '/faq'
     | '/feedback'
     | '/planning'
@@ -139,6 +150,7 @@ export interface FileRouteTypes {
     | '/budget'
     | '/calculator'
     | '/calendar'
+    | '/capture'
     | '/faq'
     | '/feedback'
     | '/planning'
@@ -152,6 +164,7 @@ export interface RootRouteChildren {
   BudgetRoute: typeof BudgetRoute
   CalculatorRoute: typeof CalculatorRoute
   CalendarRoute: typeof CalendarRoute
+  CaptureRoute: typeof CaptureRoute
   FaqRoute: typeof FaqRoute
   FeedbackRoute: typeof FeedbackRoute
   PlanningRoute: typeof PlanningRoute
@@ -188,6 +201,13 @@ declare module '@tanstack/react-router' {
       path: '/calendar'
       fullPath: '/calendar'
       preLoaderRoute: typeof CalendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/capture': {
+      id: '/capture'
+      path: '/capture'
+      fullPath: '/capture'
+      preLoaderRoute: typeof CaptureRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/faq': {
@@ -240,6 +260,7 @@ const rootRouteChildren: RootRouteChildren = {
   BudgetRoute: BudgetRoute,
   CalculatorRoute: CalculatorRoute,
   CalendarRoute: CalendarRoute,
+  CaptureRoute: CaptureRoute,
   FaqRoute: FaqRoute,
   FeedbackRoute: FeedbackRoute,
   PlanningRoute: PlanningRoute,
