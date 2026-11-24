@@ -1,0 +1,321 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>DCA Reel</title>
+<style>
+@font-face{font-family:I;font-weight:400;src:url(file:///usr/share/fonts/opentype/inter/Inter-Regular.otf)}
+@font-face{font-family:I;font-weight:500;src:url(file:///usr/share/fonts/opentype/inter/Inter-Medium.otf)}
+@font-face{font-family:I;font-weight:600;src:url(file:///usr/share/fonts/opentype/inter/Inter-SemiBold.otf)}
+@font-face{font-family:I;font-weight:800;src:url(file:///usr/share/fonts/opentype/inter/InterDisplay-ExtraBold.otf)}
+@font-face{font-family:I;font-weight:900;src:url(file:///usr/share/fonts/opentype/inter/InterDisplay-Black.otf)}
+html,body{margin:0;background:#000}
+canvas{display:block}
+</style></head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script src="data.js"></script>
+<script>
+const W=1080,H=1920,cv=document.getElementById('c'),g=cv.getContext('2d');
+const C={bg0:'#060a1c',bg1:'#0d1240',ink:'#f4f5ff',mut:'#9aa3c7',dim:'#5b6390',ind:'#6366f1',ind2:'#818cf8',teal:'#2dd4bf',amb:'#fbbf24',red:'#f87171',card:'rgba(255,255,255,0.06)',line:'rgba(255,255,255,0.10)'};
+const D=window.DATA, TL=D.tl;
+const SC={}; TL.scenes.forEach(s=>SC[s.id]=s);
+// ---------- helpers
+const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const eo=x=>1-Math.pow(1-clamp(x),3);
+const eio=x=>{x=clamp(x);return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2};
+const back=x=>{x=clamp(x);const c1=1.70158,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const P=(t,a,d=.6)=>clamp((t-a)/d);
+const lerp=(a,b,k)=>a+(b-a)*k;
+function fmt(n,dec=0){return n.toLocaleString('es-ES',{minimumFractionDigits:dec,maximumFractionDigits:dec,useGrouping:'always'})}
+function pct(n,dec=1){return (n>=0?'+':'−')+fmt(Math.abs(n),dec)+'%'}
+function font(sz,w=600){g.font=`${w} ${sz}px I`}
+function T(s,x,y,{sz=48,w=600,col=C.ink,al='left',a=1,base='alphabetic',ls=0}={}){g.save();g.globalAlpha*=a;font(sz,w);g.fillStyle=col;g.textAlign=al;g.textBaseline=base;if(ls)g.letterSpacing=ls+'px';g.fillText(s,x,y);g.restore()}
+function rr(x,y,w,h,r){g.beginPath();g.roundRect(x,y,w,h,r)}
+function card(x,y,w,h,{r=36,fill=C.card,stroke=C.line,a=1}={}){g.save();g.globalAlpha*=a;rr(x,y,w,h,r);g.fillStyle=fill;g.fill();if(stroke){g.strokeStyle=stroke;g.lineWidth=2;g.stroke()}g.restore()}
+function pill(s,x,y,{sz=40,w=800,fg='#05261f',bg=C.teal,a=1,al='center',padX=28,padY=16}={}){g.save();g.globalAlpha*=a;font(sz,w);const tw=g.measureText(s).width;const bw=tw+padX*2,bh=sz+padY*2;let bx=al==='center'?x-bw/2:al==='right'?x-bw:x;rr(bx,y-bh/2,bw,bh,bh/2);g.fillStyle=bg;g.fill();g.fillStyle=fg;g.textAlign='center';g.textBaseline='middle';g.fillText(s,bx+bw/2,y+2);g.restore();return bw}
+function wrap(s,maxW,sz,w){font(sz,w);const words=s.split(' ');const lines=[];let cur='';for(const wd of words){const t=cur?cur+' '+wd:wd;if(g.measureText(t).width>maxW&&cur){lines.push(cur);cur=wd}else cur=t}if(cur)lines.push(cur);return lines}
+function para(s,x,y,maxW,{sz=56,w=800,col=C.ink,al='center',lh=1.18,a=1}={}){const ls=wrap(s,maxW,sz,w);ls.forEach((l,i)=>T(l,x,y+i*sz*lh,{sz,w,col,al,a}));return ls.length*sz*lh}
+// rich headline: segments [{t,col}]
+function rich(segs,x,y,{sz=72,w=900,a=1,al='center'}={}){font(sz,w);const tot=segs.reduce((s,q)=>s+g.measureText(q.t).width,0);let cx=al==='center'?x-tot/2:x;segs.forEach(q=>{T(q.t,cx,y,{sz,w,col:q.col||C.ink,a});font(sz,w);cx+=g.measureText(q.t).width})}
+function cues(id){const s=SC[id];return {s:s.start,e:s.end,c:s.lines.map(l=>l.t-s.start),d:s.lines.map(l=>l.d)}}
+function sceneAlpha(lt,dur){return Math.min(eo(lt/.45),eo((dur-lt)/.45))}
+function counter(from,to,k){return lerp(from,to,eio(k))}
+// ---------- background + chrome
+function bg(t){
+  const gr=g.createLinearGradient(0,0,0,H);gr.addColorStop(0,C.bg1);gr.addColorStop(.55,C.bg0);gr.addColorStop(1,'#04061a');g.fillStyle=gr;g.fillRect(0,0,W,H);
+  // glow blobs
+  const bl=(x,y,r,col)=>{const rg=g.createRadialGradient(x,y,0,x,y,r);rg.addColorStop(0,col);rg.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=rg;g.fillRect(0,0,W,H)};
+  bl(880+Math.sin(t*.25)*60,380+Math.cos(t*.2)*40,520,'rgba(99,102,241,0.22)');
+  bl(160+Math.cos(t*.18)*50,1500+Math.sin(t*.22)*50,560,'rgba(45,212,191,0.10)');
+  // subtle grid
+  g.save();g.globalAlpha=.05;g.strokeStyle='#fff';g.lineWidth=1;for(let x=0;x<=W;x+=90){g.beginPath();g.moveTo(x,0);g.lineTo(x,H);g.stroke()}for(let y=0;y<=H;y+=90){g.beginPath();g.moveTo(0,y);g.lineTo(W,y);g.stroke()}g.restore();
+  // skyline bars motif (bottom)
+  g.save();g.globalAlpha=.10;const bars=[.3,.5,.4,.7,.55,.9,.65,.8,1];bars.forEach((h,i)=>{const bw=70,x=W-90-(bars.length-i)*86;const hh=h*260;const lg=g.createLinearGradient(0,H-hh,0,H);lg.addColorStop(0,i>=7?C.teal:C.ind);lg.addColorStop(1,'rgba(0,0,0,0)');g.fillStyle=lg;g.fillRect(x,H-hh,bw,hh)});g.restore();
+}
+function chrome(t){
+  // top brand tag
+  g.save();const a=eo(t/.8);g.globalAlpha=a;
+  rr(70,150,14,60,7);g.fillStyle=C.teal;g.fill();
+  T('@AlejandroGarciaO',104,178,{sz:34,w:800});
+  T('DCA EXPLICADO',104,212,{sz:24,w:600,col:C.mut,ls:4});
+  // progress bar
+  const k=clamp(t/TL.total);rr(70,250,W-140,6,3);g.fillStyle='rgba(255,255,255,0.08)';g.fill();rr(70,250,(W-140)*k,6,3);const lg=g.createLinearGradient(70,0,W-70,0);lg.addColorStop(0,C.ind);lg.addColorStop(1,C.teal);g.fillStyle=lg;g.fill();
+  g.restore();
+}
+function captions(t){
+  // find current line
+  for(const s of TL.scenes)for(const l of s.lines){
+    if(t>=l.t-.05&&t<=l.t+l.d+.25){
+      const k=clamp((t-l.t)/Math.max(.1,l.d*.92));
+      const txt=l.text.replace(/de-ce-a/g,'DCA').replace(/ese-and-pi quinientos/g,'S&P 500').replace(/la tir/g,'la TIR').replace(/una tir/g,'una TIR');
+      const lines=wrap(txt,880,44,700);
+      const lh=58,boxH=lines.length*lh+44,y0=1560-boxH/2;
+      const fa=Math.min(eo((t-l.t+.05)/.2),eo((l.t+l.d+.25-t)/.2));
+      card(80,y0,W-160,boxH,{r:30,fill:'rgba(5,8,26,0.78)',stroke:'rgba(255,255,255,0.08)',a:fa});
+      // word-by-word highlight
+      const words=txt.split(' ');const nOn=Math.floor(k*words.length+0.6);let wi=0;
+      lines.forEach((ln,i)=>{font(44,700);const lw=g.measureText(ln).width;let cx=W/2-lw/2;const y=y0+22+lh*i+44;
+        ln.split(' ').forEach(wd=>{const on=wi<nOn;T(wd,cx,y,{sz:44,w:700,col:on?C.ink:'rgba(244,245,255,0.38)',a:fa});font(44,700);cx+=g.measureText(wd+' ').width;wi++});});
+      return;
+    }
+  }
+}
+// ---------- scenes
+const S={};
+S.hook=(lt,q)=>{
+  const {c}=q;
+  // phone card
+  const k=back(P(lt,0,.7));const y=470+ (1-k)*120;
+  g.save();g.globalAlpha*=clamp(k);
+  const shake=(lt>c[0]+1.2&&lt<c[0]+2.4)?Math.sin(lt*40)*6*(1-P(lt,c[0]+1.2,1.2)):0;
+  g.translate(W/2+shake,y);
+  card(-330,0,660,700,{r:48,fill:'rgba(20,26,70,0.9)',stroke:'rgba(129,140,248,0.35)'});
+  T('Mi inversión',-270,90,{sz:36,w:600,col:C.mut});
+  T('Aportando cada mes desde 2022',-270,138,{sz:28,w:500,col:C.dim});
+  T('$31.360',-270,250,{sz:96,w:900});
+  // sparkline
+  g.save();g.beginPath();for(let i=0;i<=60;i++){const x=-270+i*9;const yy=470-(i*1.6+Math.sin(i*.6)*18+Math.sin(i*.23)*22);i?g.lineTo(x,yy):g.moveTo(x,yy)}g.strokeStyle=C.teal;g.lineWidth=6;g.lineJoin='round';g.stroke();g.restore();
+  // pnl pill
+  const pk=back(P(lt,.5,.5));g.save();g.translate(0,590);g.scale(pk,pk);pill('+12,0%',0,0,{sz:64,padX:40,padY:20});g.restore();
+  g.restore();
+  // question marks / headline
+  const a1=eo(P(lt,c[0]+.2,.5));
+  T('¿Solo esto después',W/2,380-a1*0,{sz:62,w:900,al:'center',a:a1*(1-P(lt,c[1]-.2,.4))});
+  T('de años invirtiendo?',W/2,1290,{sz:62,w:900,al:'center',a:a1*(1-P(lt,c[1]-.2,.4))});
+  const a2=eo(P(lt,c[1],.5));
+  T('No estás perdiendo.',W/2,1290,{sz:66,w:900,al:'center',col:C.teal,a:a2*(1-P(lt,c[2]-.1,.3))});
+  T('',0,0);
+  const a3=eo(P(lt,c[2],.5));
+  if(a3>0){rich([{t:'Estás haciendo '},{t:'DCA',col:C.teal}],W/2,1270,{sz:78,a:a3});
+    T('y ese % te está engañando',W/2,1350,{sz:44,w:600,col:C.amb,al:'center',a:eo(P(lt,c[2]+1.4,.5))});}
+};
+S.two=(lt,q)=>{
+  const {c}=q;
+  T('Dos inversores. Mismo activo.',W/2,370,{sz:58,w:900,al:'center',a:eo(P(lt,0,.5))});
+  const lane=(y,name,sub,col,kind,ka)=>{
+    card(80,y,W-160,420,{a:ka});
+    T(name,130,y+80,{sz:44,w:800,col,a:ka});T(sub,130,y+128,{sz:30,w:500,col:C.mut,a:ka});
+    // timeline months
+    const x0=150,x1=W-150,base=y+370;g.save();g.globalAlpha*=ka;g.strokeStyle=C.line;g.lineWidth=3;g.beginPath();g.moveTo(x0,base);g.lineTo(x1,base);g.stroke();
+    for(let i=0;i<12;i++){const x=x0+(x1-x0)*(i+.5)/12;T(['E','F','M','A','M','J','J','A','S','O','N','D'][i],x,base+40,{sz:24,w:600,col:C.dim,al:'center'})}
+    g.restore();return {x0,x1,base};
+  };
+  const ka=eo(P(lt,c[1]-.2,.5)),kb=eo(P(lt,c[2]-.2,.5));
+  const A=lane(470,'Persona A','Todo el dinero el día 1',C.ind2,'lump',ka);
+  const B=lane(950,'Persona B · DCA','Un poco cada mes, pase lo que pase',C.teal,'dca',kb);
+  // A: one tall bar drops
+  if(ka>0){const k=back(P(lt,c[1]+.4,.6));const bw=(A.x1-A.x0)/12*.62;const x=A.x0+(A.x1-A.x0)*.5/12-bw/2;const h=170*k;g.save();g.globalAlpha*=ka;rr(x,A.base-h,bw,h,10);g.fillStyle=C.ind;g.fill();g.restore();
+    T('12 meses de dinero',x+bw+20,A.base-130,{sz:28,w:600,col:C.mut,a:ka*clamp(k)})}
+  if(kb>0){for(let i=0;i<12;i++){const k=back(P(lt,c[2]+.3+i*.32,.4));if(k<=0)continue;const bw=(B.x1-B.x0)/12*.62;const x=B.x0+(B.x1-B.x0)*(i+.5)/12-bw/2;const h=170/12*1.6*k;g.save();g.globalAlpha*=kb;rr(x,B.base-h,bw,h,8);g.fillStyle=C.teal;g.fill();g.restore()}}
+};
+S.example=(lt,q)=>{
+  const {c}=q;const a=1;
+  T('El truco del porcentaje',W/2,370,{sz:58,w:900,al:'center',a:eo(P(lt,0,.5))});
+  // bar geometry
+  const bx=180,bw=300,base=1170,unit=0.29; // px per euro
+  const k1=eo(P(lt,c[0]+.3,.8));            // first 1000
+  const kg=back(P(lt,c[0]+1.6,.6));         // gain 200
+  const k2=eo(P(lt,c[2]+.2,.9));            // second 1000
+  const inv1=1000*k1,inv2=1000*k2,gain=200*clamp(kg);
+  // aportado 1
+  const h1=inv1*unit,h2=inv2*unit,hg=gain*unit*1.0;
+  g.save();rr(bx,base-h1,bw,h1,14);g.fillStyle=C.ind;g.fill();g.restore();
+  if(h2>0){g.save();rr(bx,base-h1-h2,bw,h2,14);g.fillStyle=C.ind2;g.fill();g.restore()}
+  if(hg>0){g.save();rr(bx,base-h1-h2-hg-6,bw,hg,14);g.fillStyle=C.teal;g.fill();g.restore()}
+  if(k1>.5)T('1.000 €',bx+bw/2,base-h1/2+14,{sz:40,w:800,al:'center',a:eo(P(lt,c[0]+.8,.4))});
+  if(k2>.5)T('+1.000 €',bx+bw/2,base-h1-h2/2+14,{sz:40,w:800,al:'center',col:'#0b1033',a:eo(P(lt,c[2]+.8,.4))});
+  if(kg>.3)T('+200 €',bx+bw/2,base-h1-h2-hg/2+8,{sz:36,w:900,al:'center',col:'#05261f'});
+  // right panel: stats
+  const rx=560;const ap=eo(P(lt,c[0]+1.6,.5));
+  T('Aportado',rx,560,{sz:32,w:600,col:C.mut,a:ap});
+  T(fmt(inv1+inv2)+' €',rx,625,{sz:64,w:900,a:ap});
+  T('Ganancia',rx,720,{sz:32,w:600,col:C.mut,a:ap});
+  T('+'+fmt(gain)+' €',rx,785,{sz:64,w:900,col:C.teal,a:ap});
+  if(lt>c[3])pill('= IGUAL',rx+300,765,{sz:26,bg:'rgba(45,212,191,0.18)',fg:C.teal,a:eo(P(lt,c[3]+.3,.4))});
+  T('En pantalla',rx,880,{sz:32,w:600,col:C.mut,a:eo(P(lt,c[1],.4))});
+  const pv=lt<c[4]?20:counter(20,10,P(lt,c[4],1.0));
+  const pc=lt<c[4]?C.teal:C.amb;
+  T('+'+fmt(pv,0)+'%',rx,1010,{sz:140,w:900,col:pc,a:eo(P(lt,c[1],.4))});
+  // formula
+  const fa=eo(P(lt,c[3]+.4,.5));
+  if(fa>0){T('200 ÷ 1.000 = 20%',rx,1110,{sz:34,w:600,col:C.dim,a:fa});g.save();g.globalAlpha=fa;g.strokeStyle=C.dim;g.lineWidth=3;g.beginPath();g.moveTo(rx,1099);g.lineTo(rx+330*eo(P(lt,c[4],.5)),1099);g.stroke();g.restore();
+    T('200 ÷ 2.000 = 10%',rx,1165,{sz:34,w:800,col:C.amb,a:eo(P(lt,c[4],.5))});}
+  const fe=eo(P(lt,c[5],.5));
+  if(fe>0){card(80,1225,W-160,150,{fill:'rgba(45,212,191,0.12)',stroke:'rgba(45,212,191,0.4)',a:fe});T('No perdiste ni un euro.',W/2,1285,{sz:50,w:900,al:'center',a:fe});T('Solo cambió la base del cálculo.',W/2,1340,{sz:34,w:600,col:C.mut,al:'center',a:fe})}
+  // floor line
+  g.save();g.strokeStyle=C.line;g.lineWidth=3;g.beginPath();g.moveTo(120,base+2);g.lineTo(520,base+2);g.stroke();g.restore();
+};
+S.layers=(lt,q)=>{
+  const {c}=q;
+  T('Cada aporte es una capa',W/2,370,{sz:58,w:900,al:'center',a:eo(P(lt,0,.5))});
+  T('Ejemplo ilustrativo · 24 aportes de 100 € · +1,5% al mes',W/2,420,{sz:26,w:500,col:C.dim,al:'center',a:eo(P(lt,0,.5))});
+  const N=24,r=0.015,x0=110,x1=W-110,base=1180,colW=(x1-x0)/N,unit=0.155;
+  const grow=lerp(1,N,eio(P(lt,c[0]+.3,Math.max(1,c[1]-c[0]+1.2))));
+  const nCols=Math.floor(grow);
+  for(let m=0;m<nCols;m++){ // column m: contributions 0..m each grown m-j months
+    let y=base;for(let j=0;j<=m;j++){const v=100*Math.pow(1+r,m-j);const h=v*unit;const age=j/(N-1);
+      const col=`hsl(${lerp(250,170,age)},80%,${lerp(62,58,age)}%)`;g.fillStyle=col;g.fillRect(x0+m*colW+3,y-h,colW-6,h-1.5);y-=h}
+  }
+  g.save();g.strokeStyle=C.line;g.lineWidth=3;g.beginPath();g.moveTo(x0,base+2);g.lineTo(x1,base+2);g.stroke();g.restore();
+  T('Mes 1',x0,base+44,{sz:26,w:600,col:C.dim});T('Mes 24',x1,base+44,{sz:26,w:600,col:C.dim,al:'right'});
+  // annotations
+  const a1=eo(P(lt,c[1]+.2,.5));
+  if(a1>0){const last=x0+(N-1)*colW;const v1=100*Math.pow(1+r,N-1);
+    pill('Aporte 1: +'+fmt((Math.pow(1+r,N-1)-1)*100,0)+'%',last-40,base-v1*unit/2,{sz:30,al:'right',bg:C.ind,fg:'#fff',a:a1});
+    const a2=eo(P(lt,c[1]+1.8,.5));
+    let tot=0;for(let j=0;j<N;j++)tot+=100*Math.pow(1+r,N-1-j);
+    const topY=base-tot*unit;pill('Aporte 24: +0%',last-40,topY+20,{sz:30,al:'right',bg:C.teal,a:a2});
+  }
+  const a3=eo(P(lt,c[2]+.3,.5));
+  if(a3>0){let tot=0;for(let j=0;j<N;j++)tot+=100*Math.pow(1+r,N-1-j);const g1=(tot/2400-1)*100;
+    card(80,1250,W-160,150,{a:a3});
+    rich([{t:'Primer aporte '},{t:'+41%',col:C.ind2},{t:'  ·  Pantalla '},{t:'+'+fmt(g1,0)+'%',col:C.amb}],W/2,1340,{sz:44,a:a3});}
+};
+function lineChart(lt,q,key,title,sub,labels){
+  const {c}=q;const d=D[key];const n=d.dca.length;
+  T(title,W/2,370,{sz:56,w:900,al:'center',a:eo(P(lt,0,.5))});
+  T(sub,W/2,422,{sz:28,w:500,col:C.mut,al:'center',a:eo(P(lt,0,.5))});
+  const x0=130,x1=W-270,y0=520,y1=1180;const vmin=-20,vmax=80;
+  const X=i=>x0+(x1-x0)*i/(n-1),Y=v=>y1-(v-vmin)/(vmax-vmin)*(y1-y0);
+  const ga=eo(P(lt,.2,.5));
+  g.save();g.globalAlpha=ga;
+  for(let v=-20;v<=80;v+=20){g.strokeStyle=v===0?'rgba(255,255,255,0.28)':C.line;g.lineWidth=v===0?3:1.5;g.beginPath();g.moveTo(x0,Y(v));g.lineTo(x1,Y(v));g.stroke();T((v>0?'+':'')+v+'%',x0-14,Y(v)+9,{sz:24,w:600,col:C.dim,al:'right'})}
+  ['2022','2023','2024','2025','2026'].forEach((yr,i)=>{const idx=d===D.ago||true?[0,9,21,33,45][i]:0;T(yr,X(idx),y1+44,{sz:24,w:600,col:C.dim,al:'center'})});
+  g.restore();
+  const kDraw=eio(P(lt,c[0]+.6,Math.max(2.5,c[1]-c[0]-.4)));
+  const path=(arr,col,wid,k)=>{const m=(n-1)*k;g.save();g.beginPath();for(let i=0;i<=Math.floor(m);i++){i?g.lineTo(X(i),Y(arr[i])):g.moveTo(X(i),Y(arr[i]))}const fi=Math.floor(m),fr=m-fi;if(fi<n-1)g.lineTo(lerp(X(fi),X(fi+1),fr),lerp(Y(arr[fi]),Y(arr[fi+1]),fr));g.strokeStyle=col;g.lineWidth=wid;g.lineJoin='round';g.lineCap='round';g.stroke();g.restore();const ii=Math.min(n-1,fi),v=lerp(arr[ii],arr[Math.min(n-1,ii+1)],fr);return {x:lerp(X(ii),X(Math.min(n-1,ii+1)),fr),y:Y(v),v}};
+  const kL=kDraw,kD=eio(P(lt,c[1]+.2,Math.max(2.5,c[2]-c[1]-.2)));
+  if(kL>0){const e=path(d.lump,C.ind2,7,kL);g.beginPath();g.arc(e.x,e.y,11,0,7);g.fillStyle=C.ind2;g.fill();
+    const la=eo(P(lt,c[1],.5));if(la>0)pill(pct(d.lump[n-1]),x1+24,Y(d.lump[n-1])-30,{sz:34,al:'left',bg:C.ind,fg:'#fff',a:la});}
+  if(kD>0){const e=path(d.dca,C.teal,7,kD);g.beginPath();g.arc(e.x,e.y,11,0,7);g.fillStyle=C.teal;g.fill();
+    const la=eo(P(lt,c[2]+1.5,.5));if(la>0)pill(pct(d.dca[n-1]),x1+24,Y(d.dca[n-1])+40,{sz:34,al:'left',a:la});}
+  // legend
+  const lgA=eo(P(lt,c[0]+.6,.5));
+  g.save();g.globalAlpha=lgA;rr(130,1250,36,10,5);g.fillStyle=C.ind2;g.fill();g.restore();T('Todo de una vez (lo que ves en el perfil)',180,1262,{sz:28,w:600,col:C.mut,a:lgA});
+  const lgB=eo(P(lt,c[1]+.2,.5));
+  g.save();g.globalAlpha=lgB;rr(130,1305,36,10,5);g.fillStyle=C.teal;g.fill();g.restore();T(labels,180,1317,{sz:28,w:600,col:C.mut,a:lgB});
+  T('Simulación con rendimientos mensuales reales en USD · aportes al inicio de cada mes',W/2,1385,{sz:21,w:500,col:C.dim,al:'center',a:ga});
+}
+S.real=(lt,q)=>lineChart(lt,q,'ago','Mi estrategia real en eToro','@AlejandroGarciaO · abril 2022 → noviembre 2026','DCA $500/mes (lo que ve quien aporta cada mes)');
+S.spy=(lt,q)=>{
+  lineChart(lt,q,'spy','El mismo efecto en el S&P 500','ETF SPY · abril 2022 → noviembre 2026 (precio, sin dividendos)','DCA $500/mes en el S&P 500');
+  const {c}=q;
+  const a=eo(P(lt,c[2]+1.6,.5));if(a>0)pill('TIR del DCA: 13,8% anual',W/2,480,{sz:32,bg:'rgba(251,191,36,0.16)',fg:C.amb,a});
+  const b=eo(P(lt,c[3],.5));
+  if(b>0){g.save();g.globalAlpha=b*.92;g.fillStyle='#070b22';g.fillRect(0,460,W,960);g.restore();
+    para('Mismo mercado. Mismas fechas.',W/2,800,900,{sz:64,w:900,a:b});
+    para('La diferencia no está en la inversión.',W/2,960,900,{sz:46,w:700,col:C.mut,a:eo(P(lt,c[3]+1.2,.5))});
+    para('Está en cómo se mide.',W/2,1080,900,{sz:64,w:900,col:C.teal,a:eo(P(lt,c[3]+2.4,.5))});}
+};
+S.cards=(lt,q)=>{
+  const {c}=q;
+  T('¿Te fue peor? No.',W/2,380,{sz:64,w:900,al:'center',a:eo(P(lt,0,.5))});
+  T('DCA de $500/mes en mi estrategia · 56 meses',W/2,432,{sz:28,w:500,col:C.mut,al:'center',a:eo(P(lt,0,.5))});
+  const cw=(W-160-30)/2,ch=230;
+  const box=(i,label,val,col,start)=>{const k=back(P(lt,start,.55));if(k<=0)return;const x=80+(i%2)*(cw+30),y=500+Math.floor(i/2)*(ch+30);g.save();g.translate(x+cw/2,y+ch/2);g.scale(lerp(.85,1,k),lerp(.85,1,k));g.translate(-x-cw/2,-y-ch/2);
+    card(x,y,cw,ch,{a:clamp(k),fill:i===3?'rgba(251,191,36,0.10)':C.card,stroke:i===3?'rgba(251,191,36,0.45)':C.line});
+    T(label,x+36,y+70,{sz:30,w:600,col:C.mut,a:clamp(k)});T(val,x+36,y+170,{sz:72,w:900,col,a:clamp(k)});g.restore()};
+  const kc=P(lt,c[1]+.2,1.6);
+  box(0,'Aportado','$'+fmt(counter(0,28000,kc)),C.ink,c[1]+.1);
+  box(1,'Valor hoy','$'+fmt(counter(0,38070,P(lt,c[1]+1.4,1.6))),C.ink,c[1]+1.3);
+  box(2,'Ganancia','+$'+fmt(counter(0,10070,P(lt,c[1]+3.4,1.4))),C.teal,c[1]+3.3);
+  box(3,'TIR anual','13,2%',C.amb,c[2]+2.2);
+  // pantalla note
+  const pn=eo(P(lt,c[1]+4.6,.5));
+  if(pn>0)T('En pantalla: +36,0%',W/2,1060,{sz:32,w:600,col:C.dim,al:'center',a:pn*(1-P(lt,c[3]-.2,.4))});
+  // compare bars
+  const kb=eo(P(lt,c[3],.6));
+  if(kb>0){const y=1060,mx=W-160-260;
+    T('Rentabilidad anual',120,y+10,{sz:30,w:700,col:C.mut,a:kb});
+    const bar=(yy,lab,v,col,k)=>{T(lab,120,yy+38,{sz:28,w:600,col:C.ink,a:kb});rr(380,yy+10,(mx-140)*(v/14)*k,40,20);g.save();g.globalAlpha=kb;g.fillStyle=col;g.fill();g.restore();T(fmt(v,1)+'%',380+(mx-140)*(v/14)*k+16,yy+42,{sz:32,w:900,col,a:eo(k)})};
+    bar(y+40,'DCA (TIR)',13.15,C.amb,eio(P(lt,c[3]+.3,1)));
+    bar(y+110,'Todo de una vez',9.22,C.ind2,eio(P(lt,c[3]+.9,1)));
+    T('Seguiste comprando barato en 2022 ↓',W/2,y+230,{sz:30,w:600,col:C.teal,al:'center',a:eo(P(lt,c[3]+3.5,.5))});}
+};
+S.copiers=(lt,q)=>{
+  const {c}=q;
+  T('¿Por qué mis copiadores',W/2,370,{sz:58,w:900,al:'center',a:eo(P(lt,0,.5))});
+  T('ven un % más bajo?',W/2,440,{sz:58,w:900,al:'center',col:C.amb,a:eo(P(lt,0,.5))});
+  const meter=(x,lab1,lab2,v,col,start)=>{const k=eio(P(lt,start,1.2));const a=eo(P(lt,start-.2,.4));if(a<=0)return;const base=1090,maxH=480,h=maxH*v/26*k;
+    card(x,540,400,620,{a});rr(x+130,base-h,140,h,18);g.save();g.globalAlpha=a;const lg=g.createLinearGradient(0,base-h,0,base);lg.addColorStop(0,col);lg.addColorStop(1,'rgba(99,102,241,0.25)');g.fillStyle=lg;g.fill();g.restore();
+    T('+'+fmt(v*k,1)+'%',x+200,base-h-24,{sz:56,w:900,col,al:'center',a});
+    T(lab1,x+200,1132,{sz:28,w:700,al:'center',a});T(lab2,x+200,1186,{sz:24,w:500,col:C.mut,al:'center',a})};
+  meter(100,'Mi cartera','últimos 2 años',24.2,C.teal,c[1]);
+  meter(W-500,'Mis copiadores','ganancia media',7.1,C.amb,c[2]);
+  const a=eo(P(lt,c[3],.5));
+  if(a>0){card(80,1230,W-160,170,{a,fill:'rgba(10,14,44,0.95)'});
+    // entry dots
+    const x0=140,x1=W-140,y=1290;g.save();g.globalAlpha=a;g.strokeStyle=C.line;g.lineWidth=3;g.beginPath();g.moveTo(x0,y);g.lineTo(x1,y);g.stroke();g.restore();
+    const ent=[.04,.18,.27,.41,.55,.63,.78,.9];ent.forEach((e,i)=>{const k=back(P(lt,c[3]+.3+i*.35,.4));if(k<=0)return;g.save();g.globalAlpha=a;g.beginPath();g.arc(lerp(x0,x1,e),y,13*k,0,7);g.fillStyle=i%2?C.teal:C.ind2;g.fill();g.restore()});
+    T('Cada copiador entra en una fecha distinta',W/2,1360,{sz:30,w:600,col:C.mut,al:'center',a});}
+};
+S.time=(lt,q)=>{
+  const {c}=q;
+  T('$500 al mes al 10% anual',W/2,370,{sz:56,w:900,al:'center',a:eo(P(lt,0,.5))});
+  T('Cuándo aparece el +100% en pantalla',W/2,425,{sz:30,w:500,col:C.mut,al:'center',a:eo(P(lt,0,.5))});
+  const items=[{y:10,inv:60000,val:99932,p:67},{y:20,inv:120000,val:359130,p:199},{y:30,inv:180000,val:1031422,p:473}];
+  const base=1220,maxH=620,maxV=1031422,bw=210,gap=(W-160-bw*3)/2;
+  items.forEach((it,i)=>{const st=c[i+1];const k=eio(P(lt,st,1.3));const a=eo(P(lt,st-.1,.3));if(a<=0)return;const x=80+i*(bw+gap);
+    const hv=Math.max(10,maxH*it.val/maxV*k),hi=Math.max(6,maxH*it.inv/maxV*k);
+    rr(x,base-hv,bw,hv,16);g.save();g.globalAlpha=a;g.fillStyle=C.teal;g.fill();g.restore();
+    rr(x,base-hi,bw,hi,16);g.save();g.globalAlpha=a;g.fillStyle=C.ind;g.fill();g.restore();
+    T(it.y+' años',x+bw/2,base+50,{sz:34,w:800,al:'center',a});
+    T('$'+(it.val>=1e6?fmt(it.val/1e6,2)+'M':fmt(Math.round(it.val*k/1000))+'k'),x+bw/2,base-hv-80,{sz:38,w:900,al:'center',a});
+    pill('+'+fmt(Math.round(it.p*k))+'%',x+bw/2,base-hv-30,{sz:30,a:eo(P(lt,st+.8,.4)),bg:it.p>=100?C.teal:C.amb});
+  });
+  const la=eo(P(lt,c[1],.4));
+  g.save();g.globalAlpha=la;rr(120,1305,30,10,5);g.fillStyle=C.ind;g.fill();rr(420,1305,30,10,5);g.fillStyle=C.teal;g.fill();g.restore();
+  T('Lo que aportaste',162,1316,{sz:26,w:600,col:C.mut,a:la});T('Lo que ganó el interés compuesto',462,1316,{sz:26,w:600,col:C.mut,a:la});
+  const e=eo(P(lt,c[4],.5));if(e>0){g.save();g.globalAlpha=e*.9;g.fillStyle='#070b22';g.fillRect(0,520,W,880);g.restore();para('El porcentaje llega tarde.',W/2,880,900,{sz:68,w:900,a:e});para('Pero llega.',W/2,1000,900,{sz:96,w:900,col:C.teal,a:eo(P(lt,c[4]+1.1,.4))})}
+};
+S.three=(lt,q)=>{
+  const {c}=q;
+  T('Deja de mirar solo',W/2,380,{sz:60,w:900,al:'center',a:eo(P(lt,0,.5))});
+  rich([{t:'el '},{t:'número verde',col:C.teal}],W/2,455,{sz:60,a:eo(P(lt,0,.5))});
+  const its=[['1','Cuánto has aportado','Tu esfuerzo real'],['2','Cuánto vale hoy','Tu patrimonio'],['3','Tu TIR anual','La rentabilidad que de verdad obtuviste']];
+  its.forEach((it,i)=>{const k=back(P(lt,c[i+1],.5));if(k<=0)return;const y=560+i*250;g.save();g.translate((1-clamp(k))*-120,0);
+    card(80,y,W-160,210,{a:clamp(k),fill:i===2?'rgba(251,191,36,0.10)':C.card,stroke:i===2?'rgba(251,191,36,0.45)':C.line});
+    g.beginPath();g.arc(180,y+105,52,0,7);g.globalAlpha=clamp(k);g.fillStyle=i===2?C.amb:C.teal;g.fill();g.globalAlpha=1;
+    T(it[0],180,y+124,{sz:56,w:900,col:'#06102a',al:'center',a:clamp(k)});
+    T(it[1],270,y+95,{sz:50,w:800,a:clamp(k)});T(it[2],270,y+148,{sz:30,w:500,col:C.mut,a:clamp(k)});g.restore()});
+};
+S.close=(lt,q)=>{
+  const {c}=q;
+  para('El DCA no se ve espectacular en la pantalla.',W/2,560,880,{sz:56,w:800,col:C.mut,a:eo(P(lt,.1,.5))});
+  para('Se ve espectacular en tu patrimonio.',W/2,760,880,{sz:76,w:900,col:C.ink,a:eo(P(lt,c[0]+2.6,.5))});
+  const a=eo(P(lt,c[1],.6));
+  if(a>0){card(140,1000,W-280,300,{a,fill:'rgba(99,102,241,0.14)',stroke:'rgba(129,140,248,0.45)'});
+    T('@AlejandroGarciaO',W/2,1110,{sz:62,w:900,al:'center',a});
+    T('Popular Investor en eToro',W/2,1170,{sz:32,w:600,col:C.mut,al:'center',a});
+    T('Camino a la libertad financiera',W/2,1240,{sz:34,w:700,col:C.teal,al:'center',a});}
+  T('Datos: eToro (abr 2022 – nov 2026). Rentabilidades pasadas no garantizan resultados futuros.',W/2,1385,{sz:20,w:500,col:C.dim,al:'center',a:eo(P(lt,.3,.5))});
+};
+// ---------- master draw
+window.draw=function(t){
+  g.clearRect(0,0,W,H);bg(t);chrome(t);
+  for(const s of TL.scenes){
+    if(t>=s.start-.05&&t<s.end+.05){const dur=s.end-s.start,lt=t-s.start;g.save();const a=sceneAlpha(lt,dur);g.globalAlpha=a;g.translate(0,(1-a)*30);S[s.id](lt,cues(s.id));g.restore();}
+  }
+  captions(t);
+};
+window.TOTAL=TL.total;
+Promise.all([400,500,600,700,800,900].map(w=>document.fonts.load(w+' 40px I'))).then(()=>{window.READY=true;draw(0)});
+</script></body></html>

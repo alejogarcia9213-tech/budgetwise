@@ -1,0 +1,287 @@
+{
+ "total": 210.60911564625843,
+ "scenes": [
+  {
+   "id": "hook",
+   "start": 0.6,
+   "lines": [
+    {
+     "t": 0.6,
+     "d": 5.00390022675737,
+     "text": "¿Llevas años invirtiendo cada mes, y tu cuenta solo marca más doce por ciento?"
+    },
+    {
+     "t": 5.953900226757369,
+     "d": 2.2165532879818595,
+     "text": "Tranquilo. No estás perdiendo."
+    },
+    {
+     "t": 8.520453514739229,
+     "d": 3.9,
+     "text": "Estás haciendo de-ce-a. Y ese porcentaje te está engañando."
+    }
+   ],
+   "end": 13.220453514739228
+  },
+  {
+   "id": "two",
+   "start": 13.220453514739228,
+   "lines": [
+    {
+     "t": 13.220453514739228,
+     "d": 3.4597732426303853,
+     "text": "Imagina dos personas que invierten en exactamente lo mismo."
+    },
+    {
+     "t": 17.030226757369615,
+     "d": 2.786394557823129,
+     "text": "La primera mete todo su dinero el primer día."
+    },
+    {
+     "t": 20.166621315192742,
+     "d": 6.38453514739229,
+     "text": "La segunda invierte un poco cada mes. Eso es el de-ce-a: aportes periódicos, pase lo que pase."
+    }
+   ],
+   "end": 27.35115646258503
+  },
+  {
+   "id": "example",
+   "start": 27.35115646258503,
+   "lines": [
+    {
+     "t": 27.35115646258503,
+     "d": 4.573378684807256,
+     "text": "Mira este ejemplo. Inviertes mil euros, y ganas doscientos."
+    },
+    {
+     "t": 32.274535147392285,
+     "d": 2.9373242630385485,
+     "text": "Tu pantalla dice: más veinte por ciento."
+    },
+    {
+     "t": 35.561859410430834,
+     "d": 1.9504761904761905,
+     "text": "Ahora aportas otros mil euros."
+    },
+    {
+     "t": 37.86233560090702,
+     "d": 4.875238095238095,
+     "text": "Tu ganancia sigue siendo de doscientos euros. Pero ahora se divide entre dos mil."
+    },
+    {
+     "t": 43.08757369614512,
+     "d": 3.0650340136054424,
+     "text": "Y la pantalla marca: más diez por ciento."
+    },
+    {
+     "t": 46.50260770975056,
+     "d": 4.712698412698413,
+     "text": "No perdiste ni un euro. Solo cambió la base sobre la que se calcula."
+    }
+   ],
+   "end": 52.015306122448976
+  },
+  {
+   "id": "layers",
+   "start": 52.015306122448976,
+   "lines": [
+    {
+     "t": 52.015306122448976,
+     "d": 3.622312925170068,
+     "text": "Con el de-ce-a, cada aporte es una capa distinta."
+    },
+    {
+     "t": 55.98761904761904,
+     "d": 4.863628117913832,
+     "text": "Tu primer aporte lleva años creciendo. El último, apenas un mes."
+    },
+    {
+     "t": 61.20124716553288,
+     "d": 7.615192743764172,
+     "text": "El porcentaje de la pantalla mezcla todas las capas: las viejas y las nuevas. Por eso siempre se ve más pequeño."
+    }
+   ],
+   "end": 69.61643990929706
+  },
+  {
+   "id": "real",
+   "start": 69.61643990929706,
+   "lines": [
+    {
+     "t": 69.61643990929706,
+     "d": 7.371383219954649,
+     "text": "Ahora, con datos reales. Esta es mi estrategia en eToro, mes a mes, desde abril de dos mil veintidós."
+    },
+    {
+     "t": 77.3378231292517,
+     "d": 5.677278911564626,
+     "text": "Si hubieras invertido todo el primer día, hoy verías más cincuenta y uno por ciento."
+    },
+    {
+     "t": 83.36510204081632,
+     "d": 6.664126984126984,
+     "text": "Si hubieras hecho de-ce-a, con quinientos dólares al mes, tu pantalla mostraría más treinta y seis por ciento."
+    }
+   ],
+   "end": 90.82922902494332
+  },
+  {
+   "id": "cards",
+   "start": 90.82922902494332,
+   "lines": [
+    {
+     "t": 90.82922902494332,
+     "d": 2.3558730158730157,
+     "text": "¿Significa que te fue peor? No."
+    },
+    {
+     "t": 93.53510204081633,
+     "d": 6.860544217687075,
+     "text": "Aportaste veintiocho mil dólares, y hoy tienes treinta y ocho mil setenta. Más de diez mil dólares de ganancia."
+    },
+    {
+     "t": 100.7456462585034,
+     "d": 8.057324263038549,
+     "text": "Y tu rentabilidad anual real, la tir, que tiene en cuenta cuándo entró cada dólar, es de trece coma dos por ciento al año."
+    },
+    {
+     "t": 109.15297052154195,
+     "d": 7.985759637188209,
+     "text": "Más alta que el nueve coma dos anual del que invirtió todo de una vez. ¿Por qué? Porque en dos mil veintidós seguiste comprando barato."
+    }
+   ],
+   "end": 117.93873015873015
+  },
+  {
+   "id": "spy",
+   "start": 117.93873015873015,
+   "lines": [
+    {
+     "t": 117.93873015873015,
+     "d": 5.943356009070294,
+     "text": "Y esto no le pasa solo a mi estrategia. Hice la misma prueba con el ese-and-pi quinientos."
+    },
+    {
+     "t": 124.23208616780045,
+     "d": 3.308843537414966,
+     "text": "Todo de una vez: más cincuenta y ocho por ciento."
+    },
+    {
+     "t": 127.89092970521541,
+     "d": 5.757596371882086,
+     "text": "Con de-ce-a: más treinta y ocho. Con una tir de trece coma ocho por ciento anual."
+    },
+    {
+     "t": 133.9985260770975,
+     "d": 6.418412698412698,
+     "text": "Mismo mercado, mismas fechas. La diferencia no está en la inversión. Está en cómo se mide."
+    }
+   ],
+   "end": 141.2169387755102
+  },
+  {
+   "id": "copiers",
+   "start": 141.2169387755102,
+   "lines": [
+    {
+     "t": 141.2169387755102,
+     "d": 2.7747845804988662,
+     "text": "Por eso también ves esta diferencia en eToro."
+    },
+    {
+     "t": 144.34172335600906,
+     "d": 4.388571428571429,
+     "text": "En los últimos dos años, mi cartera subió un veinticuatro por ciento."
+    },
+    {
+     "t": 149.08029478458047,
+     "d": 3.7848526077097504,
+     "text": "Y la ganancia media de mis copiadores aparece en siete por ciento."
+    },
+    {
+     "t": 153.21514739229022,
+     "d": 9.449569160997733,
+     "text": "Cada copiador entró en una fecha distinta, y fue sumando dinero poco a poco. Su porcentaje refleja sus aportes, no la estrategia completa."
+    }
+   ],
+   "end": 163.46471655328793
+  },
+  {
+   "id": "time",
+   "start": 163.46471655328793,
+   "lines": [
+    {
+     "t": 163.46471655328793,
+     "d": 6.779274376417233,
+     "text": "Entonces, ¿cuándo verás el cien por ciento en pantalla? Con quinientos al mes, y un diez por ciento anual:"
+    },
+    {
+     "t": 170.59399092970517,
+     "d": 3.633922902494331,
+     "text": "A los diez años, verías más sesenta y siete por ciento."
+    },
+    {
+     "t": 174.5779138321995,
+     "d": 2.5309750566893423,
+     "text": "A los veinte, casi más doscientos."
+    },
+    {
+     "t": 177.45888888888885,
+     "d": 5.6066666666666665,
+     "text": "A los treinta, más de cuatrocientos setenta por ciento. Y más de un millón en patrimonio."
+    },
+    {
+     "t": 183.41555555555553,
+     "d": 2.773832199546485,
+     "text": "El porcentaje llega tarde. Pero llega."
+    }
+   ],
+   "end": 186.989387755102
+  },
+  {
+   "id": "three",
+   "start": 186.989387755102,
+   "lines": [
+    {
+     "t": 186.989387755102,
+     "d": 4.097369614512472,
+     "text": "Así que deja de mirar solo el número verde. Mira tres cifras:"
+    },
+    {
+     "t": 191.43675736961447,
+     "d": 1.3583673469387756,
+     "text": "Cuánto has aportado."
+    },
+    {
+     "t": 193.14512471655325,
+     "d": 1.9853061224489796,
+     "text": "Cuánto vale hoy tu inversión."
+    },
+    {
+     "t": 195.48043083900222,
+     "d": 2.461315192743764,
+     "text": "Y cuál es tu rentabilidad anual real."
+    }
+   ],
+   "end": 198.74174603174598
+  },
+  {
+   "id": "close",
+   "start": 198.74174603174598,
+   "lines": [
+    {
+     "t": 198.74174603174598,
+     "d": 5.397687074829932,
+     "text": "El de-ce-a no se ve espectacular en la pantalla. Se ve espectacular en tu patrimonio."
+    },
+    {
+     "t": 204.48943310657592,
+     "d": 3.81968253968254,
+     "text": "Sígueme, y nos vemos en el camino hacia la libertad financiera."
+    }
+   ],
+   "end": 209.10911564625843
+  }
+ ]
+}
