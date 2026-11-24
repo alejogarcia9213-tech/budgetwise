@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Reel 100k</title>
+<style>
+  html,body{margin:0;background:#070d18;}
+  canvas{display:block;width:1080px;height:1920px;}
+</style>
+</head>
+<body>
+<canvas id="c" width="1080" height="1920"></canvas>
+<script>
+const W = 1080, H = 1920;
+const ctx = document.getElementById('c').getContext('2d');
+const C = {
+  bg0:'#08101e', bg1:'#0e1c33', ink:'#F4F6FB', muted:'#8C9AB3', faint:'rgba(255,255,255,0.07)',
+  blue:'#4C8DFF', gold:'#F7B93E', green:'#2BD98B', red:'#FF6B6B', card:'rgba(255,255,255,0.05)'
+};
+const F = (w, s) => `${w} ${s}px Inter, "Inter Display", system-ui, sans-serif`;
+
+// ---------- math ----------
+const clamp = (x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const easeOut = x => 1-Math.pow(1-clamp(x),3);
+const easeInOut = x => { x=clamp(x); return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2; };
+const back = x => { x=clamp(x); const c1=1.70158,c3=c1+1; return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2); };
+const seg = (t,a,d)=>clamp((t-a)/d);
+const money = v => '$' + Math.round(v).toLocaleString('es-ES').replace(/\s/g,'.');
+const moneyES = v => { const s = Math.round(v).toString(); return '$' + s.replace(/\B(?=(\d{3})+(?!\d))/g,'.'); };
+const R = 0.125, MR = Math.pow(1+R,1/12)-1;
+const growth = (P, m, years, r=R) => { const mr=Math.pow(1+r,1/12)-1; let b=P; const n=Math.round(years*12); for(let i=0;i<n;i++) b=b*(1+mr)+m; return b; };
+const fv = (P, y) => P*Math.pow(1+R,y);
+
+// ---------- draw helpers ----------
+function txt(s,x,y,{size=48,weight=700,color=C.ink,align='center',alpha=1,base='alphabetic',spacing=0}={}){
+  ctx.save(); ctx.globalAlpha*=alpha; ctx.font=F(weight,size); ctx.fillStyle=color; ctx.textAlign=align; ctx.textBaseline=base;
+  if(spacing) ctx.letterSpacing = spacing+'px';
+  ctx.fillText(s,x,y); ctx.restore();
+}
+function rr(x,y,w,h,r,fill,stroke){ ctx.beginPath(); ctx.roundRect(x,y,w,h,r); if(fill){ctx.fillStyle=fill;ctx.fill();} if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=2;ctx.stroke();} }
+function wrap(s, maxW, size, weight){ ctx.font=F(weight,size); const words=s.split(' '); const lines=[]; let cur='';
+  for(const w of words){ const t=cur?cur+' '+w:w; if(ctx.measureText(t).width>maxW && cur){lines.push(cur);cur=w;} else cur=t; } if(cur) lines.push(cur); return lines; }
+function para(s,x,y,maxW,{size=56,weight=800,color=C.ink,lh=1.15,alpha=1,align='center'}={}){
+  const L=wrap(s,maxW,size,weight); L.forEach((l,i)=>txt(l,x,y+i*size*lh,{size,weight,color,alpha,align})); return L.length*size*lh;
+}
+// rich line: array of [text,color]
+function rich(parts,x,y,{size=64,weight=800,alpha=1}={}){
+  ctx.save(); ctx.font=F(weight,size); const total=parts.reduce((a,[s])=>a+ctx.measureText(s).width,0); let cx=x-total/2;
+  for(const [s,col] of parts){ ctx.globalAlpha=alpha; ctx.fillStyle=col; ctx.textAlign='left'; ctx.fillText(s,cx,y); cx+=ctx.measureText(s).width; } ctx.restore();
+}
+function pill(s,x,y,{bg=C.green,color='#06210f',size=34,alpha=1,pad=26}={}){
+  ctx.save(); ctx.globalAlpha=alpha; ctx.font=F(800,size); const w=ctx.measureText(s).width+pad*2, h=size*1.75;
+  rr(x-w/2,y-h/2,w,h,h/2,bg); ctx.fillStyle=color; ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.fillText(s,x,y+2); ctx.restore();
+}
+function kicker(s,y,alpha=1,color=C.green){ txt(s,W/2,y,{size:32,weight:800,color,alpha,spacing:6}); }
+
+function background(t){
+  const g=ctx.createLinearGradient(0,0,0,H); g.addColorStop(0,C.bg1); g.addColorStop(1,C.bg0); ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+  // soft glow drifting
+  const gx=W*0.5+Math.sin(t*0.25)*220, gy=700+Math.cos(t*0.2)*160;
+  const rg=ctx.createRadialGradient(gx,gy,0,gx,gy,760); rg.addColorStop(0,'rgba(43,217,139,0.10)'); rg.addColorStop(1,'rgba(43,217,139,0)');
+  ctx.fillStyle=rg; ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(255,255,255,0.035)'; ctx.lineWidth=1;
+  for(let x=0;x<=W;x+=90){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(let y=0;y<=H;y+=90){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+}
+
+// ---------- scenes (lt = local time, d = duration) ----------
+const S = {};
+
+S.hook = (lt,d) => {
+  const p1 = easeOut(seg(lt,0.1,2.2));
+  const split = Math.max(3.2, d*0.5);
+  const out = 1-seg(lt,split-0.3,0.4);
+  kicker('LA REGLA DE LOS 100K', 360, seg(lt,0,0.4));
+  txt('Los primeros', W/2, 520, {size:64, weight:700, color:C.muted, alpha:seg(lt,0.1,0.4)*out});
+  const v = 100000*p1;
+  const sc = 1 + 0.06*Math.sin(Math.PI*seg(lt,2.2,0.4));
+  ctx.save(); ctx.translate(W/2,720); ctx.scale(sc,sc);
+  txt(moneyES(v),0,0,{size:190,weight:900,color:C.green,alpha:seg(lt,0.1,0.3)*out}); ctx.restore();
+  txt('son los más difíciles', W/2, 860, {size:72, weight:800, alpha:seg(lt,1.4,0.5)*out});
+  // phase 2: curve rockets
+  const q = seg(lt,split,d-split-0.4);
+  const a2 = seg(lt,split,0.4);
+  if(a2>0){
+    txt('Después…', W/2, 500, {size:72, weight:700, color:C.muted, alpha:a2});
+    txt('todo se acelera', W/2, 610, {size:96, weight:900, color:C.ink, alpha:seg(lt,split+0.3,0.4)});
+    const x0=140,x1=940,y0=1300,y1=740; const n=easeInOut(q);
+    ctx.save(); ctx.lineWidth=12; ctx.lineCap='round'; ctx.strokeStyle=C.green; ctx.shadowColor=C.green; ctx.shadowBlur=30;
+    ctx.beginPath(); for(let i=0;i<=100*n;i++){ const u=i/100; const x=x0+(x1-x0)*u; const y=y0-(y0-y1)*(Math.pow(14,u)-1)/13; i?ctx.lineTo(x,y):ctx.moveTo(x,y);} ctx.stroke(); ctx.restore();
+    ctx.strokeStyle='rgba(255,255,255,0.25)'; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(x0,y1-40); ctx.lineTo(x0,y0); ctx.lineTo(x1+20,y0); ctx.stroke();
+    const u=n; const px=x0+(x1-x0)*u, py=y0-(y0-y1)*(Math.pow(14,u)-1)/13;
+    ctx.fillStyle=C.green; ctx.beginPath(); ctx.arc(px,py,16,0,7); ctx.fill();
+    // marker at 100k-ish point
+    const mu=0.32, mx=x0+(x1-x0)*mu, my=y0-(y0-y1)*(Math.pow(14,mu)-1)/13;
+    if(n>mu){ ctx.fillStyle=C.gold; ctx.beginPath(); ctx.arc(mx,my,13,0,7); ctx.fill(); txt('$100k',mx,my-36,{size:36,weight:800,color:C.gold}); }
+  }
+};
+
+S.race = (lt,d) => {
+  kicker('SIN APORTAR NADA · 12,5% ANUAL', 330, seg(lt,0,0.4));
+  txt('¿Cuánto tardas en llegar', W/2, 420, {size:54,weight:800,alpha:seg(lt,0,0.4)});
+  txt('a $1.000.000?', W/2, 490, {size:54,weight:800,color:C.gold,alpha:seg(lt,0,0.4)});
+  const X0=150,X1=990,Y0=1150,Y1=640, maxY=40, maxV=1.1e6;
+  const sx=y=>X0+(X1-X0)*y/maxY, sy=v=>Y0-(Y0-Y1)*Math.min(v,maxV)/maxV;
+  // axes
+  ctx.strokeStyle='rgba(255,255,255,0.12)'; ctx.lineWidth=2;
+  for(const v of [250e3,500e3,750e3,1e6]){ ctx.beginPath(); ctx.moveTo(X0,sy(v)); ctx.lineTo(X1,sy(v)); ctx.stroke(); txt(v===1e6?'$1M':'$'+v/1e3+'k',X0-16,sy(v)+10,{size:26,weight:600,color:C.muted,align:'right'}); }
+  ctx.setLineDash([12,10]); ctx.strokeStyle='rgba(247,185,62,0.6)'; ctx.beginPath(); ctx.moveTo(X0,sy(1e6)); ctx.lineTo(X1,sy(1e6)); ctx.stroke(); ctx.setLineDash([]);
+  for(const y of [0,10,20,30,40]) txt(y+(y===40?' años':''),sx(y),Y0+44,{size:28,weight:600,color:C.muted});
+  const p = easeInOut(seg(lt,0.8,Math.min(d*0.62,9)));
+  const yr = p*maxY;
+  const line=(P,col,stop)=>{ ctx.save(); ctx.strokeStyle=col; ctx.lineWidth=9; ctx.lineCap='round'; ctx.shadowColor=col; ctx.shadowBlur=18; ctx.beginPath();
+    const end=Math.min(yr,stop); for(let y=0;y<=end+1e-9;y+=0.1){ const X=sx(y),Y=sy(fv(P,y)); y?ctx.lineTo(X,Y):ctx.moveTo(X,Y);} ctx.stroke(); ctx.restore();
+    const X=sx(end),Y=sy(fv(P,end)); ctx.fillStyle=col; ctx.beginPath(); ctx.arc(X,Y,12,0,7); ctx.fill(); return end>=stop; };
+  const done100=line(1e5,C.green,19.55), done10=line(1e4,C.red,39.1);
+  // legend
+  const la=seg(lt,0.4,0.4);
+  rr(150,1215,360,80,20,C.card); ctx.fillStyle=C.red; ctx.beginPath(); ctx.arc(190,1255,12,0,7); ctx.fill();
+  txt('Base $10.000',215,1266,{size:34,weight:800,align:'left',alpha:la});
+  rr(570,1215,360,80,20,C.card); ctx.fillStyle=C.green; ctx.beginPath(); ctx.arc(610,1255,12,0,7); ctx.fill();
+  txt('Base $100.000',635,1266,{size:34,weight:800,align:'left',alpha:la});
+  if(done100){ const a=seg(lt,0.8+Math.min(d*0.62,9)*0.5,0.3)||1; pill('19,6 años',sx(19.55),sy(1e6)-60,{bg:C.green,alpha:1}); }
+  if(done10){ pill('39,2 años',sx(39.1)-80,sy(1e6)-60,{bg:C.red,color:'#2a0707'}); }
+  const fin = seg(lt,0.8+Math.min(d*0.62,9)+0.2,0.5);
+  if(fin>0){ ctx.save(); ctx.globalAlpha*=fin; rr(150,1310,780,90,24,'rgba(43,217,139,0.14)','rgba(43,217,139,0.6)'); ctx.restore(); txt('= La mitad del tiempo',W/2,1372,{size:50,weight:900,color:C.green,alpha:fin}); }
+};
+
+function yearOne(lt,d,base,interest,headline,verdict,verdictCol,which){
+  kicker('AÑO 1 · APORTANDO $500/MES', 330, seg(lt,0,0.4));
+  txt('Base de', W/2, 430, {size:52,weight:700,color:C.muted,alpha:seg(lt,0,0.4)});
+  txt(moneyES(base), W/2, 560, {size:128,weight:900,color:which==='small'?C.ink:C.green,alpha:seg(lt,0.1,0.4)});
+  const maxV=14000, bh=430, by=1060, bw=280;
+  const bars=[['Tus aportes',6000,C.blue,370],['Interés ganado',interest,C.gold,710]];
+  bars.forEach(([lab,v,col,x],i)=>{
+    const g=back(seg(lt,0.9+i*0.6,0.9)); const h=bh*v/maxV*g;
+    rr(x-bw/2+ (i?0:0),by-h,bw,Math.max(h,0.01),22,col);
+    txt(moneyES(v*clamp(g)),x+ (i?0:0) - (0), by-h-28,{size:58,weight:900,color:col,alpha:seg(lt,0.9+i*0.6,0.3)});
+    txt(lab,x,by+60,{size:36,weight:700,color:C.muted,alpha:seg(lt,0.6,0.4)});
+  });
+  // reposition: centers
+  const share = Math.round(which==='small' ? 6000/(6000+interest)*100 : interest/(6000+interest)*100);
+  const va=seg(lt,Math.min(3.4,d*0.55),0.5);
+  if(va>0){ ctx.save(); ctx.globalAlpha*=va; rr(110,1170,860,200,30,'rgba(255,255,255,0.06)', verdictCol); ctx.restore();
+    txt(headline,W/2,1245,{size:44,weight:700,color:C.muted,alpha:va});
+    txt(share+'% '+verdict,W/2,1325,{size:58,weight:900,color:verdictCol,alpha:va}); }
+}
+S.base10k = (lt,d)=>yearOne(lt,d,10000,1586,'Del crecimiento del año…','sale de tu bolsillo',C.blue,'small');
+S.base100k = (lt,d)=>yearOne(lt,d,100000,12836,'Del crecimiento del año…','lo pone tu dinero',C.green,'big');
+
+S.milestones = (lt,d) => {
+  kicker('APORTANDO $500/MES · 12,5% ANUAL', 330, seg(lt,0,0.4));
+  txt('¿Cuánto tarda cada $100.000?', W/2, 420, {size:56,weight:900,alpha:seg(lt,0,0.4)});
+  const yrs=[9.2,4.3,2.9,2.1,1.8,1.4,1.2,1.1,0.9,0.8];
+  const top=490, row=80, x0=270, maxW=600;
+  const stepDur = Math.max(0.25,(d*0.7-1)/10);
+  yrs.forEach((y,i)=>{
+    const a=seg(lt,0.6+i*stepDur,0.35); const g=easeOut(seg(lt,0.6+i*stepDur,0.7));
+    const Y=top+i*row; const col = i===0?C.blue : i===9?C.green : 'rgba(255,255,255,0.28)';
+    txt(i===9?"1M":`${(i+1)*100}k`,x0-30,Y+44,{size:34,weight:800,color:i===0?C.blue:i===9?C.green:C.muted,align:'right',alpha:a});
+    rr(x0,Y+8,Math.max(8,maxW*y/9.2*g),56,14,col);
+    txt(y.toFixed(1).replace('.',',')+(y===9.2?' años':''), x0+maxW*y/9.2*g+18, Y+48,{size:34,weight:800,align:'left',color:i===0?C.blue:i===9?C.green:C.ink,alpha:a});
+  });
+  const fa=seg(lt,0.6+10*stepDur+0.2,0.5);
+  if(fa>0) { ctx.save(); ctx.globalAlpha*=fa; rr(110,1300,860,96,26,'rgba(43,217,139,0.12)','rgba(43,217,139,0.55)'); ctx.restore(); txt('El primero: 9 años. El último: < 1 año',W/2,1363,{size:42,weight:900,color:C.green,alpha:fa}); }
+};
+
+S.key = (lt,d) => {
+  kicker('QUE QUEDE CLARÍSIMO', 330, seg(lt,0,0.4), C.gold);
+  txt('Al principio, tu base', W/2, 430, {size:58,weight:800,alpha:seg(lt,0.1,0.4)});
+  txt('se alimenta de:', W/2, 500, {size:58,weight:800,alpha:seg(lt,0.1,0.4)});
+  const cards=[['Tus aportes','90%',C.blue,0.6],['El tiempo','+',C.blue,1.1]];
+  // big two cards
+  [[ 'TUS APORTES', C.blue, 0.7, 300],[ 'EL TIEMPO', C.blue, 1.2, 780]].forEach(([s,col,t0,x])=>{
+    const g=back(seg(lt,t0,0.6)); ctx.save(); ctx.translate(x,640); ctx.scale(g,g);
+    rr(-210,-70,420,140,30,'rgba(76,141,255,0.16)',col); txt(s,0,18,{size:50,weight:900,color:col}); ctx.restore();
+  });
+  txt('+',W/2,660,{size:80,weight:900,color:C.muted,alpha:seg(lt,1.0,0.3)});
+  // small profitability
+  const ra=seg(lt,Math.min(d*0.35,3.6),0.5);
+  txt('La rentabilidad ayuda…',W/2,820,{size:44,weight:700,color:C.muted,alpha:ra});
+  txt('pero llega después',W/2,880,{size:44,weight:800,color:C.gold,alpha:ra});
+  // speed table
+  const ta=d*0.55;
+  txt('Tiempo hasta tus primeros $100.000',W/2,1000,{size:38,weight:800,alpha:seg(lt,ta,0.4)});
+  [[300,12.4],[500,9.2],[1000,5.8],[2000,3.4]].forEach(([m,y],i)=>{
+    const a=seg(lt,ta+0.25*(i+1),0.4); const Y=1050+i*78;
+    rr(150,Y,780,64,16,'rgba(255,255,255,0.05)');
+    txt(moneyES(m)+'/mes',180,Y+44,{size:34,weight:800,align:'left',color:C.blue,alpha:a});
+    rr(460,Y+18,Math.max(6,250*y/12.4*easeOut(a)),28,10,C.blue);
+    txt(y.toFixed(1).replace('.',',')+' años',910,Y+44,{size:34,weight:800,align:'right',alpha:a});
+  });
+};
+
+S.cagr = (lt,d) => {
+  kicker('MI ESTRATEGIA', 330, seg(lt,0,0.4));
+  txt('10% – 15% CAGR', W/2, 450, {size:104,weight:900,color:C.green,alpha:seg(lt,0.1,0.4)});
+  txt('Desde $0 hasta $1.000.000', W/2, 530, {size:44,weight:700,color:C.muted,alpha:seg(lt,0.4,0.4)});
+  const X0=300,X1=960, sx=y=>X0+(X1-X0)*y/35;
+  // axis
+  const aa=seg(lt,0.6,0.4);
+  ctx.globalAlpha=aa; ctx.strokeStyle='rgba(255,255,255,0.2)'; ctx.lineWidth=2;
+  for(const y of [0,10,20,30]){ ctx.beginPath(); ctx.moveTo(sx(y),640); ctx.lineTo(sx(y),1010); ctx.stroke(); txt(y+' a',sx(y),1055,{size:28,weight:600,color:C.muted}); }
+  ctx.globalAlpha=1;
+  const rows=[['$500/mes',22.9,29.8,'23–30 años',Math.min(d*0.35,3.4)],['$1.000/mes',18.2,23.1,'18–23 años',Math.min(d*0.62,6.4)]];
+  rows.forEach(([lab,a,b,s,t0],i)=>{
+    const Y=700+i*170; const g=easeOut(seg(lt,t0,0.8)); const al=seg(lt,t0,0.3);
+    txt(lab,X0-24,Y+16,{size:32,weight:800,align:'right',color:C.blue,alpha:al});
+    rr(sx(0),Y-12,(sx(a)-sx(0))*g,40,12,'rgba(76,141,255,0.25)');
+    if(g>0.6){ const gg=seg(g,0.6,0.4); rr(sx(a),Y-24,(sx(b)-sx(a))*gg,64,16,C.green); }
+    txt(s,sx((a+b)/2),Y+90,{size:38,weight:900,color:C.green,alpha:seg(lt,t0+0.7,0.3)});
+  });
+  txt('Más aporte = menos años. Siempre.',W/2,1200,{size:44,weight:800,color:C.gold,alpha:seg(lt,Math.max(d-2.2,0),0.4)});
+};
+
+S.copy = (lt,d) => {
+  kicker('SIN SABER DE INVERSIONES', 330, seg(lt,0,0.4));
+  txt('Cópiame en eToro', W/2, 440, {size:84,weight:900,alpha:seg(lt,0.1,0.4)});
+  // phone card
+  const g=back(seg(lt,0.6,0.7)); ctx.save(); ctx.translate(W/2,760); ctx.scale(g,g);
+  rr(-300,-230,600,460,44,'#111c30','rgba(255,255,255,0.15)');
+  ctx.fillStyle=C.green; ctx.beginPath(); ctx.arc(-190,-120,56,0,7); ctx.fill(); txt('A',-190,-100,{size:56,weight:900,color:'#06210f'});
+  txt('Mi cartera',-110,-128,{size:40,weight:900,align:'left'}); txt('Objetivo 10–15% anual',-110,-80,{size:28,weight:600,color:C.muted,align:'left'});
+  // mini sparkline
+  ctx.strokeStyle=C.green; ctx.lineWidth=6; ctx.beginPath(); for(let i=0;i<=40;i++){ const x=-240+i*12, y=40-Math.pow(i/40,1.6)*110 + Math.sin(i*1.3)*8; i?ctx.lineTo(x,y):ctx.moveTo(x,y);} ctx.stroke();
+  const pulse=1+0.05*Math.sin(lt*6)*seg(lt,1.4,0.3);
+  ctx.save(); ctx.translate(0,150); ctx.scale(pulse,pulse); rr(-230,-44,460,88,44,C.green); txt('COPIAR',0,14,{size:40,weight:900,color:'#06210f',spacing:4}); ctx.restore();
+  ctx.restore();
+  const t1=Math.min(d*0.45,4), t2=Math.min(d*0.7,6);
+  const a1=seg(lt,t1,0.4), a2=seg(lt,t2,0.4);
+  rr(110,1060,410,230,30,'rgba(76,141,255,0.14)','rgba(76,141,255,0.7)');
+  txt('TÚ',315,1130,{size:46,weight:900,color:C.blue,alpha:a1}); txt('Aportes',315,1195,{size:40,weight:800,alpha:a1}); txt('+ tiempo',315,1250,{size:40,weight:800,alpha:a1});
+  rr(560,1060,410,230,30,'rgba(43,217,139,0.14)','rgba(43,217,139,0.7)');
+  txt('YO',765,1130,{size:46,weight:900,color:C.green,alpha:a2}); txt('La',765,1195,{size:40,weight:800,alpha:a2}); txt('estrategia',765,1250,{size:40,weight:800,alpha:a2});
+};
+
+S.cta = (lt,d) => {
+  kicker('LIBERTAD FINANCIERA', 360, seg(lt,0,0.4), C.gold);
+  txt('No es para quien', W/2, 520, {size:66,weight:800,color:C.muted,alpha:seg(lt,0.1,0.4)});
+  txt('tiene mucho dinero.', W/2, 600, {size:66,weight:800,color:C.muted,alpha:seg(lt,0.1,0.4)});
+  const t2=Math.min(d*0.38,3.6);
+  txt('Es para quien', W/2, 760, {size:84,weight:900,alpha:seg(lt,t2,0.4)});
+  txt('empieza hoy.', W/2, 860, {size:104,weight:900,color:C.green,alpha:seg(lt,t2+0.3,0.4)});
+  const t3=Math.min(d*0.62,6);
+  const g=back(seg(lt,t3,0.6));
+  ctx.save(); ctx.translate(W/2,1060); ctx.scale(g,g); rr(-330,-62,660,124,62,C.green); txt('SÍGUEME',0,18,{size:56,weight:900,color:'#06210f',spacing:6}); ctx.restore();
+  txt('Vamos juntos por tus primeros $100.000',W/2,1210,{size:40,weight:800,color:C.ink,alpha:seg(lt,t3+0.4,0.4)});
+};
+
+// ---------- timeline / captions ----------
+let TL = null;
+function setTimeline(tl){ TL = tl; }
+function captions(t){
+  const sc = TL.scenes.find(s=>t>=s.start && t<s.start+s.dur); if(!sc) return;
+  const lt=t-sc.start, speak=sc.speak;
+  const words=sc.caption.split(' ');
+  // chunk ~ 4-6 words, break after punctuation
+  const chunks=[]; let cur=[];
+  words.forEach((w,i)=>{ cur.push(w); if(cur.length>=6 || (/[.,:?!]$/.test(w) && cur.length>=3) ){ chunks.push(cur); cur=[]; } }); if(cur.length) chunks.push(cur);
+  const total=chunks.reduce((a,c)=>a+c.join(' ').length,0); let acc=0, idx=-1;
+  for(let i=0;i<chunks.length;i++){ const len=chunks[i].join(' ').length; if(lt*1 < (acc+len)/total*speak){ idx=i; break; } acc+=len; }
+  if(idx<0) idx=chunks.length-1;
+  const s=chunks[idx].join(' ');
+  const L=wrap(s,900,54,900);
+  const y0=1540;
+  ctx.save();
+  L.forEach((l,i)=>{ ctx.font=F(900,54); const w=ctx.measureText(l).width; rr(W/2-w/2-22,y0+i*74-52,w+44,70,16,'rgba(0,0,0,0.55)'); });
+  L.forEach((l,i)=>txt(l,W/2,y0+i*74,{size:54,weight:900,color:'#FFFFFF'}));
+  ctx.restore();
+}
+function progress(t){ const p=t/TL.total; rr(60,200,W-120,8,4,'rgba(255,255,255,0.12)'); rr(60,200,(W-120)*p,8,4,C.green); }
+function disclaimer(id){ const o={size:22,weight:500,color:'rgba(255,255,255,0.5)'}; if(['cagr','copy','cta'].includes(id)){ txt('Simulación con CAGR y aportes constantes. Rentabilidad pasada no garantiza',W/2,1422,o); txt('resultados futuros. Capital en riesgo. No es asesoría financiera.',W/2,1450,o);} else txt('Simulación: CAGR 12,5% constante, aportes mensuales.',W/2,1430,o); }
+
+function render(t){
+  background(t);
+  const sc = TL.scenes.find(s=>t>=s.start && t<s.start+s.dur) || TL.scenes[TL.scenes.length-1];
+  const lt=t-sc.start;
+  const fadeIn=seg(lt,0,0.25), fadeOut=1-seg(lt,sc.dur-0.25,0.25);
+  ctx.save(); ctx.globalAlpha=Math.min(fadeIn,fadeOut); ctx.translate(0,(1-easeOut(fadeIn))*40);
+  S[sc.id](lt,sc.dur); ctx.restore();
+  disclaimer(sc.id);
+  progress(t);
+  captions(t);
+}
+window.setTimeline=setTimeline; window.render=render;
+</script>
+</body>
+</html>

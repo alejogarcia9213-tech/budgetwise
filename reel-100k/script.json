@@ -1,0 +1,23 @@
+{
+  "voice": {"model": "elevenlabs_v4", "voice_type": "element", "voice_id": "ffff1547-43ad-41ee-be93-a1ba88daa60f", "prefix": "[Colombian Spanish accent] ", "speed": 1.05},
+  "scenes": [
+    {"id": "hook",       "text": "Los primeros cien mil dólares invertidos son los más difíciles de tu vida. Pero después, todo se acelera.",
+     "caption": "Los primeros $100.000 invertidos son los más difíciles de tu vida. Pero después, todo se acelera."},
+    {"id": "race",       "text": "Mira estos números, con un doce y medio por ciento anual. Con diez mil dólares, sin aportar nada más, llegas al millón en treinta y nueve años. Con cien mil, en menos de veinte. La mitad del tiempo.",
+     "caption": "Mira estos números, con un 12,5% anual. Con $10.000, sin aportar nada más, llegas al millón en 39 años. Con $100.000, en menos de 20. La mitad del tiempo."},
+    {"id": "base10k",    "text": "¿Por qué? Porque el interés compuesto trabaja sobre tu base. Con diez mil, el primer año ganas unos mil quinientos dólares. Pero si aportas quinientos al mes, metes seis mil. Casi el ochenta por ciento del crecimiento sale de tu bolsillo.",
+     "caption": "¿Por qué? Porque el interés compuesto trabaja sobre tu base. Con $10.000, el primer año ganas unos $1.500. Pero si aportas $500 al mes, metes $6.000. Casi el 80% del crecimiento sale de tu bolsillo."},
+    {"id": "base100k",   "text": "Con cien mil, la historia cambia. Ganas más de doce mil dólares al año. Ahora tu dinero trabaja más que tú.",
+     "caption": "Con $100.000, la historia cambia. Ganas más de $12.000 al año. Ahora tu dinero trabaja más que tú."},
+    {"id": "milestones", "text": "Aportando quinientos al mes, los primeros cien mil tardan nueve años. Los segundos, cuatro. Y los últimos cien mil antes del millón, menos de un año.",
+     "caption": "Aportando $500 al mes, los primeros $100.000 tardan 9 años. Los segundos, 4. Y los últimos $100.000 antes del millón, menos de un año."},
+    {"id": "key",        "text": "Que quede clarísimo: al principio, lo que alimenta tu base son tus aportes y el tiempo. La rentabilidad ayuda, pero llega después. Por eso, haz todo lo posible por llegar rápido a tus primeros cien mil.",
+     "caption": "Que quede clarísimo: al principio, lo que alimenta tu base son tus aportes y el tiempo. La rentabilidad ayuda, pero llega después. Por eso, haz todo lo posible por llegar rápido a tus primeros $100.000."},
+    {"id": "cagr",       "text": "Mi estrategia apunta a entre un diez y un quince por ciento anual. Desde cero, con quinientos al mes, eso es el millón en veintitrés a treinta años. Con mil al mes, entre dieciocho y veintitrés.",
+     "caption": "Mi estrategia apunta a entre un 10% y un 15% anual. Desde cero, con $500 al mes, eso es el millón en 23 a 30 años. Con $1.000 al mes, entre 18 y 23."},
+    {"id": "copy",       "text": "Y no necesitas saber de inversiones. En eToro puedes copiarme automáticamente. Tú pones los aportes y el tiempo. Yo pongo la estrategia.",
+     "caption": "Y no necesitas saber de inversiones. En eToro puedes copiarme automáticamente. Tú pones los aportes y el tiempo. Yo pongo la estrategia."},
+    {"id": "cta",        "text": "La libertad financiera no es solo para quien tiene mucho dinero. Es para quien empieza hoy. Sígueme, y vamos juntos por esos primeros cien mil.",
+     "caption": "La libertad financiera no es solo para quien tiene mucho dinero. Es para quien empieza hoy. Sígueme, y vamos juntos por esos primeros $100.000."}
+  ]
+}
